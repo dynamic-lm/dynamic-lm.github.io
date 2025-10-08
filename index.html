@@ -1,31 +1,20 @@
 <!DOCTYPE html>
-<html lang="en"></html>
-
+<html lang="en">
 <head>
     <meta charset="utf-8">
-    <!-- Meta tags for social media banners, these should be filled in appropriately as they are your "business card" -->
-    <!-- Replace the content tag with appropriate information -->
     <meta name="description" content="Are Large Reasoning Models Interruptible? Exploring interruptibility as a core capability for reasoning agents in dynamic, interactive environments.">
-    <meta property="og:title" content="Are Large Reasoning Models Interruptible?" />
-    <meta property="og:description" content="Today's Large Reasoning Models (LRMs) are evaluated in frozen worlds — static problems, fixed contexts, one long uninterrupted chain of thought. But real life isn't frozen. We argue that interruptibility is essential: models should gracefully stop, adapt, and continue. Rigid redo-from-scratch pipelines are the opposite of what real interactive reasoning needs." />
-    <meta property="og:url" content="http://interrupt-lrm.github.io" />
-    <!-- Path to banner image, should be in the path listed below. Optimal dimensions are 1200X630-->
-    <meta property="og:image" content="static/images/ilrm_logo.png" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-
-
+    <meta property="og:title" content="Are Large Reasoning Models Interruptible?">
+    <meta property="og:description" content="Today's Large Reasoning Models (LRMs) are evaluated in frozen worlds — static problems, fixed contexts, one long uninterrupted chain of thought. But real life isn't frozen. We argue that interruptibility is essential: models should gracefully stop, adapt, and continue. Rigid redo-from-scratch pipelines are the opposite of what real interactive reasoning needs.">
+    <meta property="og:url" content="http://interrupt-lrm.github.io">
+    <meta property="og:image" content="static/images/ilrm_logo.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta name="twitter:title" content="Are Large Reasoning Models Interruptible?">
-    <meta name="twitter:description" content="Today's Large Reasoning Models (LRMs) are evaluated in frozen worlds — static problems, fixed contexts, one long uninterrupted chain of thought. But real life isn't frozen. We argue that interruptibility is essential: models should gracefully stop, adapt, and continue." />
-    <!-- Path to banner image, should be in the path listed below. Optimal dimensions are 1200X600-->
+    <meta name="twitter:description" content="Today's Large Reasoning Models (LRMs) are evaluated in frozen worlds — static problems, fixed contexts, one long uninterrupted chain of thought. But real life isn't frozen. We argue that interruptibility is essential: models should gracefully stop, adapt, and continue.">
     <meta name="twitter:image" content="static/images/ilrm_logo.png">
     <meta name="twitter:card" content="Interruptible LRM Project: Exploring interruptibility as a core capability for reasoning agents.">
-    <!-- Keywords for your paper to be indexed by-->
-    <meta name="keywords"
-        content="Large Reasoning Models, Interruptibility, Dynamic Context, Interactive Reasoning, Anytime Models, Real-world AI">
+    <meta name="keywords" content="Large Reasoning Models, Interruptibility, Dynamic Context, Interactive Reasoning, Anytime Models, Real-world AI">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
     <title>Are Large Reasoning Models Interruptible?</title>
     <link rel="icon" type="image/x-icon" href="static/images/favicon_io/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="static/images/favicon_io/apple-touch-icon.png">
@@ -33,439 +22,364 @@
     <link rel="icon" type="image/png" sizes="16x16" href="static/images/favicon_io/favicon-16x16.png">
     <link rel="manifest" href="static/images/favicon_io/site.webmanifest">
     <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
-
     <link rel="stylesheet" href="static/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-
+    <link rel="stylesheet" href="static/css/site.css">
     <script defer src="static/fontawesome/js/fontawesome.min.js"></script>
-    
-    <!-- Custom CSS -->
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-        
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Google Sans', 'Noto Sans', sans-serif;
-            line-height: 1.6;
-            color: #333;
-        }
-        
-        .nav-link:hover {
-            color: #007bff !important;
-        }
-        
-        /* Ensure proper spacing and layout */
-        section {
-            display: block;
-        }
-        
-        /* Make sure images are responsive */
-        img {
-            max-width: 100%;
-            height: auto;
-        }
-        
-        /* Custom button styles */
-        .custom-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            background: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 500;
-            transition: all 0.2s;
-            border: none;
-            cursor: pointer;
-        }
-        
-        .custom-button:hover {
-            background: #0056b3;
-            transform: translateY(-1px);
-        }
-        
-        /* Responsive design */
-        @media (max-width: 768px) {
-            .nav-links {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            h1 {
-                font-size: 2.5rem !important;
-            }
-        }
-    </style>
+    <script defer src="static/js/charts.js"></script>
 </head>
-
 <body>
-
-    <!-- Top Navigation Bar -->
-    <nav style="background: #ffffff; border-bottom: 1px solid #e9ecef; padding: 0.5rem 0; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-        <div style="max-width: 100%; padding: 0 2rem;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <!-- Logo -->
-                <div style="display: flex; align-items: center; gap: 1rem;">
-                    <img src="static/images/ilrm_logo.png" alt="Logo" style="width: 40px; height: 40px; object-fit: contain;">
-                    <span style="font-size: 1.2rem; font-weight: 700; color: #2c3e50;">Interruptible LRM</span>
+    <nav class="site-nav">
+        <div class="layout-container">
+            <div class="nav-inner">
+                <div class="nav-brand">
+                    <div class="logo-container">
+                        <img class="nav-logo" src="static/images/ilrm_logo.png" alt="Interruptible LRM logo">
+                        <div class="logo-tooltip">
+                            Think of The Great Wave as a metaphor for dynamic context — the chatbot has to surf the changing tides of conversation, staying robust even as the waves keep moving.
+                        </div>
+                    </div>
+                    <span class="nav-title">Interruptible LRM</span>
                 </div>
-                
-                <!-- Navigation Links -->
-                <div style="display: flex; gap: 2rem; align-items: center;">
-                    <a href="#problem" style="color: #495057; text-decoration: none; font-weight: 500; transition: color 0.2s;">Problem</a>
-                    <a href="#approach" style="color: #495057; text-decoration: none; font-weight: 500; transition: color 0.2s;">Approach</a>
-                    <a href="#results" style="color: #495057; text-decoration: none; font-weight: 500; transition: color 0.2s;">Results</a>
-                    <a href="https://arxiv.org/abs/2504.13169" target="_blank" style="color: #495057; text-decoration: none; font-weight: 500; transition: color 0.2s;">Paper</a>
-                    <a href="https://huggingface.co/collections/tsunghanwu/reverse-67f410b5d147edf2ed7817ae" target="_blank" style="color: #495057; text-decoration: none; font-weight: 500; transition: color 0.2s;">Dataset</a>
-                    <a href="https://github.com/tsunghan-wu/reverse_vlm" target="_blank" style="color: #495057; text-decoration: none; font-weight: 500; transition: color 0.2s;">GitHub</a>
+                <div class="nav-links">
+                    <a class="nav-link" href="#problem">Problem</a>
+                    <a class="nav-link" href="#approach">Approach</a>
+                    <a class="nav-link" href="#time-constraint">Results</a>
+                    <a class="nav-link" href="https://arxiv.org/abs/2504.13169" target="_blank" rel="noopener">Paper</a>
+                    <a class="nav-link" href="https://huggingface.co/collections/tsunghanwu/reverse-67f410b5d147edf2ed7817ae" target="_blank" rel="noopener">Dataset</a>
+                    <a class="nav-link" href="https://github.com/tsunghan-wu/reverse_vlm" target="_blank" rel="noopener">GitHub</a>
                 </div>
             </div>
         </div>
     </nav>
 
-
-    <!-- Modern Header Section -->
-    <section style="background: #ffffff; padding: 1rem 0 0.1rem 0;">
-        <div style="max-width: 100%; padding: 0 2rem;">
-            <div style="max-width: 1000px; margin: 0 auto;">
-                <!-- Title -->
-                <h1 style="font-size: 2.8rem; font-weight: 800; color: #2c3e50; margin: 0 0 1rem 0; line-height: 1.1; text-align: left; letter-spacing: -0.02em;">
-                    Are Large Reasoning Models Interruptible?
-                </h1>
-                
-                <!-- Authors - Single Line -->
-                <div style="margin-bottom: 0.5rem;">
-                    <div style="font-size: 1.1rem; color: #495057; line-height: 1.6; text-align: left;">
-                        <a href="https://patrickthwu.com/" target="_blank" style="color: #007bff; text-decoration: none; font-weight: 500;">Tsung-Han Wu<sup style="color: #dc3545;">*</sup></a> · 
-                        <a href="https://mmiroyan.github.io/" target="_blank" style="color: #007bff; text-decoration: none; font-weight: 500;">Mihran Miroyan<sup style="color: #dc3545;">*</sup></a> · 
-                        <a href="https://dchan.cc/" target="_blank" style="color: #007bff; text-decoration: none; font-weight: 500;">David M. Chan</a> · 
-                        <a href="https://people.eecs.berkeley.edu/~trevor/" target="_blank" style="color: #007bff; text-decoration: none; font-weight: 500;">Trevor Darrell</a> · 
-                        <a href="https://nargesnorouzi.me/" target="_blank" style="color: #007bff; text-decoration: none; font-weight: 500;">Narges Norouzi</a> · 
-                        <a href="https://people.eecs.berkeley.edu/~jegonzal/" target="_blank" style="color: #007bff; text-decoration: none; font-weight: 500;">Joseph E. Gonzalez</a>
-                    </div>
+    <main>
+        <section class="section hero hero--accent" id="overview">
+            <div class="layout-container hero__layout">
+                <div class="hero-title-block">
+                    <h1 class="hero-title">Are Large Reasoning Models Interruptible?</h1>
                 </div>
-                
-                <!-- Affiliation -->
-                <div style="margin-bottom: 1.5rem;">
-                    <div style="font-size: 1rem; font-weight: 600; color: #2c3e50; margin-bottom: 0.25rem; text-align: left;">UC Berkeley</div>
-                    <div style="font-size: 0.85rem; color: #6c757d; text-align: left; margin-bottom: 1rem;"><sup style="color: #dc3545;">*</sup>Indicates Equal Contribution</div>
-                    
-                    <!-- Links Section -->
-                    <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
-                        <a href="https://arxiv.org/abs/2504.13169" target="_blank" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1rem; background: #dc3545; color: white; text-decoration: none; border-radius: 6px; font-weight: 600; transition: all 0.2s; font-size: 0.85rem; box-shadow: 0 2px 4px rgba(220, 53, 69, 0.2);">
-                            <i class="fas fa-file-pdf" style="font-size: 0.75rem;"></i>
-                            arXiv
-                        </a>
-                        <a href="https://github.com/tsunghan-wu/reverse_vlm" target="_blank" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1rem; background: #333; color: white; text-decoration: none; border-radius: 6px; font-weight: 600; transition: all 0.2s; font-size: 0.85rem; box-shadow: 0 2px 4px rgba(51, 51, 51, 0.2);">
-                            <i class="fab fa-github" style="font-size: 0.75rem;"></i>
-                            GitHub
-                        </a>
-                        <a href="https://huggingface.co/collections/tsunghanwu/reverse-67f410b5d147edf2ed7817ae" target="_blank" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1rem; background: #ff6b35; color: white; text-decoration: none; border-radius: 6px; font-weight: 600; transition: all 0.2s; font-size: 0.85rem; box-shadow: 0 2px 4px rgba(255, 107, 53, 0.2);">
-                            <i class="fas fa-database" style="font-size: 0.75rem;"></i>
-                            Dataset
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Why Interruptible Matters Section -->
-    <section id="problem" style="padding: 0.5 rem 0; background: #ffffff;">
-        <div style="max-width: 100%; padding: 0 2rem;">
-            <div style="max-width: 1000px; margin: 0 auto;">
-                <h2 style="font-size: 1.6rem; font-weight: 700; color: #2c3e50; margin-bottom: 0.25rem; text-align: left;">
-                    Why Interruptibility Matters
-                </h2>
-                <div style="font-size: 1rem; line-height: 1.6; color: #495057; margin-bottom: 2rem; text-align: left;">
-                    <p style="font-size: 1rem; line-height: 1.6; color: #2c3e50; margin-bottom: 1.5rem; text-align: left;">
-                        LRMs are often tested in "frozen worlds", where the context never changes. But real life keeps moving: environments shift, collaborators step in, and sometimes urgency spikes, like a user saying "hurry up." This is especially hard for reasoning models, where inference takes time. We argue that instead of restarting from scratch whenever interruptions occur, models should be able to pause, adapt, and carry on gracefully. Below we show a glimpse of what that future might look like in dynamic “vibe coding” scenarios. In this work, we ask: <strong style="color: #007bff;">Are today’s reasoning models ready? And if not, how far are we from getting there?</strong>
-                      </p>
-                     <img src="static/images/fig1.png" alt="Figure 1: How do LRMs perform in dynamic worlds?" style="width: 95%; height: auto; border-radius: 6px; display: block; margin: 0 auto;">
-                  </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="approach" style="padding: 0.75rem 0; background: #ffffff;">
-        <div style="max-width: 100%; padding: 0 2rem;">
-          <div style="max-width: 1000px; margin: 0 auto;">
-      
-            <!-- Title -->
-            <h2 style="font-size: 1.6rem; font-weight: 700; color: #2c3e50; margin-bottom: 0.5rem; text-align: left;">
-              Experimental Setup
-            </h2>
-      
-            <!-- Quick overview -->
-            <p style="font-size: 1rem; line-height: 1.6; color: #2c3e50; margin-bottom: 1rem;">
-              We evaluate LRMs in <strong>dynamic settings</strong> where reasoning can be interrupted. 
-              Two scenarios matter most: <strong>time-constrained</strong> requests (e.g., “hurry up”) 
-              and <strong>update-driven</strong> changes (new information arriving mid-reasoning). Below is the illustration of our setup.
-            </p>
-      
-            <!-- Hero figure -->
-            <figure style="margin: 0 0 1.25rem;">
-              <img src="static/images/fig2.png"
-                   alt="Overview: time-constrained vs update-driven interruptions and the evaluation loop"
-                   style="width: 80%; height: auto; border-radius: 6px; display: block; margin: 0 auto;">
-              <!-- <figcaption style="font-size: 0.9rem; color: #6c757d; margin-top: 0.5rem; text-align: center;">
-                Experimental loop: cut → intervene → continue → measure
-              </figcaption> -->
-            </figure>
-      
-            <!-- Two types summary -->
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0.75rem; margin-bottom: 1rem;">
-              <div style="border: 1px solid #e9ecef; border-radius: 8px; padding: 0.75rem;">
-                <h3 style="margin: 0 0 0.4rem; font-size: 1.05rem; color: #2c3e50;">Time-constrained</h3>
-                <ul style="margin: 0; padding-left: 1rem; color: #495057; font-size: 0.95rem; line-height: 1.5;">
-                  <li><strong>Hard:</strong> immediately stop reasoning and output an answer.</li>
-                  <li><strong>Soft:</strong> continue reasoning but accelerate and finish sooner.</li>
-                </ul>
-              </div>
-              <div style="border: 1px solid #e9ecef; border-radius: 8px; padding: 0.75rem;">
-                <h3 style="margin: 0 0 0.4rem; font-size: 1.05rem; color: #2c3e50;">Update-driven</h3>
-                <p style="margin: 0; color: #495057; font-size: 0.95rem; line-height: 1.5;">
-                  Introduce new information mid-reasoning so that the final answer depends on the update.
-                </p>
-              </div>
-            </div>
-      
-            <!-- Protocol + Models & Data side by side -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1rem;">
-              
-              <!-- Experimental protocol -->
-              <div style="border: 1px dashed #dee2e6; border-radius: 8px; padding: 0.75rem;">
-                <h3 style="margin: 0 0 0.4rem; font-size: 1.05rem; color: #2c3e50;">Experimental Protocol</h3>
-                <ol style="margin: 0; padding-left: 1.1rem; color: #495057; font-size: 0.95rem; line-height: 1.5;">
-                  <li>Generate a reasoning trace (<em>r</em>) and pick a cut point <em>X</em> (0 ≤ X < |r|).</li>
-                  <li>Insert an intervention <em>i</em> (time-constrained or update-driven).</li>
-                  <li>Resume generation to produce a new final answer (<em>a'</em>).</li>
-                  <li>Evaluate correctness and measure post-interrupt length (|r<sub>X</sub>' ⊕ a'|).</li>
-                </ol>
-              </div>
-      
-              <!-- Models and data -->
-              <div style="border: 1px solid #e9ecef; border-radius: 8px; padding: 0.75rem;">
-                <h3 style="margin: 0 0 0.4rem; font-size: 1.05rem; color: #2c3e50;">Models & Data</h3>
-                <ul style="margin: 0; padding-left: 1rem; color: #495057; font-size: 0.95rem; line-height: 1.5;">
-                  <li><strong>Models:</strong> GPT-OSS-20B, Qwen3-8B, and Magistral-24B</li>
-                  <li><strong>Data:</strong> GSM8k, MATH-500, AIME 24/25, and LiveCodeBench (v6)</li>
-                  <li><strong>Cut positions:</strong> X ∈ {0.1, 0.3, 0.5, 0.7, 0.9} × |r| for each sample</li>
-                  <li><strong>Data augmentation:</strong> Problems modified so answers change after interruption (GPT-5 generated, human refined)</li>
-                </ul>
-              </div>
-            </div>
-      
-            <!-- Augmented data details -->
-            <details style="margin-top: 0.75rem;">
-              <summary style="font-size: 0.95rem; font-weight: 500; color: #2c3e50; cursor: pointer;">
-                → See examples of our augmented data
-              </summary>
-              <div style="margin-top: 0.5rem; padding: 0.75rem; border: 1px solid #e9ecef; border-radius: 6px; background: #f8f9fa; font-size: 0.9rem; color: #495057; line-height: 1.5;">
-                <p style="margin: 0 0 0.5rem;">Here we provide sample cases where interruptions lead to different final answers:</p>
-                <ul style="margin: 0; padding-left: 1.2rem;">
-                  <li><em>Math (AIME 2025):</em> Cutting mid-proof and injecting an update that changes a key assumption.</li>
-                  <li><em>Coding (LiveCodeBench v6):</em> Mid-function update that alters a variable constraint.</li>
-                  <li><em>GSM8k:</em> User interrupts with “hurry up” halfway through multi-step reasoning.</li>
-                </ul>
-              </div>
-            </details>
-          </div>
-        </div>
-      </section>
-
-
-    <!-- Time-Constraint Interruptions Section -->
-    <section id="time-constraint" style="padding: 2rem 0; background: #ffffff;">
-        <div style="max-width: 100%; padding: 0 2rem;">
-            <div style="max-width: 1000px; margin: 0 auto;">
-                <h2 style="font-size: 1.6rem; font-weight: 700; color: #2c3e50; margin-bottom: 1rem; text-align: left;">
-                    How Do Models Behave Under Time-Constraint Interruptions?
-                </h2>
-                
-                <!-- Hard Interrupt -->
-                <div style="background: #ffffff; border-radius: 8px; padding: 1.5rem; border: 1px solid #e9ecef; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 1.5rem;">
-                    <h3 style="font-size: 1.3rem; font-weight: 600; color: #2c3e50; margin-bottom: 0.75rem;">
-                        Hard Interrupt: Anytime Models but with Reasoning Leakage
-                    </h3>
-                    <p style="font-size: 1rem; color: #495057; margin-bottom: 1rem;">
-                        When forced to stop immediately, models can provide answers but often "leak" their reasoning process into the final answer, making responses verbose and unfocused.
-                    </p>
-                    <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 6px; padding: 1rem; margin-bottom: 1rem;">
-                        <p style="margin: 0; font-size: 0.9rem; color: #856404; font-style: italic;">
-                            <strong>Example:</strong> "The answer is 42, but I was still working through the quadratic formula when you interrupted me, so let me explain the steps I was taking..."
-                        </p>
-                    </div>
-                    <!-- Placeholder for chart -->
-                    <div style="text-align: center; padding: 2rem; background: #f8f9fa; border-radius: 6px; border: 2px dashed #dee2e6;">
-                        <p style="color: #6c757d; margin: 0;">[Chart: Reasoning leakage examples and accuracy vs. response length]</p>
-                    </div>
-                </div>
-
-                <!-- Soft Interrupt -->
-                <div style="background: #ffffff; border-radius: 8px; padding: 1.5rem; border: 1px solid #e9ecef; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-                    <h3 style="font-size: 1.3rem; font-weight: 600; color: #2c3e50; margin-bottom: 0.75rem;">
-                        Soft Interrupt: Think Less, Lower Accuracy with "PANIC"
-                    </h3>
-                    <p style="font-size: 1rem; color: #495057; margin-bottom: 1rem;">
-                        When asked to "hurry up," models generally produce shorter responses with lower accuracy. GPT-OSS particularly shows "panic" behavior, rushing to conclusions.
-                    </p>
-                    <div style="background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 6px; padding: 1rem; margin-bottom: 1rem;">
-                        <p style="margin: 0; font-size: 0.9rem; color: #721c24; font-style: italic;">
-                            <strong>Example:</strong> "Hurry up!" → "The answer is definitely 15! No wait, maybe 23? Actually, I think it's 15. Yes, 15."
-                        </p>
-                    </div>
-                    <!-- Placeholder for chart -->
-                    <div style="text-align: center; padding: 2rem; background: #f8f9fa; border-radius: 6px; border: 2px dashed #dee2e6;">
-                        <p style="color: #6c757d; margin: 0;">[Chart: Accuracy vs. response length under soft interrupts, showing panic behavior]</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Update-Driven Interruptions Section -->
-    <section id="update-driven" style="padding: 2rem 0; background: #ffffff;">
-        <div style="max-width: 100%; padding: 0 2rem;">
-            <div style="max-width: 1000px; margin: 0 auto;">
-                <h2 style="font-size: 1.6rem; font-weight: 700; color: #2c3e50; margin-bottom: 1rem; text-align: left;">
-                    How Do Models Behave Under Update-Driven Interruptions?
-                </h2>
-                
-                <!-- Best Way to Interrupt -->
-                <div style="background: #f8f9fa; border-radius: 8px; padding: 1.5rem; border: 1px solid #e9ecef; margin-bottom: 1.5rem;">
-                    <h3 style="font-size: 1.3rem; font-weight: 600; color: #2c3e50; margin-bottom: 0.75rem;">
-                        What's the Best Way to Interrupt and Resume a Model?
-                    </h3>
-                    <p style="font-size: 1rem; color: #495057; margin-bottom: 1rem;">
-                        User-initiated interruptions vs. model-initiated pauses: We found that explicit user guidance significantly improves model performance when resuming after interruptions.
-                    </p>
-                    <!-- Placeholder for comparison chart -->
-                    <div style="text-align: center; padding: 2rem; background: #ffffff; border-radius: 6px; border: 2px dashed #dee2e6;">
-                        <p style="color: #6c757d; margin: 0;">[Chart: User vs. model-initiated interruption performance comparison]</p>
-                    </div>
-                </div>
-
-                <!-- Self-Doubt Phenomenon -->
-                <div style="background: #f8f9fa; border-radius: 8px; padding: 1.5rem; border: 1px solid #e9ecef;">
-                    <h3 style="font-size: 1.3rem; font-weight: 600; color: #2c3e50; margin-bottom: 0.75rem;">
-                        The "Self-Doubt" Phenomenon
-                    </h3>
-                    <p style="font-size: 1rem; color: #495057; margin-bottom: 1rem;">
-                        Models get confused without proper prompting when updates arrive late in the reasoning process, showing a <strong style="color: #dc3545;">60% performance drop</strong> when updates are injected after 70% of reasoning is complete.
-                    </p>
-                    <div style="background: #d1ecf1; border: 1px solid #bee5eb; border-radius: 6px; padding: 1rem; margin-bottom: 1rem;">
-                        <p style="margin: 0; font-size: 0.9rem; color: #0c5460; font-style: italic;">
-                            <strong>Example:</strong> Model: "I'm confident the answer is X." → Update arrives → "Wait, maybe it's Y? I'm not sure anymore..."
-                        </p>
-                    </div>
-                    <!-- Placeholder for chart -->
-                    <div style="text-align: center; padding: 2rem; background: #ffffff; border-radius: 6px; border: 2px dashed #dee2e6;">
-                        <p style="color: #6c757d; margin: 0;">[Chart: Performance drop vs. interruption timing, showing self-doubt effect]</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Scaling Analysis Section -->
-    <section id="scaling" style="padding: 2rem 0; background: #f8f9fa;">
-        <div style="max-width: 100%; padding: 0 2rem;">
-            <div style="max-width: 1000px; margin: 0 auto;">
-                <h2 style="font-size: 1.6rem; font-weight: 700; color: #2c3e50; margin-bottom: 1rem; text-align: left;">
-                    Does Scaling Help?
-                </h2>
-                
-                <div style="background: #ffffff; border-radius: 8px; padding: 1.5rem; border: 1px solid #e9ecef; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-                    <p style="font-size: 1rem; color: #495057; margin-bottom: 1rem;">
-                        <strong style="color: #28a745;">Yes, scaling helps.</strong> Larger models (Magistral-24B) show better interruptibility compared to smaller models (Qwen3-8B), with improved ability to handle both time-constrained and update-driven interruptions.
-                    </p>
-                    
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
-                        <div style="text-align: center; padding: 1rem; background: #e8f5e8; border-radius: 6px;">
-                            <div style="font-size: 1.5rem; font-weight: 700; color: #28a745;">24B</div>
-                            <div style="font-size: 0.85rem; color: #495057;">Magistral</div>
-                            <div style="font-size: 0.8rem; color: #6c757d;">Best interruptibility</div>
+                <div class="hero-grid hero-grid--two">
+                    <div class="hero-secondary hero-secondary--focused">
+                        <p class="hero-lede hero-lede--motivation">
+                            <strong>Motivation: </strong>Ideal AGI must bend to the human loop. While reasoning models are powerful, people often wanna cut in during their reasoning: Engineers revise specs mid-trace, researchers force early answers, and grad students beg it to hurry up before a deadline. If models can’t handle these real-world interrupts, they fall out of sync with the teams they serve.</p>                        <div class="hero-meta">
+                            <p class="author-list">
+                                <a href="https://patrickthwu.com/" target="_blank" rel="noopener">Tsung-Han Wu<sup class="text-danger">*</sup></a> &middot; <a href="https://mmiroyan.github.io/" target="_blank" rel="noopener">Mihran Miroyan<sup class="text-danger">*</sup></a> &middot; <a href="https://dchan.cc/" target="_blank" rel="noopener">David M. Chan</a> &middot; <a href="https://people.eecs.berkeley.edu/~trevor/" target="_blank" rel="noopener">Trevor Darrell</a> &middot; <a href="https://nargesnorouzi.me/" target="_blank" rel="noopener">Narges Norouzi</a> &middot; <a href="https://people.eecs.berkeley.edu/~jegonzal/" target="_blank" rel="noopener">Joseph E. Gonzalez</a>
+                            </p>
+                            <p class="affiliation">
+                                UC Berkeley
+                                <span class="equal-contrib-inline"><sup class="text-danger">*</sup> Equal contribution.</span>
+                            </p>
                         </div>
-                        <div style="text-align: center; padding: 1rem; background: #fff3cd; border-radius: 6px;">
-                            <div style="font-size: 1.5rem; font-weight: 700; color: #856404;">20B</div>
-                            <div style="font-size: 0.85rem; color: #495057;">GPT-OSS</div>
-                            <div style="font-size: 0.8rem; color: #6c757d;">Panic behavior</div>
-                        </div>
-                        <div style="text-align: center; padding: 1rem; background: #f8d7da; border-radius: 6px;">
-                            <div style="font-size: 1.5rem; font-weight: 700; color: #721c24;">8B</div>
-                            <div style="font-size: 0.85rem; color: #495057;">Qwen3</div>
-                            <div style="font-size: 0.8rem; color: #6c757d;">Struggles most</div>
+                        <div class="cta-group">
+                            <a class="button button--arxiv" href="https://arxiv.org/abs/2504.13169" target="_blank" rel="noopener">
+                                <i class="fas fa-file-pdf"></i>
+                                Read the paper
+                            </a>
+                            <a class="button button--github" href="https://github.com/tsunghan-wu/reverse_vlm" target="_blank" rel="noopener">
+                                <i class="fab fa-github"></i>
+                                Explore the code
+                            </a>
+                            <a class="button button--dataset" href="https://huggingface.co/collections/tsunghanwu/reverse-67f410b5d147edf2ed7817ae" target="_blank" rel="noopener">
+                                <i class="fas fa-database"></i>
+                                Browse the data
+                            </a>
                         </div>
                     </div>
-                    
-                    <!-- Placeholder for scaling chart -->
-                    <div style="text-align: center; padding: 2rem; background: #f8f9fa; border-radius: 6px; border: 2px dashed #dee2e6;">
-                        <p style="color: #6c757d; margin: 0;">[Chart: Interruptibility performance vs. model size across different interruption types]</p>
+                    <aside class="hero-primary">
+                        <div class="card card--tldr hero-tldr">
+                            <h2 class="hero-tldr__title">Our Answer → Not Really. <br>Here are three common pathologies we found.</h2>
+                            <!-- <p class="hero-tldr__intro">
+                                Interruptions expose the same fragile behaviors across today’s leading reasoning models.
+                            </p> -->
+                            <ul class="hero-tldr__list">
+                                <li><strong>Hard stop → Reasoning leakage:</strong> forcing an answer mid-think spills unfinished chains into the final response.</li>
+                                <li><strong>Hurry up → Panic:</strong> time pressure shortens reasoning and drives rushed, low-confidence guesses.</li>
+                                <li><strong>Late update → Self-doubt:</strong> unplanned edits derail the chain unless the model is guided to replan.</li>
+                            </ul>
+                            <div class="hero-tldr__models" aria-label="Models evaluated">
+                                <span class="hero-tldr__models-title">Models evaluated</span>
+                                <div class="hero-pill-row">
+                                    <span class="hero-pill hero-pill--openai">
+                                        <i class="fa-solid fa-robot" aria-hidden="true"></i>
+                                        GPT-OSS&nbsp;20B
+                                    </span>
+                                    <span class="hero-pill hero-pill--qwen">
+                                        <i class="fa-solid fa-rocket" aria-hidden="true"></i>
+                                        Qwen3&nbsp;8B
+                                    </span>
+                                    <span class="hero-pill hero-pill--mistral">
+                                        <i class="fa-solid fa-wave-square" aria-hidden="true"></i>
+                                        Magistral&nbsp;24B
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+                <div class="hero-chart chart-card chart-card--figure">
+                    <h2 class="hero-chart__title">Pathology Behaviors</h2>
+                    <p class="hero-chart__text">Toggle each interruption setting to see the pathology it induces.</p>
+                    <div class="chart-selector" role="tablist" aria-label="Interruptibility behaviors">
+                        <button class="chart-selector__button" type="button" data-chart-toggle="leakage" aria-controls="chart-leakage" aria-pressed="false">
+                            Hard stop → Reasoning leakage
+                        </button>
+                        <button class="chart-selector__button" type="button" data-chart-toggle="panic" aria-controls="chart-panic" aria-pressed="false">
+                            Hurry up → Panic
+                        </button>
+                        <button class="chart-selector__button" type="button" data-chart-toggle="doubt" aria-controls="chart-doubt" aria-pressed="false">
+                            Late update → Self-doubt
+                        </button>
+                    </div>
+                    <div class="chart-display">
+                        <iframe class="chart-frame" data-chart="leakage" src="static/images/plotly/leakage_rate.html" title="Reasoning leakage rates across models" loading="lazy"></iframe>
+                        <iframe class="chart-frame" data-chart="panic" src="static/images/plotly/panic_rate.html" title="Panic response rates across models" loading="lazy" hidden></iframe>
+                        <iframe class="chart-frame" data-chart="doubt" src="static/images/plotly/doubt_rate.html" title="Self-doubt rates across models" loading="lazy" hidden></iframe>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <!-- Footer -->
-    <footer style="background: #f8f9fa; color: #495057; padding: 2rem 0 1.5rem 0; border-top: 1px solid #e9ecef;">
-        <div style="max-width: 100%; padding: 0 2rem;">
-            <div style="max-width: 1200px; margin: 0 auto;">
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
+        </section>
+
+        <section id="problem" class="section section--compact">
+            <div class="layout-container">
+                <div class="section-content">
+                    <h2 class="section-title">Why Interruptibility Matters</h2>
+                    <p class="section-text">
+                        LRMs are often tested in “frozen worlds”, where the context never changes. But real life keeps moving:
+                        environments shift, collaborators step in, and sometimes urgency spikes, like a user saying “hurry up.”
+                        This is especially hard for reasoning models, where inference takes time. We argue that instead of
+                        restarting from scratch whenever interruptions occur, models should be able to pause, adapt, and
+                        carry on gracefully. Below we show a glimpse of what that future might look like in dynamic “vibe
+                        coding” scenarios. In this work, we ask:
+                        <strong class="text-primary">Are today’s reasoning models ready? And if not, how far are we from getting there?</strong>
+                    </p>
+                    <img class="full-width-image" src="static/images/fig1.png" alt="Figure 1: How do LRMs perform in dynamic worlds?">
+                </div>
+            </div>
+        </section>
+
+        <section id="approach" class="section section--tight">
+            <div class="layout-container">
+                <div class="section-content">
+                    <h2 class="section-title">Experimental Setup</h2>
+                    <p class="section-text">
+                        We evaluate LRMs in <strong>dynamic settings</strong> where reasoning can be interrupted. Two scenarios matter most:
+                        <strong>time-constrained</strong> requests (e.g., “hurry up”) and <strong>update-driven</strong> changes (new information
+                        arriving mid-reasoning). Below is the illustration of our setup.
+                    </p>
+                    <figure class="hero-figure">
+                        <img src="static/images/fig2.png" alt="Overview: time-constrained vs update-driven interruptions and the evaluation loop">
+                    </figure>
+                    <div class="card-grid">
+                        <div class="bordered-card">
+                            <h3>Time-constrained</h3>
+                            <ul>
+                                <li><strong>Hard:</strong> immediately stop reasoning and output an answer.</li>
+                                <li><strong>Soft:</strong> continue reasoning but accelerate and finish sooner.</li>
+                            </ul>
+                        </div>
+                        <div class="bordered-card">
+                            <h3>Update-driven</h3>
+                            <p>Introduce new information mid-reasoning so that the final answer depends on the update.</p>
+                        </div>
+                    </div>
+                    <div class="card-grid card-grid--two">
+                        <div class="bordered-card bordered-card--dashed">
+                            <h3>Experimental Protocol</h3>
+                            <ol>
+                                <li>Generate a reasoning trace (<em>r</em>) and pick a cut point <em>X</em> (0 ≤ X &lt; |r|).</li>
+                                <li>Insert an intervention <em>i</em> (time-constrained or update-driven).</li>
+                                <li>Resume generation to produce a new final answer (<em>a'</em>).</li>
+                                <li>Evaluate correctness and measure post-interrupt length (|r<sub>X</sub>' ⊕ a'|).</li>
+                            </ol>
+                        </div>
+                        <div class="bordered-card">
+                            <h3>Models &amp; Data</h3>
+                            <ul>
+                                <li><strong>Models:</strong> GPT-OSS-20B, Qwen3-8B, and Magistral-24B.</li>
+                                <li><strong>Data:</strong> GSM8k, MATH-500, AIME 24/25, and LiveCodeBench (v6).</li>
+                                <li><strong>Cut positions:</strong> X ∈ {0.1, 0.3, 0.5, 0.7, 0.9} × |r| for each sample.</li>
+                                <li><strong>Data augmentation:</strong> Answers updated via GPT-5 generation and human refinement.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <details class="details-block">
+                        <summary>&rarr; See examples of our augmented data</summary>
+                        <div class="details-block__content">
+                            <p>Here we provide sample cases where interruptions lead to different final answers:</p>
+                            <ul>
+                                <li><em>Math (AIME 2025):</em> Cutting mid-proof and injecting an update that changes a key assumption.</li>
+                                <li><em>Coding (LiveCodeBench v6):</em> Mid-function update that alters a variable constraint.</li>
+                                <li><em>GSM8k:</em> User interrupts with “hurry up” halfway through multi-step reasoning.</li>
+                            </ul>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <section id="time-constraint" class="section">
+            <div class="layout-container">
+                <div class="section-content">
+                    <h2 class="section-title">How Do Models Behave Under Time-Constraint Interruptions?</h2>
+                    <div class="card">
+                        <h3 class="section-subtitle">Hard Interrupt: Anytime Models but with Reasoning Leakage</h3>
+                        <p class="section-text">
+                            When forced to stop immediately, models can provide answers but often “leak” their reasoning
+                            process into the final answer, making responses verbose and unfocused.
+                        </p>
+                        <div class="callout callout--warning">
+                            <p>
+                                <strong>Example:</strong> “The answer is 42, but I was still working through the quadratic formula
+                                when you interrupted me, so let me explain the steps I was taking...”
+                            </p>
+                        </div>
+                        <div class="placeholder">
+                            [Chart: Reasoning leakage examples and accuracy vs. response length]
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3 class="section-subtitle">Soft Interrupt: Think Less, Lower Accuracy with “PANIC”</h3>
+                        <p class="section-text">
+                            When asked to “hurry up,” models generally produce shorter responses with lower accuracy. GPT-OSS
+                            particularly shows “panic” behavior, rushing to conclusions.
+                        </p>
+                        <div class="callout callout--danger">
+                            <p>
+                                <strong>Example:</strong> “Hurry up!” → “The answer is definitely 15! No wait, maybe 23? Actually,
+                                I think it’s 15. Yes, 15.”
+                            </p>
+                        </div>
+                        <div class="placeholder">
+                            [Chart: Accuracy vs. response length under soft interrupts, showing panic behavior]
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="update-driven" class="section">
+            <div class="layout-container">
+                <div class="section-content">
+                    <h2 class="section-title">How Do Models Behave Under Update-Driven Interruptions?</h2>
+                    <div class="card card--muted">
+                        <h3 class="section-subtitle">What’s the Best Way to Interrupt and Resume a Model?</h3>
+                        <p class="section-text">
+                            User-initiated interruptions vs. model-initiated pauses: we found that explicit user guidance
+                            significantly improves model performance when resuming after interruptions.
+                        </p>
+                        <div class="placeholder">
+                            [Chart: User vs. model-initiated interruption performance comparison]
+                        </div>
+                    </div>
+                    <div class="card card--muted">
+                        <h3 class="section-subtitle">The “Self-Doubt” Phenomenon</h3>
+                        <p class="section-text">
+                            Models get confused without proper prompting when updates arrive late in the reasoning process,
+                            showing a <strong class="text-danger">60% performance drop</strong> when updates are injected after 70% of reasoning is complete.
+                        </p>
+                        <div class="callout callout--info">
+                            <p>
+                                <strong>Example:</strong> Model: “I’m confident the answer is X.” → Update arrives →
+                                “Wait, maybe it’s Y? I’m not sure anymore...”
+                            </p>
+                        </div>
+                        <div class="placeholder">
+                            [Chart: Performance drop vs. interruption timing, showing self-doubt effect]
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="scaling" class="section section--alt">
+            <div class="layout-container">
+                <div class="section-content">
+                    <h2 class="section-title">Does Scaling Help?</h2>
+                    <div class="card">
+                        <p class="section-text">
+                            <strong class="text-success">Yes, scaling helps.</strong> Larger models (Magistral-24B) show better interruptibility compared
+                            to smaller models (Qwen3-8B), with improved ability to handle both time-constrained and
+                            update-driven interruptions.
+                        </p>
+                        <div class="stat-grid">
+                            <div class="stat-card stat-card--success">
+                                <div class="stat-card__value">24B</div>
+                                <div class="stat-card__label">Magistral</div>
+                                <div class="stat-card__note">Best interruptibility</div>
+                            </div>
+                            <div class="stat-card stat-card--warning">
+                                <div class="stat-card__value">20B</div>
+                                <div class="stat-card__label">GPT-OSS</div>
+                                <div class="stat-card__note">Panic behavior</div>
+                            </div>
+                            <div class="stat-card stat-card--danger">
+                                <div class="stat-card__value">8B</div>
+                                <div class="stat-card__label">Qwen3</div>
+                                <div class="stat-card__note">Struggles most</div>
+                            </div>
+                        </div>
+                        <div class="placeholder">
+                            [Chart: Interruptibility performance vs. model size across different interruption types]
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="layout-container">
+            <div class="section-content section-content--wide">
+                <div class="footer-grid">
                     <div>
-                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
-                            <img src="static/images/ilrm_logo.png" alt="Logo" style="width: 32px; height: 32px; object-fit: contain;">
-                            <span style="font-size: 1rem; font-weight: 700; color: #2c3e50;">Interruptible LRM</span>
+                        <div class="nav-brand">
+                            <div class="logo-container">
+                                <img class="footer-logo" src="static/images/ilrm_logo.png" alt="Interruptible LRM logo">
+                                <div class="logo-tooltip">
+                                    Think of The Great Wave as a metaphor for dynamic context — the chatbot has to surf the changing tides of conversation, staying robust even as the waves keep moving.
+                                </div>
+                            </div>
+                            <span class="nav-title">Interruptible LRM</span>
                         </div>
-                        <p style="font-size: 0.85rem; line-height: 1.4; color: #6c757d;">
+                        <p class="footer-text">
                             Exploring interruptibility as a core capability for reasoning agents.
                         </p>
                     </div>
-                    
                     <div>
-                        <h4 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.75rem; color: #2c3e50;">Resources</h4>
-                        <div style="display: flex; flex-direction: column; gap: 0.25rem;">
-                            <a href="https://arxiv.org/abs/2504.13169" target="_blank" style="color: #495057; text-decoration: none; transition: color 0.2s; display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem;">
-                                <i class="fas fa-file-pdf" style="color: #dc3545;"></i> Paper
+                        <h4 class="section-subtitle">Resources</h4>
+                        <div class="footer-links">
+                            <a href="https://arxiv.org/abs/2504.13169" target="_blank" rel="noopener">
+                                <i class="fas fa-file-pdf icon--danger"></i>
+                                Paper
                             </a>
-                            <a href="https://huggingface.co/collections/tsunghanwu/reverse-67f410b5d147edf2ed7817ae" target="_blank" style="color: #495057; text-decoration: none; transition: color 0.2s; display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem;">
-                                <i class="fas fa-database" style="color: #28a745;"></i> Dataset
+                            <a href="https://huggingface.co/collections/tsunghanwu/reverse-67f410b5d147edf2ed7817ae" target="_blank" rel="noopener">
+                                <i class="fas fa-database icon--success"></i>
+                                Dataset
                             </a>
-                            <a href="https://github.com/tsunghan-wu/reverse_vlm" target="_blank" style="color: #495057; text-decoration: none; transition: color 0.2s; display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem;">
-                                <i class="fab fa-github" style="color: #6c757d;"></i> GitHub
+                            <a href="https://github.com/tsunghan-wu/reverse_vlm" target="_blank" rel="noopener">
+                                <i class="fab fa-github icon--muted"></i>
+                                GitHub
                             </a>
                         </div>
                     </div>
-                    
                     <div>
-                        <h4 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.75rem; color: #2c3e50;">Institution</h4>
-                        <p style="font-size: 0.85rem; line-height: 1.4; color: #495057; margin-bottom: 0.25rem;">
+                        <h4 class="section-subtitle">Institution</h4>
+                        <p class="footer-text margin-bottom-sm">
                             <strong>UC Berkeley</strong>
                         </p>
-                        <p style="font-size: 0.8rem; color: #6c757d;">
+                        <p class="footer-text footer-text--small">
                             EECS Department<br>
                             Berkeley, CA
                         </p>
                     </div>
                 </div>
-                
-                <div style="border-top: 1px solid #e9ecef; padding-top: 1.5rem; text-align: center;">
-                    <p style="font-size: 0.8rem; color: #6c757d; margin-bottom: 0.25rem;">
-                        © 2025 Interruptible LRM Project. All rights reserved.
-                    </p>
-                    <p style="font-size: 0.75rem; color: #adb5bd;">
-                        Built with ❤️ for advancing AI reasoning capabilities
-                    </p>
+                <div class="footer-meta">
+                    <p class="footer-meta__primary">© 2025 Interruptible LRM Project. All rights reserved.</p>
+                    <p class="footer-meta__secondary">Built with ❤️ for advancing AI reasoning capabilities.</p>
                 </div>
             </div>
         </div>
     </footer>
-
 </body>
-
 </html>

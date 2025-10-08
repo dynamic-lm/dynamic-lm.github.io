@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Interactive Coding & Math Review</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+  <style>
+    body { margin: 0; font-family: "Inter", Arial, sans-serif; background: #eef2f7; color: #1c1c1c; }
+    .wrapper { max-width: 1280px; margin: 32px auto; background: #fff; border-radius: 14px; box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12); overflow: hidden; }
+    .header { padding: 22px 28px; background: linear-gradient(135deg, #1f3c88, #111827); color: #fff; display: flex; justify-content: space-between; align-items: center; }
+    .header h1 { margin: 0; font-size: 1.2rem; font-weight: 600; max-width: 75%; }
+    .header button { background: rgba(255,255,255,0.92); color: #111827; border: none; padding: 9px 18px; border-radius: 999px; font-weight: 600; cursor: pointer; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+    .header button:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(255,255,255,0.35); }
+    .question-details { padding: 22px 28px; border-bottom: 1px solid #e5e7eb; display: none; line-height: 1.55; background: #f8fafc; }
+    .control-bar { padding: 20px 28px; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; border-bottom: 1px solid #e5e7eb; }
+    .control-bar button { background: #2563eb; color: #fff; border: none; padding: 10px 18px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: background 0.15s ease; }
+    .control-bar button:hover { background: #1d4ed8; }
+    .model-selection { display: flex; flex-wrap: wrap; gap: 10px; }
+    .model-checkbox { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 999px; background: #f9fafb; cursor: pointer; transition: border-color 0.15s ease, background 0.15s ease; }
+    .model-checkbox input { accent-color: #2563eb; cursor: pointer; }
+    .model-checkbox:hover { border-color: #2563eb; background: #f3f4ff; }
+    .panels-container { padding: 24px 28px 32px; display: flex; flex-direction: column; gap: 28px; }
+    .model-block { border: 1px solid #e5e7eb; border-radius: 14px; padding: 22px; background: #fbfcfe; display: flex; flex-direction: column; gap: 20px; }
+    .model-block h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: #0f172a; }
+    .model-panels { display: grid; gap: 22px; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+    .panel { border: 1px solid #dbe3f4; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 14px; background: #fff; min-height: 300px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.4); }
+    .panel h3 { margin: 0; font-size: 0.95rem; color: #1f2937; }
+    .reasoning-toggle { align-self: flex-start; background: #f97316; color: #fff; border: none; padding: 7px 16px; border-radius: 999px; font-weight: 600; cursor: pointer; transition: background 0.15s ease, transform 0.15s ease; }
+    .reasoning-toggle:hover { background: #ea580c; transform: translateY(-1px); }
+    .reasoning { display: none; background: #fff4ed; border-left: 4px solid #f97316; padding: 12px 14px; border-radius: 10px; font-size: 0.95rem; line-height: 1.55; color: #7c2d12; max-height: 180px; overflow-y: auto; }
+    .math-answer, .final-answer { border-radius: 10px; line-height: 1.6; max-height: 180px; overflow-y: auto; }
+    .math-answer { background: #f1f5f9; border-left: 4px solid #0ea5e9; padding: 12px 16px; }
+    .final-answer { background: #e0f2fe; border-left: 4px solid #0284c7; padding: 12px 14px; font-weight: 600; color: #0f172a; }
+    pre { margin: 0; border-radius: 10px; overflow-y: auto; max-height: 260px; }
+    .code-block { position: relative; padding-left: 0.0rem; counter-reset: line-number; }
+    .code-block code { font-size: 0.9rem; line-height: 1.45; display: block; }
+    .code-line { display: block; padding: 0 0.6rem; white-space: pre; position: relative; }
+    .code-line::before {
+      counter-increment: line-number;
+      content: attr(data-line);
+      position: absolute;
+      left: -3.6rem;
+      width: 3.1rem;
+      padding-right: 0.5rem;
+      text-align: right;
+      color: #9ca3af;
+      border-right: 1px solid rgba(156, 163, 175, 0.35);
+    }
+    .code-line:nth-child(odd) { background: rgba(255, 255, 255, 0.03); }
+    .inline-code {
+      font-family: "JetBrains Mono", "Fira Code", Consolas, monospace;
+      background: rgba(15, 23, 42, 0.08);
+      color: #0f172a;
+      border-radius: 6px;
+      padding: 0.1rem 0.35rem;
+      font-size: 0.92em;
+      white-space: pre;
+    }
+    .empty-state { text-align: center; padding: 40px; border: 1px dashed #cbd5f5; border-radius: 12px; color: #64748b; background: #f8fafc; }
+  </style>
+  <script>
+    window.MathJax = { tex: { inlineMath: [["\\(","\\)"], ["$","$"]] }, svg: { fontCache: "global" } };
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="header">
+      <h1 id="question-title">Loading problem…</h1>
+      <button id="toggle-question">View full context</button>
+    </div>
+    <div class="question-details" id="question-details"></div>
+
+    <div class="control-bar">
+      <div class="model-selection" id="model-selection"></div>
+      <button id="next-problem" title="Cycle through the next problem">Next problem ▶</button>
+    </div>
+
+    <div class="panels-container" id="panels-container"></div>
+  </div>
+
+  <script>
+    let problems = [];
+    let currentProblemIndex = 0;
+
+    const questionTitleEl = document.getElementById("question-title");
+    const questionDetailsEl = document.getElementById("question-details");
+    const toggleQuestionBtn = document.getElementById("toggle-question");
+    const modelSelectionEl = document.getElementById("model-selection");
+    const panelsContainerEl = document.getElementById("panels-container");
+    const nextProblemBtn = document.getElementById("next-problem");
+
+    function escapeHTML(str = "") {
+      return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    function truncate(text = "", limit = 96) {
+      const base = String(text);
+      return base.length > limit ? base.slice(0, limit).trim() + "…" : base;
+    }
+
+    function slugify(text = "model") {
+      return String(text).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "model";
+    }
+
+    function formatPlainText(value = "") {
+      const tokens = tokenizePlainText(String(value));
+      return tokens.map(renderPlainToken).join("");
+    }
+
+    function tokenizePlainText(input) {
+      const tokens = [];
+      let idx = 0;
+      let buffer = "";
+
+      const flushBuffer = () => {
+        if (buffer) {
+          tokens.push({ type: "text", content: buffer });
+          buffer = "";
+        }
+      };
+
+      while (idx < input.length) {
+        if (input.startsWith("```", idx)) {
+          const fenceEnd = input.indexOf("```", idx + 3);
+          if (fenceEnd === -1) {
+            buffer += input.slice(idx);
+            break;
+          }
+
+          flushBuffer();
+
+          let lang = "";
+          let contentStart = idx + 3;
+          const newlineIdx = input.indexOf("\n", idx + 3);
+          if (newlineIdx !== -1 && newlineIdx < fenceEnd) {
+            lang = input.slice(idx + 3, newlineIdx).trim();
+            contentStart = newlineIdx + 1;
+          }
+          const content = input.slice(contentStart, fenceEnd);
+          tokens.push({ type: "codeblock", lang, content });
+          idx = fenceEnd + 3;
+          continue;
+        }
+
+        if (input.startsWith("**", idx)) {
+          const end = input.indexOf("**", idx + 2);
+          if (end === -1) {
+            buffer += input[idx];
+            idx += 1;
+          } else {
+            flushBuffer();
+            const content = input.slice(idx + 2, end);
+            tokens.push({ type: "bold", content });
+            idx = end + 2;
+          }
+          continue;
+        }
+
+        if (input[idx] === "`") {
+          const end = input.indexOf("`", idx + 1);
+          if (end === -1) {
+            buffer += input[idx];
+            idx += 1;
+          } else {
+            flushBuffer();
+            const content = input.slice(idx + 1, end);
+            tokens.push({ type: "inline", content });
+            idx = end + 1;
+          }
+          continue;
+        }
+
+        buffer += input[idx];
+        idx += 1;
+      }
+
+      if (idx >= input.length && buffer) {
+        tokens.push({ type: "text", content: buffer });
+      }
+
+      return tokens;
+    }
+
+    function renderPlainToken(token) {
+      switch (token.type) {
+        case "text":
+          return escapeHTML(token.content).replace(/\n/g, "<br>");
+        case "bold":
+          return `<strong>${formatPlainText(token.content)}</strong>`;
+        case "inline": {
+          const trimmed = token.content.trim();
+          if (/^latex[:\s]/i.test(trimmed)) {
+            const latexContent = trimmed.replace(/^latex[:\s]*/i, "");
+            return wrapLatex(latexContent);
+          }
+          return `<code class="inline-code">${escapeHTML(token.content)}</code>`;
+        }
+        case "codeblock": {
+          const lang = (token.lang || "").trim().toLowerCase();
+          if (lang === "latex" || lang === "math" || lang === "tex") {
+            return wrapLatex(token.content.trim());
+          }
+          const languageClass = lang ? `language-${escapeHTML(lang)}` : "language-plaintext";
+          return `<pre class="code-block"><code class="${languageClass}">${escapeHTML(token.content)}</code></pre>`;
+        }
+        default:
+          return "";
+      }
+    }
+
+    function wrapLatex(value = "") {
+      const trimmed = value.trim();
+      if (!trimmed) return "";
+      const needsBlock = trimmed.includes("\n") || trimmed.includes("\\begin");
+      return needsBlock ? `<span class="mathjax-latex">\\[${trimmed}\\]</span>` : `<span class="mathjax-latex">\\(${trimmed}\\)</span>`;
+    }
+
+    function renderRich(content) {
+      if (!content) return "";
+      if (typeof content === "string") {
+        return formatPlainText(content);
+      }
+      const format = content.format || "text";
+      const value = content.value ?? "";
+      if (!value) return "";
+      if (format === "latex") return wrapLatex(String(value));
+      if (format === "html") return String(value);
+      return formatPlainText(value);
+    }
+
+    function normalizeContent(content, fallbackValue = "") {
+      if (!content && !fallbackValue) {
+        return null;
+      }
+      if (typeof content === "string") {
+        return { format: "text", value: content };
+      }
+      if (content && typeof content === "object") {
+        const value = content.value ?? fallbackValue;
+        return { format: content.format || "text", value };
+      }
+      return { format: "text", value: fallbackValue };
+    }
+
+    function extractQuestion(problem) {
+      const question = problem.question;
+      if (!question) {
+        return { title: "Untitled Problem", content: null };
+      }
+      if (typeof question === "string") {
+        return { title: question, content: { format: "text", value: question } };
+      }
+      const title = question.title || "Untitled Problem";
+      const content = normalizeContent(question.content, title);
+      return { title, content };
+    }
+
+    async function loadProblems() {
+      try {
+        questionTitleEl.textContent = "Loading problem…";
+        panelsContainerEl.innerHTML = "";
+        const response = await fetch("./interactive_examples_data.json", { cache: "no-cache" });
+        if (!response.ok) {
+          throw new Error(`Failed to load data (${response.status})`);
+        }
+        const payload = await response.json();
+        problems = Array.isArray(payload.problems) ? payload.problems : [];
+        if (!problems.length) {
+          questionTitleEl.textContent = "No problems available.";
+          panelsContainerEl.innerHTML = '<div class="empty-state">Add entries to interactive_examples_data.json to get started.</div>';
+          return;
+        }
+        currentProblemIndex = 0;
+        renderProblem();
+      } catch (error) {
+        console.error(error);
+        questionTitleEl.textContent = "Failed to load examples.";
+        panelsContainerEl.innerHTML = `<div class="empty-state">Unable to load interactive_examples_data.json.<br>${escapeHTML(error.message)}</div>`;
+      }
+    }
+
+    function renderProblem() {
+      if (!problems.length) {
+        return;
+      }
+      const problem = problems[currentProblemIndex];
+      const { title, content } = extractQuestion(problem);
+      questionTitleEl.textContent = title;
+      questionTitleEl.setAttribute("title", title);
+      questionDetailsEl.innerHTML = renderRich(content);
+      questionDetailsEl.style.display = "none";
+      toggleQuestionBtn.textContent = "View full context";
+
+      const defaultSelection = renderModelSelection(problem);
+      renderPanels(problem, defaultSelection);
+      typesetMath(questionDetailsEl);
+    }
+
+    function renderModelSelection(problem) {
+      modelSelectionEl.innerHTML = "";
+      const names = [];
+      (problem.models || []).forEach((model, idx) => {
+        const modelName = model.name || `Model ${idx + 1}`;
+        names.push(modelName);
+        const id = `${problem.id || "problem"}-${slugify(modelName)}-option`;
+        const label = document.createElement("label");
+        label.className = "model-checkbox";
+        label.setAttribute("for", id);
+
+        const input = document.createElement("input");
+        input.type = "checkbox";
+        input.id = id;
+        input.value = modelName;
+        input.checked = true;
+
+        input.addEventListener("change", () => {
+          const selected = Array.from(modelSelectionEl.querySelectorAll("input"))
+            .filter(el => el.checked)
+            .map(el => el.value);
+          renderPanels(problem, selected);
+        });
+
+        const span = document.createElement("span");
+        span.textContent = modelName;
+
+        label.appendChild(input);
+        label.appendChild(span);
+        modelSelectionEl.appendChild(label);
+      });
+      return names;
+    }
+
+    function renderPanels(problem, selectedModelNames) {
+      const activeNames = Array.isArray(selectedModelNames) ? selectedModelNames : [];
+      const entries = (problem.models || []).map((model, idx) => ({
+        model,
+        name: model.name || `Model ${idx + 1}`
+      }));
+      const selectedModels = entries.filter(entry => activeNames.includes(entry.name));
+      if (!selectedModels.length) {
+        panelsContainerEl.innerHTML = '<div class="empty-state">Select at least one model to view its draft and revised outputs.</div>';
+        typesetMath();
+        return;
+      }
+
+      panelsContainerEl.innerHTML = selectedModels.map((entry, idx) => {
+        const { model, name: modelName } = entry;
+        const baseId = `${problem.id || "problem"}-${slugify(modelName)}-${idx}`;
+        return `
+          <div class="model-block">
+            <h2>${escapeHTML(modelName)}</h2>
+            <div class="model-panels">
+              ${["draft", "revised"].map(stage => {
+                const stageData = model[stage] || {};
+                const codeSection = stageData.code ? `<pre class="code-block"><code class="language-python">${escapeHTML(stageData.code)}</code></pre>` : "";
+                const answerSection = stageData.answer ? `<div class="math-answer">${renderRich(stageData.answer)}</div>` : "";
+                const finalSection = stageData.final ? `<div class="final-answer">${renderRich(stageData.final)}</div>` : "";
+                const stageLabel = stage === "draft" ? "[Full Thinking]" : "[Hard Interrupt @0.3]";
+                const bodyLabel = stageData.code ? "Model Output" : "Model Output";
+                return `
+                  <section class="panel">
+                    <h3>${bodyLabel} ${stageLabel}</h3>
+                    <button class="reasoning-toggle" data-target="${baseId}-${stage}">Show reasoning</button>
+                    <div class="reasoning" id="${baseId}-${stage}">${renderRich(stageData.reasoning)}</div>
+                    ${codeSection}
+                    ${answerSection}
+                    ${finalSection}
+                  </section>
+                `;
+              }).join("")}
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      panelsContainerEl.querySelectorAll(".reasoning-toggle").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const target = document.getElementById(btn.dataset.target);
+          if (!target) return;
+          const isHidden = target.style.display === "none" || !target.style.display;
+          target.style.display = isHidden ? "block" : "none";
+          btn.textContent = isHidden ? "Hide reasoning" : "Show reasoning";
+          if (isHidden) typesetMath(target);
+        });
+      });
+
+      panelsContainerEl.querySelectorAll("pre code").forEach(block => {
+        hljs.highlightElement(block);
+        applyLineNumbers(block);
+      });
+
+      typesetMath();
+    }
+
+    function applyLineNumbers(codeEl) {
+      if (!codeEl || codeEl.dataset.lineNumbers === "true") {
+        return;
+      }
+      const html = codeEl.innerHTML.replace(/\n$/, "");
+      const segments = html.split(/\n/);
+      const numbered = segments
+        .map((segment, index) => {
+          const safe = segment.length ? segment : "&nbsp;";
+          return `<span class="code-line" data-line="${index + 1}">${safe}</span>`;
+        })
+        .join("");
+      codeEl.innerHTML = numbered;
+      codeEl.dataset.lineNumbers = "true";
+    }
+
+    function typesetMath(scope) {
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        if (scope) {
+          MathJax.typesetPromise([scope]);
+        } else {
+          MathJax.typesetPromise();
+        }
+      }
+    }
+
+    toggleQuestionBtn.addEventListener("click", () => {
+      if (!problems.length) {
+        return;
+      }
+      const isHidden = questionDetailsEl.style.display === "none" || !questionDetailsEl.style.display;
+      questionDetailsEl.style.display = isHidden ? "block" : "none";
+      toggleQuestionBtn.textContent = isHidden ? "Hide full context" : "View full context";
+      if (isHidden) typesetMath(questionDetailsEl);
+    });
+
+    nextProblemBtn.addEventListener("click", () => {
+      if (!problems.length) {
+        return;
+      }
+      currentProblemIndex = (currentProblemIndex + 1) % problems.length;
+      renderProblem();
+    });
+
+    window.addEventListener("load", () => {
+      typesetMath();
+      loadProblems();
+    });
+  </script>
+</body>
+</html>
