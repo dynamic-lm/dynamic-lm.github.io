@@ -113,4 +113,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
     activate(buttons[0].getAttribute('data-chart-toggle'));
     resizeActiveFrame();
+
+    const examplesToggle = document.getElementById('chart-examples-toggle');
+    const examplesContainer = document.getElementById('chart-examples');
+
+    if (examplesToggle && examplesContainer) {
+        const examplesFrame = examplesContainer.querySelector('.chart-examples__frame');
+        let examplesLoaded = false;
+
+        const updateButtonState = (isOpen) => {
+            examplesToggle.setAttribute('aria-expanded', String(isOpen));
+            examplesToggle.innerHTML = isOpen
+                ? '<span class="chart-examples__icon" aria-hidden="true">✕</span> Hide examples'
+                : '<span class="chart-examples__icon" aria-hidden="true">📂</span> See examples';
+        };
+
+        updateButtonState(false);
+
+        examplesToggle.addEventListener('click', () => {
+            const isCurrentlyOpen = !examplesContainer.hidden;
+
+            if (isCurrentlyOpen) {
+                examplesContainer.hidden = true;
+                updateButtonState(false);
+                return;
+            }
+
+            if (!examplesLoaded && examplesFrame && examplesFrame.dataset.src) {
+                examplesFrame.src = examplesFrame.dataset.src;
+                examplesLoaded = true;
+            }
+
+            examplesContainer.hidden = false;
+            updateButtonState(true);
+        });
+
+        if (examplesFrame) {
+            examplesFrame.addEventListener('error', () => {
+                if (examplesFrame.dataset.src) {
+                    window.open(examplesFrame.dataset.src, '_blank', 'noopener');
+                }
+            });
+        }
+    }
 });

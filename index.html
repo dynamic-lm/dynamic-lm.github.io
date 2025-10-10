@@ -1,385 +1,419 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"></html>
+
 <head>
     <meta charset="utf-8">
-    <meta name="description" content="Are Large Reasoning Models Interruptible? Exploring interruptibility as a core capability for reasoning agents in dynamic, interactive environments.">
-    <meta property="og:title" content="Are Large Reasoning Models Interruptible?">
-    <meta property="og:description" content="Today's Large Reasoning Models (LRMs) are evaluated in frozen worlds — static problems, fixed contexts, one long uninterrupted chain of thought. But real life isn't frozen. We argue that interruptibility is essential: models should gracefully stop, adapt, and continue. Rigid redo-from-scratch pipelines are the opposite of what real interactive reasoning needs.">
-    <meta property="og:url" content="http://interrupt-lrm.github.io">
-    <meta property="og:image" content="static/images/ilrm_logo.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
+    <!-- Meta tags for social media banners, these should be filled in appropriately as they are your "business card" -->
+    <!-- Replace the content tag with appropriate information -->
+    <meta name="description" content="Project page for the paper “Are Large Reasoning Models Interruptible?” by Tsung-Han Wu, Mihran Miroyan, David M. Chan, Trevor Darrell, Narges Norouzi, and Joseph E. Gonzalez.">
+    <meta property="og:title" content="Are Large Reasoning Models Interruptible?" />
+    <meta property="og:description" content="Project page for the paper “Are Large Reasoning Models Interruptible?” by Tsung-Han Wu, Mihran Miroyan, David M. Chan, Trevor Darrell, Narges Norouzi, and Joseph E. Gonzalez." />
+    <meta property="og:url" content="http://reverse-vlm.github.io" />
+    <!-- Path to banner image, should be in the path listed below. Optimal dimensions are 1200X630-->
+    <meta property="og:image" content="static/images/ilrm_logo.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+
     <meta name="twitter:title" content="Are Large Reasoning Models Interruptible?">
-    <meta name="twitter:description" content="Today's Large Reasoning Models (LRMs) are evaluated in frozen worlds — static problems, fixed contexts, one long uninterrupted chain of thought. But real life isn't frozen. We argue that interruptibility is essential: models should gracefully stop, adapt, and continue.">
+    <meta name="twitter:description" content="Project page for the paper “Are Large Reasoning Models Interruptible?” by Tsung-Han Wu, Mihran Miroyan, David M. Chan, Trevor Darrell, Narges Norouzi, and Joseph E. Gonzalez." />
+    <!-- Path to banner image, should be in the path listed below. Optimal dimensions are 1200X600-->
     <meta name="twitter:image" content="static/images/ilrm_logo.png">
-    <meta name="twitter:card" content="Interruptible LRM Project: Exploring interruptibility as a core capability for reasoning agents.">
-    <meta name="keywords" content="Large Reasoning Models, Interruptibility, Dynamic Context, Interactive Reasoning, Anytime Models, Real-world AI">
+    <meta name="twitter:card" content="IRLM Project Logo highlighting interruptible large reasoning models.">
+    <!-- Keywords for your paper to be indexed by-->
+    <meta name="keywords"
+        content="Large Reasoning Models, Interruptibility, Large Language Models">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
     <title>Are Large Reasoning Models Interruptible?</title>
-    <link rel="icon" type="image/x-icon" href="static/images/favicon_io/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="static/images/favicon_io/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="static/images/favicon_io/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="static/images/favicon_io/favicon-16x16.png">
-    <link rel="manifest" href="static/images/favicon_io/site.webmanifest">
-    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+    <!-- Standard favicon (for most browsers) -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/static/images/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon/favicon.ico">
+
+    <!-- Apple Touch Icon (iOS / macOS Safari bookmarks) -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/images/favicon/apple-touch-icon.png">
+    <!-- Progressive Web App manifest (optional) -->
+    <link rel="manifest" href="/static/images/favicon/site.webmanifest">
+
+    <link rel="stylesheet" href="static/css/bulma.min.css">
+    <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="static/css/bulma-slider.min.css">
     <link rel="stylesheet" href="static/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-    <link rel="stylesheet" href="static/css/site.css">
+    <link rel="stylesheet" href="static/css/index.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
     <script defer src="static/fontawesome/js/fontawesome.min.js"></script>
-    <script defer src="static/js/charts.js"></script>
+    <script src="static/js/bulma-carousel.min.js"></script>
+    <script src="static/js/bulma-slider.min.js"></script>
+    <script src="static/js/index.js"></script>
 </head>
+
 <body>
-    <nav class="site-nav">
-        <div class="layout-container">
-            <div class="nav-inner">
-                <div class="nav-brand">
-                    <div class="logo-container">
-                        <img class="nav-logo" src="static/images/ilrm_logo.png" alt="Interruptible LRM logo">
-                        <div class="logo-tooltip">
-                            Think of The Great Wave as a metaphor for dynamic context — the chatbot has to surf the changing tides of conversation, staying robust even as the waves keep moving.
+    <section class="hero hero--landing">
+        <div class="hero-body" style="padding-top: 1.5rem;">
+            <div class="container is-max-desktop">
+                <div class="columns is-centered is-vcentered hero-header">
+                    <div class="column is-narrow hero-logo-column">
+                        <img class="hero-logo" src="static/images/ilrm_logo.png" alt="IRLM Project Logo", style="height: 100px;">
+                    </div>
+                    <div class="column has-text-centered hero-text-column">
+                        <h1 class="title is-2 publication-title hero-title">Are Large Reasoning Models Interruptible?</h1>
+                    </div>
+                </div>
+                <div class="container is-max-desktop">
+                    <div class="columns is-centered">
+                        <div class="column has-text-centered">
+                            <div class="is-size-6 publication-authors authors-inline" style="margin-top: -1.5rem;">
+                                <!-- Paper authors -->
+                                <span class="author-block"><a href="https://patrickthwu.com/" target="_blank" rel="noopener">Tsung-Han Wu<sup class="has-text-danger">*</sup></a></span>
+                                <span class="author-block"><a href="https://mmiroyan.github.io/" target="_blank" rel="noopener">Mihran Miroyan<sup class="has-text-danger">*</sup></a></span>
+                                <span class="author-block"><a href="https://dchan.cc/" target="_blank" rel="noopener">David M. Chan</a></span>
+                                <span class="author-block"><a href="https://people.eecs.berkeley.edu/~trevor/" target="_blank" rel="noopener">Trevor Darrell</a></span>
+                                <span class="author-block"><a href="https://nargesnorouzi.me/" target="_blank" rel="noopener">Narges Norouzi</a></span>
+                                <span class="author-block"><a href="https://people.eecs.berkeley.edu/~jegonzal/" target="_blank" rel="noopener">Joseph E. Gonzalez</a></span>
+                            </div>
+                            <div class="is-size-6 publication-authors" style="margin-top: 0.5rem;">
+                                <span class="author-block"><strong>UC Berkeley</strong></span>
+                                <br>
+                                <span class="author-block"><sup class="has-text-danger">*</sup>Equal contribution</span>
+                            </div>
+
+                            <div class="column has-text-centered">
+                                <div class="publication-links">
+
+                                    <span class="link-block">
+                                        <a href="https://arxiv.org/abs/2504.13169" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                                            <span class="icon">
+                                                <i class="ai ai-arxiv"></i>
+                                            </span>
+                                            <span>arXiv</span>
+                                        </a>
+                                    </span>
+                                    <!-- Model/Dataset Button -->
+                                    <span class="link-block">
+                                        <a href="https://huggingface.co/collections/tsunghanwu/reverse-67f410b5d147edf2ed7817ae" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                                            <span class="icon">
+                                                <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face" style="height: 20px; vertical-align: middle;">
+                                            </span>
+                                            <span>Dataset</span>
+                                        </a>
+                                    </span>
+
+                                    <!-- Code Button -->
+                                    <span class="link-block">
+                                        <a href="https://github.com/tsunghan-wu/reverse_vlm" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                                            <span class="icon">
+                                                <i class="fa-brands fa-github"></i>
+                                            </span>
+                                            <span>Code</span>
+                                        </a>
+                                    </span>
+                                </div>
+                                <br>
+                                <!-- <p>
+                                    <strong>TL;DR: </strong> We test SOTA reasoning models under <strong>mid-thinking stops, hurry-ups, and info updates</strong>, uncovering three failure modes.
+                                </p> -->
+                                 <div class="tldr-callout" role="note" aria-label="TLDR summary" style="margin-top: -1rem;">
+                                     <div class="tldr-header">
+                                       <!-- <span class="tldr-badge">TL;DR</span> -->
+                                       <p class="tldr-lede">We are the first to test SOTA reasoning models under real-world interruptions and find three failure modes.</p>
+                                     </div>
+                                     <ul class="tldr-failures">
+                                        <li class="failure-item">
+                                            <span class="failure-title">Hard Stop → Reasoning Leakage</span>
+                                            <span class="failure-desc">Spill unfinished thoughts into answers,<br>failing to actually save users' time</span>
+                                          </li>
+                                          <li class="failure-item">
+                                            <span class="failure-title">Hurry Up → Panic</span>
+                                            <span class="failure-desc">Rush to answer directly with unfinished reasoning, hurting accuracy</span>
+                                          </li>
+                                          <li class="failure-item">
+                                            <span class="failure-title">Info Updates → Self-doubt</span>
+                                            <span class="failure-desc">Can't adapt to new information from users<br>when conflicting with existing thoughts</span>
+                                          </li>
+                                     </ul>
+                                   </div>
+                            </div>
                         </div>
                     </div>
-                    <span class="nav-title">Interruptible LRM</span>
                 </div>
-                <div class="nav-links">
-                    <a class="nav-link" href="#problem">Problem</a>
-                    <a class="nav-link" href="#approach">Approach</a>
-                    <a class="nav-link" href="#time-constraint">Results</a>
-                    <a class="nav-link" href="https://arxiv.org/abs/2504.13169" target="_blank" rel="noopener">Paper</a>
-                    <a class="nav-link" href="https://huggingface.co/collections/tsunghanwu/reverse-67f410b5d147edf2ed7817ae" target="_blank" rel="noopener">Dataset</a>
-                    <a class="nav-link" href="https://github.com/tsunghan-wu/reverse_vlm" target="_blank" rel="noopener">GitHub</a>
+                
+                <div id="results-carousel" class="carousel results-carousel" style="margin-top: -2rem;">
+                    <div class="item">
+                        <img src="static/images/answer_length.png"
+                            alt="Example 1." loading="lazy"/>
+                    </div>
+                    <div class="item">
+                        <img src="static/images/answer_length.png"
+                            alt="Example 2." loading="lazy"/>
+                    </div>
+                    <div class="item">
+                        <img src="static/images/answer_length.png"
+                            alt="Example 3." loading="lazy"/>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- <section class="section hero hero--overview" style="margin-top: -2rem;">
+        <div class="container is-max-desktop">
+          <div class="columns is-centered has-text-centered">
+            <div class="column is-full">
+      
+              <h2 class="title is-4" style="margin-bottom: 1rem;">
+                Interruptible Models? Not Really.
+              </h2>
+      
+              <div class="content has-text-justified" style="margin-bottom: 1.5rem;">
+                <p>
+                    We evaluate SOTA reasoning models under three common mid-thought interruptions and find consistent failure modes:
+                </p>
+                <ul style="margin-top: 1rem;">
+                  <li><strong>Hard stop → Reasoning leakage:</strong> Answer spills incomplete chains.</li>
+                  <li><strong>Hurry up → Panic:</strong> Time pressure causes rushed, low-confidence guesses.</li>
+                  <li><strong>Late update → Self-doubt:</strong> Unplanned edits derail the chain of thought.</li>
+                </ul>
+              </div>
+      
+              <div class="content has-text-centered" style="margin-top: 2rem;">
+      
+                <div class="carousel results-carousel">
+                  <div class="item">
+                    <h4 class="title is-6">Leakage Rate</h4>
+                    <div class="carousel-image">
+                      <img src="static/images/answer_length.png" alt="Leakage rate pathology" loading="lazy">
+                    </div>
+                  </div>
+                  <div class="item">
+                    <h4 class="title is-6">Panic Rate</h4>
+                    <div class="carousel-image">
+                      <img src="static/images/panic_rate.png" alt="Panic rate pathology" loading="lazy">
+                    </div>
+                  </div>
+                  <div class="item">
+                    <h4 class="title is-6">Doubt Rate</h4>
+                    <div class="carousel-image">
+                      <img src="static/images/doubt_rate.png" alt="Doubt rate pathology" loading="lazy">
+                    </div>
+                  </div>
+                </div>
+              </div>
+      
+            </div>
+          </div>
+        </div>
+      </section> -->
+      
+    <!-- End paper abstract -->
+
+    <!-- REVERSE -->
+    <section class="section ">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-full">
+                    <h2 class="title is-4">Why Interruptibility Matters
+                    </h2>
+                </div>
+            </div>
+            <p>
+                Ideal AGI must bend to the human loop. While reasoning models are powerful, people often wanna cut in during their reasoning: Engineers revise specs mid-trace, researchers force early answers, and grad students beg it to hurry up before a deadline. If models can’t handle these real-world interrupts, they fall out of sync with the teams they serve.
+            </p>
+            <br>
+            <div class="item is-vcentered" style="text-align: center;">
+                <img src="./static/images/fig1.png" style="width: 90%; height: auto;">
+            </div>
+        </div>
+    </section>
+
+    <section class="section hero">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-full">
+                    <h2 class="title is-4">REVERSE's Training Recipe: A New Training Data with Custom Loss</h2>
+                </div>
+            </div>
+            <div class="content has-text-justified">
+                <ul>
+                    <li>
+                        <b>Introducing Three Special Tokens</b>: REVERSE training introduces three tokens which can be used to explicity mark key phrases to represent the model's confidence level: <code>&lt;SPAN&gt;</code> marks the start of a key phrase. The phrase then ends with either <code>&lt;/CN&gt;</code> (for confident/grounded) or <code>&lt;/UN&gt;</code> (for unconfident/potentially hallucinated). These tokens act like in-line confidence classifiers, enabling the model not only to flag uncertainty but also to determine  <em>where</em> to backtrack.
+                </ul>
+                <ul>
+                    <li>
+                        <b>A New Training Dataset</b>:
+                            Annotating our data with such tokens, we built <strong>1.3M-sample instruction-tuning dataset</strong>, augmenting LLaVA-v1.5.
+                            Our dataset maintains a similar overall composition from the LLaVA-v1.5. dataset, while preserving the data quality, the same average question-answer pairs per sample and a comparable question type distribution.
+                    </li> 
+                    <!-- TODO: Dataset example picture -->
+                </ul>
+                    <div class="item is-vcentered" style="text-align: center;">
+                        <!-- <img src="static/images/dataset_example.png" alt="" /> -->
+                        <img src="static/images/dataset_example2.png" alt="" style="width: 90%; height: auto;" />
+                    </div>
+                <ul>
+                    <li>
+                      <b>Hallucination-Aware Training Objectives</b>: 
+                      <ul>
+                        <li><strong>Standard next-token prediction:</strong> Retains conventional instruction tuning behavior for answer generation.</li>
+                        <li><strong>Avoiding hallucination modeling:</strong> Minimizes the likelihood of producing tokens labeled as hallucinated in the dataset.</li>
+                        <li><strong>Confidence tagging:</strong> Teaches the model when to emit <code>&lt;SPAN&gt;</code>, and whether to end with <code>&lt;/CN&gt;</code> or <code>&lt;/UN&gt;</code> as a signal of groundedness.</li>
+                      </ul>
+                    </li>
+                  </ul>
+                  <p style="margin-left: 2rem;">
+                    We achieve this through a <b>weighted token loss</b>: <b>positive weights</b> are applied to <code>&lt;SPAN&gt;</code> and <code>&lt;/CN&gt;</code> tokens, while <strong>zero weights</strong> are assigned to tokens inside <code>&lt;SPAN&gt;...&lt;/UN&gt;</code> sections—effectively masking them to avoid penalizing the model when generating ungrounded phrases.
+                  </p>
+            </div>
+        </div>
+    </section>
+    <section class="section hero">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-full">
+                    
+                    <!-- TODO: perhaps put Figure 3 -->
+                 
+                    <h2 class="title is-4">REVERSE's Inference Paradigm: Retrospective Resampling</h2>
+                    <div class="content has-text-justified">
+                        <p style="margin-left: 1rem;">
+                            During inference, REVERSE performs next-token prediction while monitoring the probability of <code>&lt;/UN&gt;</code>. Instead of passively waiting for a hallucination to fully appear, we proactively intervene when the probability exceeds a set confidence threshold (τ). This enables the model to identify and correct hallucinations before they are fully formed.
+                        </p>
+                        <ul>
+                            <li><strong>Backtracking Strategy:</strong>
+                                <ol>
+                                    <li>First, backtrack to the <b>most recent</b> <code>&lt;/CN&gt;</code> token.</li>
+                                    <li><b>(After <em>K</em> local correction attempts):</b> The model assumes the issue originates earlier and backtracks to the nearest prior punctuation.</li>
+                                    <li><b>(After <em>N</em> total attempts):</b> The model returns the output with a flag indicating that hallucination is unresolved.</li>
+                                </ol>
+                            </li>
+                            <li><strong>Self-Correction Strategies:</strong> 
+                                <ul>
+                                    <li><strong>Rejection Sampling:</strong> The model resamples multiple completions at a higher temperature (T+ΔT), searching for an alternative phrase that falls below the hallucination threshold.</li>
+                                    <li><strong>Query Rewriting:</strong> In addition to rejection sampling, REVERSE augments the prompt with hints to improve grounding. Specifically, the prompt is rewritten to include phrases like: <i>Hint: potential incorrect phrases</i>.
+                                        <br>
+                                        This instructs the model to revisit uncertain segments to provide a more reliable response. During training, Some of the queries are randomly injected with hint-based rewrites to help the model recognize and respond to them.
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <p style="margin-left: 1rem; margin-top: 1rem;">
+                            <strong>Open-ended tasks:</strong> In these tasks, models often encounter false premises or lack sufficient context. To address this, we adopt a prompting strategy that encourages the model to <b>identify missing information or invalid assumptions, rather than attempting to answer directly</b>. (Modified prompt): <i>"For this question, please point out the false premises or note what information is missing, rather than answering it directly."</i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <video class="is-fullwidth" autoplay loop muted playsinline>
+                <source src="./static/images/fig3.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </section>
+
+    <section class="section ">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-full">
+                    <h2 class="title is-4">Examples: Real Evaluation Result Examples</h2>
+                    <div class="content has-text-justified">
+                        <p> Examples from AMBER benchmark evaluation for comparison. Hallucinated objects from other VLMs are highlighted in red. </p>
+                        <div class="item is-vcentered">
+                            <img src="static/images/qualitative_examples_2.png" alt="" />
+                        </div><br>
+                        <div class="columns is-centered has-text-centered">
+                            <div class="column is-full">
+                                <h2 class="title is-4">Results: Performance Comparison Across Different Tasks</h2>
+                            </div>
+                        </div>
+                        <p>
+                            Our evaluations show that <b>REVERSE</b> achieves state-of-the-art hallucination reduction, <b>outperforming the best existing methods</b> by up to 12% on CHAIR-MSCOCO and 28% on HaloQuest.
+                        </p>
+                        <b> Image Captioning Tasks</b>
+                        <p>
+                            Performance comparison across different models on <b>CHAIR-MSCOCO</b> and <b>AMBER(g)</b> benchmark.
+                        </p>
+                        <div class="item is-vcentered">
+                            <img src="static/images/image_captioning_results.png" alt="" />
+                        </div>
+                        <br>
+                        <b> Open-ended Question Answering </b>
+                        <p>
+                            Performance comparison across different models on <b>mmHal</b> (Left), <b>HaloQuest</b> (Right) benchmark .
+                        </p>
+                        <div class="columns is-centered is-vcentered">
+                            <div class="column is-half">
+                                <img src="static/images/mmhal_results.png" alt="HaloQuest Results" style="width: 88%; height: auto;" />
+                            </div>
+                            <div class="column is-half">
+                                <img src="static/images/haloquest_results.png" alt="MMHal Results" style="width: 88%; height: auto;" />
+                            </div>
+                        </div>
+                        <br>
+
+                        <b> Discriminative Questions </b>
+                        <p>
+                            Performance comparison across different models on <b>AMBER(d)</b>, <b>POPE</b>, <b>MME-Hall</b>.
+                        </p>
+                        <div class="item is-vcentered">
+                            <img src="static/images/discriminative_results.png" alt="discriminative_results" style="width: 99%; height: auto;" />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </nav>
+    </section>
 
-    <main>
-        <section class="section hero hero--accent" id="overview">
-            <div class="layout-container hero__layout">
-                <div class="hero-title-block">
-                    <h1 class="hero-title">Are Large Reasoning Models Interruptible?</h1>
-                </div>
-                <div class="hero-grid hero-grid--two">
-                    <div class="hero-secondary hero-secondary--focused">
-                        <p class="hero-lede hero-lede--motivation">
-                            <strong>Motivation: </strong>Ideal AGI must bend to the human loop. While reasoning models are powerful, people often wanna cut in during their reasoning: Engineers revise specs mid-trace, researchers force early answers, and grad students beg it to hurry up before a deadline. If models can’t handle these real-world interrupts, they fall out of sync with the teams they serve.</p>                        <div class="hero-meta">
-                            <p class="author-list">
-                                <a href="https://patrickthwu.com/" target="_blank" rel="noopener">Tsung-Han Wu<sup class="text-danger">*</sup></a> &middot; <a href="https://mmiroyan.github.io/" target="_blank" rel="noopener">Mihran Miroyan<sup class="text-danger">*</sup></a> &middot; <a href="https://dchan.cc/" target="_blank" rel="noopener">David M. Chan</a> &middot; <a href="https://people.eecs.berkeley.edu/~trevor/" target="_blank" rel="noopener">Trevor Darrell</a> &middot; <a href="https://nargesnorouzi.me/" target="_blank" rel="noopener">Narges Norouzi</a> &middot; <a href="https://people.eecs.berkeley.edu/~jegonzal/" target="_blank" rel="noopener">Joseph E. Gonzalez</a>
-                            </p>
-                            <p class="affiliation">
-                                UC Berkeley
-                                <span class="equal-contrib-inline"><sup class="text-danger">*</sup> Equal contribution.</span>
-                            </p>
-                        </div>
-                        <div class="cta-group">
-                            <a class="button button--arxiv" href="https://arxiv.org/abs/2504.13169" target="_blank" rel="noopener">
-                                <i class="fas fa-file-pdf"></i>
-                                Read the paper
-                            </a>
-                            <a class="button button--github" href="https://github.com/tsunghan-wu/reverse_vlm" target="_blank" rel="noopener">
-                                <i class="fab fa-github"></i>
-                                Explore the code
-                            </a>
-                            <a class="button button--dataset" href="https://huggingface.co/collections/tsunghanwu/reverse-67f410b5d147edf2ed7817ae" target="_blank" rel="noopener">
-                                <i class="fas fa-database"></i>
-                                Browse the data
-                            </a>
-                        </div>
-                    </div>
-                    <aside class="hero-primary">
-                        <div class="card card--tldr hero-tldr">
-                            <h2 class="hero-tldr__title">Our Answer → Not Really. <br>Here are three common pathologies we found.</h2>
-                            <!-- <p class="hero-tldr__intro">
-                                Interruptions expose the same fragile behaviors across today’s leading reasoning models.
-                            </p> -->
-                            <ul class="hero-tldr__list">
-                                <li><strong>Hard stop → Reasoning leakage:</strong> forcing an answer mid-think spills unfinished chains into the final response.</li>
-                                <li><strong>Hurry up → Panic:</strong> time pressure shortens reasoning and drives rushed, low-confidence guesses.</li>
-                                <li><strong>Late update → Self-doubt:</strong> unplanned edits derail the chain unless the model is guided to replan.</li>
-                            </ul>
-                            <div class="hero-tldr__models" aria-label="Models evaluated">
-                                <span class="hero-tldr__models-title">Models evaluated</span>
-                                <div class="hero-pill-row">
-                                    <span class="hero-pill hero-pill--openai">
-                                        <i class="fa-solid fa-robot" aria-hidden="true"></i>
-                                        GPT-OSS&nbsp;20B
-                                    </span>
-                                    <span class="hero-pill hero-pill--qwen">
-                                        <i class="fa-solid fa-rocket" aria-hidden="true"></i>
-                                        Qwen3&nbsp;8B
-                                    </span>
-                                    <span class="hero-pill hero-pill--mistral">
-                                        <i class="fa-solid fa-wave-square" aria-hidden="true"></i>
-                                        Magistral&nbsp;24B
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </aside>
-                </div>
-                <div class="hero-chart chart-card chart-card--figure">
-                    <h2 class="hero-chart__title">Pathology Behaviors</h2>
-                    <p class="hero-chart__text">Toggle each interruption setting to see the pathology it induces.</p>
-                    <div class="chart-selector" role="tablist" aria-label="Interruptibility behaviors">
-                        <button class="chart-selector__button" type="button" data-chart-toggle="leakage" aria-controls="chart-leakage" aria-pressed="false">
-                            Hard stop → Reasoning leakage
-                        </button>
-                        <button class="chart-selector__button" type="button" data-chart-toggle="panic" aria-controls="chart-panic" aria-pressed="false">
-                            Hurry up → Panic
-                        </button>
-                        <button class="chart-selector__button" type="button" data-chart-toggle="doubt" aria-controls="chart-doubt" aria-pressed="false">
-                            Late update → Self-doubt
-                        </button>
-                    </div>
-                    <div class="chart-display">
-                        <iframe class="chart-frame" data-chart="leakage" src="static/images/plotly/leakage_rate.html" title="Reasoning leakage rates across models" loading="lazy"></iframe>
-                        <iframe class="chart-frame" data-chart="panic" src="static/images/plotly/panic_rate.html" title="Panic response rates across models" loading="lazy" hidden></iframe>
-                        <iframe class="chart-frame" data-chart="doubt" src="static/images/plotly/doubt_rate.html" title="Self-doubt rates across models" loading="lazy" hidden></iframe>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <section id="problem" class="section section--compact">
-            <div class="layout-container">
-                <div class="section-content">
-                    <h2 class="section-title">Why Interruptibility Matters</h2>
-                    <p class="section-text">
-                        LRMs are often tested in “frozen worlds”, where the context never changes. But real life keeps moving:
-                        environments shift, collaborators step in, and sometimes urgency spikes, like a user saying “hurry up.”
-                        This is especially hard for reasoning models, where inference takes time. We argue that instead of
-                        restarting from scratch whenever interruptions occur, models should be able to pause, adapt, and
-                        carry on gracefully. Below we show a glimpse of what that future might look like in dynamic “vibe
-                        coding” scenarios. In this work, we ask:
-                        <strong class="text-primary">Are today’s reasoning models ready? And if not, how far are we from getting there?</strong>
-                    </p>
-                    <img class="full-width-image" src="static/images/fig1.png" alt="Figure 1: How do LRMs perform in dynamic worlds?">
-                </div>
-            </div>
-        </section>
 
-        <section id="approach" class="section section--tight">
-            <div class="layout-container">
-                <div class="section-content">
-                    <h2 class="section-title">Experimental Setup</h2>
-                    <p class="section-text">
-                        We evaluate LRMs in <strong>dynamic settings</strong> where reasoning can be interrupted. Two scenarios matter most:
-                        <strong>time-constrained</strong> requests (e.g., “hurry up”) and <strong>update-driven</strong> changes (new information
-                        arriving mid-reasoning). Below is the illustration of our setup.
-                    </p>
-                    <figure class="hero-figure">
-                        <img src="static/images/fig2.png" alt="Overview: time-constrained vs update-driven interruptions and the evaluation loop">
-                    </figure>
-                    <div class="card-grid">
-                        <div class="bordered-card">
-                            <h3>Time-constrained</h3>
-                            <ul>
-                                <li><strong>Hard:</strong> immediately stop reasoning and output an answer.</li>
-                                <li><strong>Soft:</strong> continue reasoning but accelerate and finish sooner.</li>
-                            </ul>
-                        </div>
-                        <div class="bordered-card">
-                            <h3>Update-driven</h3>
-                            <p>Introduce new information mid-reasoning so that the final answer depends on the update.</p>
-                        </div>
-                    </div>
-                    <div class="card-grid card-grid--two">
-                        <div class="bordered-card bordered-card--dashed">
-                            <h3>Experimental Protocol</h3>
-                            <ol>
-                                <li>Generate a reasoning trace (<em>r</em>) and pick a cut point <em>X</em> (0 ≤ X &lt; |r|).</li>
-                                <li>Insert an intervention <em>i</em> (time-constrained or update-driven).</li>
-                                <li>Resume generation to produce a new final answer (<em>a'</em>).</li>
-                                <li>Evaluate correctness and measure post-interrupt length (|r<sub>X</sub>' ⊕ a'|).</li>
-                            </ol>
-                        </div>
-                        <div class="bordered-card">
-                            <h3>Models &amp; Data</h3>
-                            <ul>
-                                <li><strong>Models:</strong> GPT-OSS-20B, Qwen3-8B, and Magistral-24B.</li>
-                                <li><strong>Data:</strong> GSM8k, MATH-500, AIME 24/25, and LiveCodeBench (v6).</li>
-                                <li><strong>Cut positions:</strong> X ∈ {0.1, 0.3, 0.5, 0.7, 0.9} × |r| for each sample.</li>
-                                <li><strong>Data augmentation:</strong> Answers updated via GPT-5 generation and human refinement.</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <details class="details-block">
-                        <summary>&rarr; See examples of our augmented data</summary>
-                        <div class="details-block__content">
-                            <p>Here we provide sample cases where interruptions lead to different final answers:</p>
-                            <ul>
-                                <li><em>Math (AIME 2025):</em> Cutting mid-proof and injecting an update that changes a key assumption.</li>
-                                <li><em>Coding (LiveCodeBench v6):</em> Mid-function update that alters a variable constraint.</li>
-                                <li><em>GSM8k:</em> User interrupts with “hurry up” halfway through multi-step reasoning.</li>
-                            </ul>
-                        </div>
-                    </details>
-                </div>
-            </div>
-        </section>
+    <!--BibTex citation -->
+    <section class="section" id="BibTeX">
+        <div class="container is-max-desktop content">
+            <h2 class="title">BibTeX</h2>
+            <pre><code>@misc{wu2025interruptible,
+  title={Are Large Reasoning Models Interruptible?},
+  author={Wu, Tsung-Han and Miroyan, Mihran and Chan, David M and Darrell, Trevor and Norouzi, Narges and Gonzalez, Joseph E},
+  note={Project page},
+  year={2025}
+}</code></pre>
+        </div>
+    </section>
+    <!--End BibTex citation -->
 
-        <section id="time-constraint" class="section">
-            <div class="layout-container">
-                <div class="section-content">
-                    <h2 class="section-title">How Do Models Behave Under Time-Constraint Interruptions?</h2>
-                    <div class="card">
-                        <h3 class="section-subtitle">Hard Interrupt: Anytime Models but with Reasoning Leakage</h3>
-                        <p class="section-text">
-                            When forced to stop immediately, models can provide answers but often “leak” their reasoning
-                            process into the final answer, making responses verbose and unfocused.
-                        </p>
-                        <div class="callout callout--warning">
-                            <p>
-                                <strong>Example:</strong> “The answer is 42, but I was still working through the quadratic formula
-                                when you interrupted me, so let me explain the steps I was taking...”
-                            </p>
-                        </div>
-                        <div class="placeholder">
-                            [Chart: Reasoning leakage examples and accuracy vs. response length]
-                        </div>
-                    </div>
-                    <div class="card">
-                        <h3 class="section-subtitle">Soft Interrupt: Think Less, Lower Accuracy with “PANIC”</h3>
-                        <p class="section-text">
-                            When asked to “hurry up,” models generally produce shorter responses with lower accuracy. GPT-OSS
-                            particularly shows “panic” behavior, rushing to conclusions.
-                        </p>
-                        <div class="callout callout--danger">
-                            <p>
-                                <strong>Example:</strong> “Hurry up!” → “The answer is definitely 15! No wait, maybe 23? Actually,
-                                I think it’s 15. Yes, 15.”
-                            </p>
-                        </div>
-                        <div class="placeholder">
-                            [Chart: Accuracy vs. response length under soft interrupts, showing panic behavior]
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <section id="update-driven" class="section">
-            <div class="layout-container">
-                <div class="section-content">
-                    <h2 class="section-title">How Do Models Behave Under Update-Driven Interruptions?</h2>
-                    <div class="card card--muted">
-                        <h3 class="section-subtitle">What’s the Best Way to Interrupt and Resume a Model?</h3>
-                        <p class="section-text">
-                            User-initiated interruptions vs. model-initiated pauses: we found that explicit user guidance
-                            significantly improves model performance when resuming after interruptions.
-                        </p>
-                        <div class="placeholder">
-                            [Chart: User vs. model-initiated interruption performance comparison]
-                        </div>
-                    </div>
-                    <div class="card card--muted">
-                        <h3 class="section-subtitle">The “Self-Doubt” Phenomenon</h3>
-                        <p class="section-text">
-                            Models get confused without proper prompting when updates arrive late in the reasoning process,
-                            showing a <strong class="text-danger">60% performance drop</strong> when updates are injected after 70% of reasoning is complete.
-                        </p>
-                        <div class="callout callout--info">
-                            <p>
-                                <strong>Example:</strong> Model: “I’m confident the answer is X.” → Update arrives →
-                                “Wait, maybe it’s Y? I’m not sure anymore...”
-                            </p>
-                        </div>
-                        <div class="placeholder">
-                            [Chart: Performance drop vs. interruption timing, showing self-doubt effect]
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <footer class="footer">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-8">
+                    <div class="content">
 
-        <section id="scaling" class="section section--alt">
-            <div class="layout-container">
-                <div class="section-content">
-                    <h2 class="section-title">Does Scaling Help?</h2>
-                    <div class="card">
-                        <p class="section-text">
-                            <strong class="text-success">Yes, scaling helps.</strong> Larger models (Magistral-24B) show better interruptibility compared
-                            to smaller models (Qwen3-8B), with improved ability to handle both time-constrained and
-                            update-driven interruptions.
+                        <p>
+                            This page was built using the <a
+                                href="https://github.com/eliahuhorwitz/Academic-project-page-template"
+                                target="_blank">Academic Project Page Template</a> which was adopted from the <a
+                                href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+                            You are free to borrow the of this website, we just ask that you link back to this page in
+                            the footer. <br> This website is licensed under a <a rel="license"
+                                href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+                                Commons Attribution-ShareAlike 4.0 International License</a>.
                         </p>
-                        <div class="stat-grid">
-                            <div class="stat-card stat-card--success">
-                                <div class="stat-card__value">24B</div>
-                                <div class="stat-card__label">Magistral</div>
-                                <div class="stat-card__note">Best interruptibility</div>
-                            </div>
-                            <div class="stat-card stat-card--warning">
-                                <div class="stat-card__value">20B</div>
-                                <div class="stat-card__label">GPT-OSS</div>
-                                <div class="stat-card__note">Panic behavior</div>
-                            </div>
-                            <div class="stat-card stat-card--danger">
-                                <div class="stat-card__value">8B</div>
-                                <div class="stat-card__label">Qwen3</div>
-                                <div class="stat-card__note">Struggles most</div>
-                            </div>
-                        </div>
-                        <div class="placeholder">
-                            [Chart: Interruptibility performance vs. model size across different interruption types]
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
 
-    <footer>
-        <div class="layout-container">
-            <div class="section-content section-content--wide">
-                <div class="footer-grid">
-                    <div>
-                        <div class="nav-brand">
-                            <div class="logo-container">
-                                <img class="footer-logo" src="static/images/ilrm_logo.png" alt="Interruptible LRM logo">
-                                <div class="logo-tooltip">
-                                    Think of The Great Wave as a metaphor for dynamic context — the chatbot has to surf the changing tides of conversation, staying robust even as the waves keep moving.
-                                </div>
-                            </div>
-                            <span class="nav-title">Interruptible LRM</span>
-                        </div>
-                        <p class="footer-text">
-                            Exploring interruptibility as a core capability for reasoning agents.
-                        </p>
                     </div>
-                    <div>
-                        <h4 class="section-subtitle">Resources</h4>
-                        <div class="footer-links">
-                            <a href="https://arxiv.org/abs/2504.13169" target="_blank" rel="noopener">
-                                <i class="fas fa-file-pdf icon--danger"></i>
-                                Paper
-                            </a>
-                            <a href="https://huggingface.co/collections/tsunghanwu/reverse-67f410b5d147edf2ed7817ae" target="_blank" rel="noopener">
-                                <i class="fas fa-database icon--success"></i>
-                                Dataset
-                            </a>
-                            <a href="https://github.com/tsunghan-wu/reverse_vlm" target="_blank" rel="noopener">
-                                <i class="fab fa-github icon--muted"></i>
-                                GitHub
-                            </a>
-                        </div>
-                    </div>
-                    <div>
-                        <h4 class="section-subtitle">Institution</h4>
-                        <p class="footer-text margin-bottom-sm">
-                            <strong>UC Berkeley</strong>
-                        </p>
-                        <p class="footer-text footer-text--small">
-                            EECS Department<br>
-                            Berkeley, CA
-                        </p>
-                    </div>
-                </div>
-                <div class="footer-meta">
-                    <p class="footer-meta__primary">© 2025 Interruptible LRM Project. All rights reserved.</p>
-                    <p class="footer-meta__secondary">Built with ❤️ for advancing AI reasoning capabilities.</p>
                 </div>
             </div>
         </div>
     </footer>
+
+    <!-- Statcounter tracking code -->
+
+    <!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+    <!-- End of Statcounter Code -->
+
 </body>
+
 </html>

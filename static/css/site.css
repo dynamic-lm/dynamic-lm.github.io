@@ -930,6 +930,45 @@ footer {
     box-shadow: 0 8px 16px rgba(0, 50, 98, 0.25);
 }
 
+.chart-toolbar {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.chart-examples__button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(0, 50, 98, 0.08);
+    color: var(--color-primary);
+    border: 1px solid rgba(0, 50, 98, 0.18);
+    border-radius: 12px;
+    padding: 0.55rem 1rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 50, 98, 0.12);
+    transition: background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.chart-examples__button:hover {
+    background: rgba(0, 50, 98, 0.16);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 16px rgba(0, 50, 98, 0.18);
+}
+
+.chart-examples__button:focus-visible {
+    outline: 3px solid rgba(0, 50, 98, 0.25);
+    outline-offset: 2px;
+}
+
+.chart-examples__icon {
+    font-size: 1rem;
+}
+
 .chart-display {
     margin-top: 0.75rem;
 }
@@ -951,6 +990,23 @@ footer {
     display: none;
 }
 
+.chart-examples {
+    margin-top: 1.5rem;
+    border-radius: 16px;
+    border: 1px solid rgba(0, 50, 98, 0.12);
+    box-shadow: 0 18px 36px rgba(0, 50, 98, 0.12);
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.98);
+}
+
+.chart-examples__frame {
+    display: block;
+    width: 100%;
+    height: 640px;
+    border: none;
+    background: #f7f9fb;
+}
+
 @media (max-width: 1024px) {
     .hero-grid {
         grid-template-columns: minmax(0, 1fr);
@@ -966,6 +1022,10 @@ footer {
     .hero-secondary--focused {
         justify-self: stretch;
         max-width: none;
+    }
+
+    .chart-examples__frame {
+        height: 600px;
     }
 }
 
@@ -1002,5 +1062,9 @@ footer {
     .logo-tooltip {
         width: 240px;
         font-size: 0.8rem;
+    }
+
+    .chart-examples__frame {
+        height: 520px;
     }
 }
