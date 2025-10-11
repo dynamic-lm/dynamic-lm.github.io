@@ -48,7 +48,7 @@
     <style>
         .floating-toc {
             position: fixed;
-            left: 5%;
+            left: 2%;
             top: 50%;
             transform: translateY(-50%);
             background: rgba(255, 255, 255, 0.95);
@@ -58,8 +58,8 @@
             padding: 1rem;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             z-index: 1000;
-            max-width: 250px;
-            font-size: 0.9rem;
+            max-width: 10%;
+            font-size: 0.8rem;
             transition: all 0.3s ease;
         }
         
@@ -223,11 +223,11 @@
                                      </div>
                                      <ul class="tldr-failures">
                                         <li class="failure-item">
-                                            <span class="failure-title">Hard Stop → Reasoning Leakage</span>
+                                            <span class="failure-title">Hard Interrupt → Reasoning Leakage</span>
                                             <span class="failure-desc">Spill unfinished thoughts into answers,<br>failing to actually save users' time</span>
                                           </li>
                                           <li class="failure-item">
-                                            <span class="failure-title">Hurry Up → Panic</span>
+                                            <span class="failure-title">Speedup → Panic</span>
                                             <span class="failure-desc">Rush to answer directly with unfinished reasoning, hurting accuracy</span>
                                           </li>
                                           <li class="failure-item">
@@ -241,100 +241,52 @@
                     </div>
                 </div>
                     
+                <div style="text-align: center; margin-top: 2.5rem;">
+                    <p style="color: #000000; font-size: 1.13rem; font-weight: 600;">What would happen if we interrupt LRMs when they perform 30% of the reasoning?</p>
+                </div>
+                
                 <div class="carousel-container" style="position: relative; display: flex; align-items: center; justify-content: center; margin: 0rem 0;">
                     <!-- Left Arrow -->
-                    <button class="carousel-arrow carousel-arrow-left" style="background: none; border: none; font-size: 1.5rem; color: #666; cursor: pointer; margin-right: 1rem;">‹</button>
+                    <button class="carousel-arrow carousel-arrow-left" style="background: none; border: none; font-size: 1.5rem; color: #666; cursor: pointer; margin-right: 0.5rem;">‹</button>
                     
                      <!-- Carousel Content - Sliding Panels -->
                      <div class="carousel-content" style="position: relative; width: 850px; height: 400px; overflow: hidden; margin: 0 auto;">
                          <div class="carousel-track" style="position: absolute; top: 0; left: 0; width: 2550px; height: 100%; transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);">
                              <div class="carousel-panel" style="float: left; width: 850px; height: 100%; background: white; text-align: center; padding: 0.5rem;">
                                  <div style="background: white; border-radius: 4px; height: 360px; display: flex; align-items: center; justify-content: center;">
-                                     <img src="static/images/answer_length.png" alt="Hard Stop" style="max-width: 100%; max-height: 340px; object-fit: contain;">
+                                     <img src="static/images/figures_new/answer_length.png" alt="Hard Interrupt" style="max-width: 100%; max-height: 340px; object-fit: contain;">
                                  </div>
-                                 <div style="text-align: center; font-weight: 500; color: #333;">Hard Stop → Reasoning Leakage</div>
+                                 <div style="text-align: center; font-weight: 500; color: #333;">Hard Interrupt → <span style="color: #FF0000;">Up to 10x longer answer length</span> with minimal time savings</div>
                              </div>
                              <div class="carousel-panel" style="float: left; width: 850px; height: 100%; background: white; text-align: center; padding: 0.5rem;">
                                  <div style="background: white; border-radius: 4px; height: 360px; display: flex; align-items: center; justify-content: center;">
-                                     <img src="static/images/answer_length.png" alt="Hurry Up" style="max-width: 100%; max-height: 340px; object-fit: contain;">
+                                     <img src="static/images/figures_new/panic_rate.png" alt="Speedup" style="max-width: 100%; max-height: 340px; object-fit: contain;">
                                  </div>
-                                 <div style="text-align: center; font-weight: 500; color: #333;">Hurry Up → Panic</div>
+                                 <div style="text-align: center; font-weight: 500; color: #333;">Speedup → <span style="color: #FF0000;">Up to 90% errors stem from panic</span>, where the model answers too early without finishing its first reasoning pass</div>
                              </div>
                              <div class="carousel-panel" style="float: left; width: 850px; height: 100%; background: white; text-align: center; padding: 0.5rem;">
                                  <div style="background: white; border-radius: 4px; height: 360px; display: flex; align-items: center; justify-content: center;">
-                                     <img src="static/images/answer_length.png" alt="Info Update" style="max-width: 100%; max-height: 340px; object-fit: contain;">
+                                     <img src="static/images/figures_new/doubt_rate.png" alt="Info Update" style="max-width: 100%; max-height: 340px; object-fit: contain;">
                                  </div>
-                                 <div style="text-align: center; font-weight: 500; color: #333; ">Info Update → Self-doubt</div>
+                                 <div style="text-align: center; font-weight: 500; color: #333; ">Info Update → <span style="color: #FF0000;">Up to 80% wrong cases come from self-doubt</span>, where the model fails to take new information</div>
                              </div>
                          </div>
                      </div>
                     
                     <!-- Right Arrow -->
-                    <button class="carousel-arrow carousel-arrow-right" style="background: none; border: none; font-size: 1.5rem; color: #666; cursor: pointer; padding: 1rem; margin-left: 1rem;">›</button>
+                    <button class="carousel-arrow carousel-arrow-right" style="background: none; border: none; font-size: 1.5rem; color: #666; cursor: pointer; padding: 1rem; margin-left: 0.5rem;">›</button>
                 </div>
                 
                 <!-- Pagination Indicators -->
                 <div class="carousel-pagination" style="display: flex; justify-content: center; gap: 0.5rem; margin-top: 1rem;">
-                    <span class="pagination-dot active" style="width: 12px; height: 3px; background: #000; border-radius: 2px; display: inline-block;"></span>
-                    <span class="pagination-dot" style="width: 12px; height: 3px; background: #ccc; border-radius: 2px; display: inline-block;"></span>
-                    <span class="pagination-dot" style="width: 12px; height: 3px; background: #ccc; border-radius: 2px; display: inline-block;"></span>
-                    <!-- <span class="pagination-dot" style="width: 12px; height: 3px; background: #ccc; border-radius: 2px; display: inline-block;"></span> -->
-                    <!-- <span class="pagination-dot" style="width: 12px; height: 3px; background: #ccc; border-radius: 2px; display: inline-block;"></span> -->
+                    <span class="pagination-dot active" style="width: 5%; height: 3px; background: #000; border-radius: 2px; display: inline-block;"></span>
+                    <span class="pagination-dot" style="width: 5%; height: 3px; background: #ccc; border-radius: 2px; display: inline-block;"></span>
+                    <span class="pagination-dot" style="width: 5%; height: 3px; background: #ccc; border-radius: 2px; display: inline-block;"></span>
                 </div>
             </div>
 
         </div>
     </section>
-
-
-    <!-- <section class="section hero hero--overview" style="margin-top: -2rem;">
-        <div class="container is-max-desktop">
-          <div class="columns is-centered has-text-centered">
-            <div class="column is-full">
-      
-              <h2 class="title is-4" style="margin-bottom: 1rem;">
-                Interruptible Models? Not Really.
-              </h2>
-      
-              <div class="content has-text-justified" style="margin-bottom: 1.5rem;">
-                <p>
-                    We evaluate SOTA reasoning models under three common mid-thought interruptions and find consistent failure modes:
-                </p>
-                <ul style="margin-top: 1rem;">
-                  <li><strong>Hard stop → Reasoning leakage:</strong> Answer spills incomplete chains.</li>
-                  <li><strong>Hurry up → Panic:</strong> Time pressure causes rushed, low-confidence guesses.</li>
-                  <li><strong>Late update → Self-doubt:</strong> Unplanned edits derail the chain of thought.</li>
-                </ul>
-              </div>
-      
-              <div class="content has-text-centered" style="margin-top: 2rem;">
-      
-                <div class="carousel results-carousel">
-                  <div class="item">
-                    <h4 class="title is-6">Leakage Rate</h4>
-                    <div class="carousel-image">
-                      <img src="static/images/answer_length.png" alt="Leakage rate pathology" loading="lazy">
-                    </div>
-                  </div>
-                  <div class="item">
-                    <h4 class="title is-6">Panic Rate</h4>
-                    <div class="carousel-image">
-                      <img src="static/images/panic_rate.png" alt="Panic rate pathology" loading="lazy">
-                    </div>
-                  </div>
-                  <div class="item">
-                    <h4 class="title is-6">Doubt Rate</h4>
-                    <div class="carousel-image">
-                      <img src="static/images/doubt_rate.png" alt="Doubt rate pathology" loading="lazy">
-                    </div>
-                  </div>
-                </div>
-              </div>
-      
-            </div>
-          </div>
-        </div>
-      </section> -->
       
     <section class="section" id="problem-setup">
         <div class="container is-max-desktop">
@@ -345,19 +297,19 @@
                 </div>
             </div>
             <p>
-                In the real world, users don’t just sit and wait for a large reasoning model (LRM) to finish: they interrupt, rush, and revise. Because LRM reasoning takes time, models need to handle updates mid-inference. We introduce a new evaluation suite that test how well LRMs cope with interruptions and dynamic context changes across math and coding tasks. While today’s models show some any-time ability, they still struggle to stay stable under real-world dynamics.</p>
+                In the real world, users don’t just sit and wait for a large reasoning model (LRM) to finish: they interrupt, rush, and revise. Because LRM reasoning takes time, models need to handle updates mid-inference. We introduce a new evaluation suite that test how well LRMs cope with interruptions and dynamic context changes across math and coding tasks. Here's the illustration of our evaluation protocol.</p>
             <br>
             <div class="item is-vcentered" style="text-align: center; width: 90%; margin: 0 auto;">
                 <img src="./static/images/fig2.png" style="max-width: 100%; height: auto;">
             </div>
             <br>
-            <p>We study three major types of interruptions: hard stop, hurry up, and info update. The evaluation protocol is shown above: we run a single inference session to obtain the full reasoning chain $r_X$ and then interrupt it at different stages of the reasoning process:</p>
+            <p>We study three major types of interruptions: Hard Interrupt, Speedup, and Info update. We run a single inference session to obtain the full reasoning chain $r$ and then interrupt it at different stages of the reasoning process ($0 \leq X < |r|$). Specifically, we have:</p>
             <ul style="list-style-type: disc; padding-left: 2rem; margin-top: 0.5rem;">
-                <li><strong>Hard Stop → </strong> $i=\langle\text{end-think}\rangle$ or $\langle\text{force-answer}\rangle$; $r_X' = \emptyset$</li>
-                <li><strong>Hurry Up → </strong> $i=\text{Please provide the answer as soon as possible.}$</li>
+                <li><strong>Hard Interrupt → </strong> $i=\langle\text{end-think}\rangle$ or $\langle\text{force-answer}\rangle$; $r_X' = \emptyset$</li>
+                <li><strong>Speedup → </strong> $i=\text{Please provide the answer as soon as possible.}$</li>
                 <li><strong>Info Update →</strong> $i=\text{Update information}$</li>
             </ul>
-            <p style="margin-top: 0.5rem;">For hard stop and hurry up evaluations, we directly utilized existing math and coding datasets, including GSM8K, MATH-500, AIME 24/25, and LiveCodeBench-v6. For the info update track specifically, we augmented these datasets to create a new collection containing 1401 reasoning problems with multiple conflicting information updates.</p>
+            <p style="margin-top: 0.5rem;">For Hard Interrupt and Speedup evaluations, we directly utilized existing math and coding datasets, including GSM8K, MATH-500, AIME 24/25, and LiveCodeBench-v6. For the info update track specifically, we augmented these datasets to create a new collection containing 1401 reasoning problems with multiple conflicting information updates.</p>
             <br>
             <p>See more about out dataset (a Gallery below).</p>
         </div>
@@ -371,48 +323,135 @@
                 </div>
             </div>
             
-            <!-- Hard Stop Subsection -->
+            <!-- Hard Interrupt Subsection -->
             <div class="columns is-centered">
                 <div class="column is-full">
-                    <h3 class="title is-5" style="margin-top: 2rem; margin-bottom: 1rem;">(1) Hard Stop: Are LRMs anytime models?</h3>
-                    <p>When users abruptly interrupt the model's reasoning process, we observe significant reasoning leakage where models spill their incomplete thoughts into the final answer.</p>
+                    <h3 class="title is-5" style="margin-top: 0.0rem; margin-bottom: 0.0rem;">
+                        (1) Hard Interrupt: Are LRMs Truly Anytime Models?
+                    </h3>
+                    
+                    <ul style="list-style-type: disc; padding-left: 2rem; margin: 1rem 0 0.5rem 0;">
+                        <li style="margin-bottom: 0.5rem;">Top: Allocating more thinking tokens generally leads to better performance.</li>
+                        <li style="margin-bottom: 0;">Bottom: Much of this gain comes from <strong>reasoning leakage</strong>: spilling unfinished thoughts into their final answers when interrupted.</li>
+                    </ul>
+                    <img src="static/images/figures_new/hard_interrupt_acc_and_len.png" style="max-width: 100%; height: auto;">
+                    <p style="margin-top: 0rem; margin-bottom: 0rem; line-height: 1.6;">
+                        As we see, whether LRMs are truly anytime models is debatable. 
+                        While performance improves with longer reasoning traces, models struggle to produce direct answers when forced to stop early. 
+                        They often "cheat" by sneaking extra reasoning into the answer section, effectively continuing their thought process even after being told to conclude. 
+                        This raises a concern for LRMs — we may not be able to use them reliably in applications that might require fast responses in any chances.
+                      </p>
+                      
+                      <p style="margin-top: 1rem; line-height: 1.6;">
+                        Should we still rely on <em>"thinking tokens vs. accuracy"</em> as the key metric for efficient reasoning? 
+                        The thinking budget alone fails to capture the true computational cost, as longer outputs often hide additional reasoning within the answer itself. The results also echo findings from <em>No-Think</em>, where models tend to "think" anyway — either inside or outside explicit reasoning blocks — to boost performance. 
+                        An ideal model should be both self-aware and reactive: aware of its own reasoning limits, able to estimate the effort required, and capable of responding transparently when a task cannot be fully solved within the given time, rather than “cheating” by performing hidden reasoning during the answer stage.
+                      </p>
                 </div>
             </div>
             
-            <!-- Hurry Up Subsection -->
+            <!-- Speedup Subsection -->
             <div class="columns is-centered">
                 <div class="column is-full">
-                    <h3 class="title is-5" style="margin-top: 2rem; margin-bottom: 1rem;">(2) Hurry Up: Can we reduce LRM's computes on-the-fly?</h3>
-                    <p>Under time pressure, models exhibit panic behavior, rushing to provide answers without completing their reasoning process, leading to decreased accuracy.</p>
+                  <h3 class="title is-5" style="margin-top: 2rem; margin-bottom: 1rem;">
+                    (2) Speedup: Can We Reduce LRM Computation On the Fly?
+                  </h3>
+                  <ul style="list-style-type: disc; padding-left: 2rem; margin: 1rem 0 0.5rem 0;">
+                    <li style="margin-bottom: 0.5rem;">Magistral & Qwen (Math): Achieve near “free-lunch” speedups — thinking faster mid-process with fewer tokens consumed.</li>
+                    <li style="margin-bottom: 0;">GPT-OSS & Qwen (Coding): Tend to <strong>panic</strong> under pressure — up to a 25% performance drop from rushing to answer before finishing its first reasoning cycle.</li>
+                  </ul>
+                  <img src="static/images/figures_new/soft_interrupt_ratio.png" style="max-width: 100%; height: auto;">
+                  
+                  <p style="margin-top: 1rem; line-height: 1.6;">
+                    Complementary to prior work on efficient reasoning via pre-planning, we are the first to examine the efficacy of <b>on-the-fly speedup</b>. 
+                    Interestingly, the speedup rate follows a <b>U-shaped curve</b> — pushing the model at the right moment can yield faster responses with minimal performance loss.
+                  </p>
+              
+                  <p style="margin-top: 1rem; line-height: 1.6;">
+                    However, some models like Qwen and GPT-OSS exhibit <b>panic answering</b>, especially on coding tasks. 
+                    While performance drops are expected under acceleration, the ideal behavior should be a smooth drop than a complete collapse into rushed, low-quality answers.
+                  </p>
                 </div>
-            </div>
+              </div>
         </div>
     </section>
 
     <section class="section" id="update-driven">
         <div class="container is-max-desktop">
-            <div class="columns is-centered has-text-centered">
-                <div class="column is-full">
-                    <h2 class="title is-4">How Do LRMs Behave Under Update-Driven Interruptions?</h2>
-                </div>
+          <div class="columns is-centered has-text-centered">
+            <div class="column is-full">
+              <h2 class="title is-4">How Do LRMs Behave Under Update-Driven Interruptions?</h2>
             </div>
-            <!-- Hard Stop Subsection -->
-            <div class="columns is-centered">
-                <div class="column is-full">
-                    <h3 class="title is-5" style="margin-top: 2rem; margin-bottom: 1rem;">(1) What's the best way to provide updates to LRMs?</h3>
-                    <p>When users abruptly interrupt the model's reasoning process, we observe significant reasoning leakage where models spill their incomplete thoughts into the final answer.</p>
-                </div>
+          </div>
+      
+          <!-- (1) Update Prompting Subsection -->
+          <div class="columns is-centered">
+            <div class="column is-full">
+              <h3 class="title is-5" style="margin-top: 0rem; margin-bottom: 1rem;">
+                (1) What's the Best Way to Provide Updates to LRMs?
+              </h3>
+      
+              <p>
+                To simulate real-time context changes, we prompt the model with a system instruction
+                explaining that updates will appear between <code>&lt;update&gt;...&lt;/update&gt;</code> tags,
+                and then insert these updates mid-reasoning. This simple setup caused a noticeable performance drop across models.
+              </p>
+      
+              <p>
+                To mitigate this, we introduced a more natural baseline: <b>guided prompting</b> using the model’s own voice.
+                Instead of a raw update tag, we phrase the update as if the model is reminding itself of the new information.
+                This almost eliminates the <b>self-doubt</b> issue and significantly stabilizes performance,
+                as shown in the chart below.
+              </p>
+      
+              <img src="static/images/figures_new/intervene_acc.png" style="max-width: 100%; height: auto;">
+      
+              <p style="margin-top: 1rem; line-height: 1.6;">
+                From the figure, we observe that:
+                <br>(1) Guided prompts are highly effective but cannot fully prevent performance drops when updates arrive too late in the reasoning process.
+                <br>(2) With guidance, Qwen and Magistral still struggle on harder benchmarks like <i>AIME 24/25</i> and <i>LiveCodeBench-v6</i>, especially in coding tasks where updates often conflict with starter code.
+              </p>
+      
+              <p style="margin-top: 1rem; line-height: 1.6;">
+                Since not all LRMs natively support multi-turn thinking, we cannot easily close a reasoning block,
+                inject a user update, and reopen it. To validate this, we performed an ablation study simulating that setup,
+                confirming that current LRMs remain fragile under such mid-thinking interruptions, performing worse than our guided prompting baseline.
+              </p>
+      
+              <img src="static/images/figures_new/intervene_acc_turn_ablation.png" style="max-width: 100%; height: auto;">
             </div>
-            
-            <!-- Hurry Up Subsection -->
-            <div class="columns is-centered">
-                <div class="column is-full">
-                    <h3 class="title is-5" style="margin-top: 2rem; margin-bottom: 1rem;">(2) What happens if we combine updates with time pressure?</h3>
-                    <p>Under time pressure, models exhibit panic behavior, rushing to provide answers without completing their reasoning process, leading to decreased accuracy.</p>
-                </div>
+          </div>
+      
+          <!-- (2) Efficiency Subsection -->
+          <div class="columns is-centered">
+            <div class="column is-full">
+              <h3 class="title is-5" style="margin-top: 0rem; margin-bottom: 1rem;">
+                (2) What Happens If We Consider Efficiency as Well?
+              </h3>
+              <p style="margin-top: 1rem; line-height: 1.6;">
+                We revisit the main intervention experiments to study the trade-off between
+                performance retention and output-length expansion after receiving information updates.
+                In some cases, models maintain strong performance—even outperforming the
+                “stop-and-redo” baseline. For example, GPT-OSS on <i>LiveCodeBench-v6</i> and
+                Qwen on <i>GSM8k</i> preserve around <b>95%</b> of oracle accuracy with much lower computation cost.
+                However, this efficiency remains inconsistent across other settings.
+              </p>
+              <img src="static/images/figures_new/intervene_ratio.png" style="max-width: 100%; height: auto;">
+      
+              <p style="margin-top: 1rem; line-height: 1.6;">
+                Finally, we combine our <b>speedup</b> (Case 2) and <b>update-driven</b> (Case 3) scenarios.
+                Interestingly, we find another “free lunch”: Qwen3 and Magistral achieve comparable performance
+                to the standard setup while using fewer tokens after updates.
+                GPT-OSS shows more stable behavior without panic, though the token savings are modest.
+              </p>
+      
+              <img src="static/images/figures_new/intervene_output_length_speedup_ablation.png" style="max-width: 100%; height: auto;">
+      
+
             </div>
+          </div>
         </div>
-    </section>
+      </section>
 
     <section class="section" id="scaling-law">
         <div class="container is-max-desktop">
@@ -421,17 +460,26 @@
                     <h2 class="title is-4">Does scaling-law still hold here?</h2>
                 </div>
             </div>
-            <!-- Hard Stop Subsection -->
+            <!-- Hard Interrupt Subsection -->
             <div class="columns is-centered">
                 <div class="column is-full">
-                    <h3 class="title is-5" style="margin-top: 2rem; margin-bottom: 1rem;">(1) Time-Constrained Interruptions</h3>
+                    <h3 class="title is-5" style="margin-top: 2rem; margin-bottom: 1rem;">(1) Hard Interruptions</h3>
+                    <img src="static/images/figures_new/hard_interrupt_acc_and_len_size_ablation.png" style="max-width: 100%; height: auto;">
                 </div>
             </div>
             
-            <!-- Hurry Up Subsection -->
+            <!-- Speedup Subsection -->
             <div class="columns is-centered">
                 <div class="column is-full">
-                    <h3 class="title is-5" style="margin-top: 2rem; margin-bottom: 1rem;">(2) Update-Driven Interruptions</h3>
+                    <h3 class="title is-5" style="margin-top: 2rem; margin-bottom: 1rem;">(2) Speedup</h3>
+                    <img src="static/images/figures_new/soft_interrupt_ratio_size_ablation.png" style="max-width: 100%; height: auto;">
+                </div>
+            </div>
+
+            <div class="columns is-centered">
+                <div class="column is-full">
+                    <h3 class="title is-5" style="margin-top: 2rem; margin-bottom: 1rem;">(3) Info Updates</h3>
+                    <img src="static/images/figures_new/intervene_ratio_size_ablation.png" style="max-width: 100%; height: auto;">
                 </div>
             </div>
         </div>
@@ -499,7 +547,7 @@
             'static/images/answer_length.png', 
             'static/images/answer_length.png'
         ];
-        const labels = ['Hard Stop → Reasoning Leakage', 'Hurry Up → Panic', 'Info Update → Self-doubt'];
+        const labels = ['Hard Interrupt → Reasoning Leakage', 'Speedup → Panic', 'Info Update → Self-doubt'];
 
         function updateCarousel() {
             const track = document.querySelector('.carousel-track');
