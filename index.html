@@ -298,13 +298,11 @@
                 </div>
             </div>
             <p>
-                In the real world, users don’t just sit and wait for a large reasoning model (LRM) to finish: they interrupt, rush, and revise. Because LRM reasoning takes time, models need to handle updates mid-inference. We introduce a new evaluation suite that test how well LRMs cope with interruptions and dynamic context changes across math and coding tasks. Here's the illustration of our evaluation protocol.</p>
-            <br>
-            <div class="item is-vcentered" style="text-align: center; width: 90%; margin: 0 auto;">
+                Because LRMs' reasoning and inference can take a lot of time, users don’t want to simply wait for them to finish. Instead, they often interrupt mid-inference: forcing an immediate answer (hard interrupt), asking the model to accelerate (speedup), or changing the task specification (info update). We introduce a new evaluation suite that tests how well LRMs handle these interruptions and dynamic context changes across math and coding tasks. The figure below illustrates our evaluation protocol.</p>
+            <div class="item is-vcentered" style="text-align: center; width: 90%; margin: 0.5rem auto;">
                 <img src="./static/images/fig2.png" style="max-width: 100%; height: auto;">
             </div>
-            <br>
-            <p>We study three major types of interruptions: Hard Interrupt, Speedup, and Info update. We run a single inference session to obtain the full reasoning chain $r$ and then interrupt it at different stages of the reasoning process ($0 \leq X < |r|$). Specifically, we have:</p>
+            <p>In practice, we run a single inference session to obtain the full reasoning chain $r$ and then interrupt the interrupt message $i$ at different stages of the reasoning process ($0 \leq X < |r|$) based on different scenarios:</p>
             <ul style="list-style-type: disc; padding-left: 2rem; margin-top: 0.5rem;">
                 <li><strong>Hard Interrupt → </strong> $i=\langle\text{end-think}\rangle$ or $\langle\text{force-answer}\rangle$; $r_X' = \emptyset$</li>
                 <li><strong>Speedup → </strong> $i=\text{Please provide the answer as soon as possible.}$</li>
@@ -327,29 +325,50 @@
             <!-- Hard Interrupt Subsection -->
             <div class="columns is-centered">
                 <div class="column is-full">
-                    <h3 class="title is-5" style="margin-top: 0.0rem; margin-bottom: 0.0rem;">
-                        (1) Hard Interrupt: Are LRMs Truly Anytime Models?
-                    </h3>
-                    
-                    <ul style="list-style-type: disc; padding-left: 2rem; margin: 1rem 0 0.5rem 0;">
-                        <li style="margin-bottom: 0.5rem;">Top: Allocating more thinking tokens generally leads to better performance.</li>
-                        <li style="margin-bottom: 0;">Bottom: Much of this gain comes from <strong>reasoning leakage</strong>: spilling unfinished thoughts into their final answers when interrupted.</li>
-                    </ul>
-                    <img src="static/images/figures_new/hard_interrupt_acc_and_len.png" style="max-width: 100%; height: auto;">
-                    <p style="margin-top: 0rem; margin-bottom: 0rem; line-height: 1.6;">
-                        As we see, whether LRMs are truly anytime models is debatable. 
-                        While performance improves with longer reasoning traces, models struggle to produce direct answers when forced to stop early. 
-                        They often "cheat" by sneaking extra reasoning into the answer section, effectively continuing their thought process even after being told to conclude. 
-                        This raises a concern for LRMs — we may not be able to use them reliably in applications that might require fast responses in any chances.
-                      </p>
-                      
-                      <p style="margin-top: 1rem; line-height: 1.6;">
-                        Should we still rely on <em>"thinking tokens vs. accuracy"</em> as the key metric for efficient reasoning? 
-                        The thinking budget alone fails to capture the true computational cost, as longer outputs often hide additional reasoning within the answer itself. The results also echo findings from <em>No-Think</em>, where models tend to "think" anyway — either inside or outside explicit reasoning blocks — to boost performance. 
-                        An ideal model should be both self-aware and reactive: aware of its own reasoning limits, able to estimate the effort required, and capable of responding transparently when a task cannot be fully solved within the given time, rather than “cheating” by performing hidden reasoning during the answer stage.
-                      </p>
+                  <h3 class="title is-5" style="margin-top: 0; margin-bottom: 0;">
+                    (1) Hard Interrupt: Are LRMs Truly Anytime Models?
+                  </h3>
+              
+                  <p style="margin-top: 1rem; margin-bottom: 0; line-height: 1.6;">
+                    When cutting LRMs’ thinking budget in the end-thinking setup, the results look surprisingly good at first: Pass@1 does not drop much.
+                 </p>
+              
+                  <p style="margin-top: 1rem; line-height: 1.6;">
+                    But the fun part comes after we look at the answer lengths, where most models "cheat" when told to answer right away. Even with the inserted end-thinking token, they keep reasoning inside the answer section, sneaking in extra thoughts to reach the right result.
+                    This hidden reasoning, we call it <strong>reasoning leakage</strong>, makes models look smarter than they really are. 
+                    Once we disable it in the force-answering setup, Pass@1 accuracy drops sharply, showing that LRMs still have room for improvement under anytime scenarios.
+                  </p>
+              
+                  <p style="margin-top: 1rem; line-height: 1.6;">
+                    Things get even trickier in coding tasks. Models still "think" through inline comments in the force-answering setup, producing up to 10× longer code to reason their way out. 
+                    It is clever, but it breaks the idea of controlled computation and disobeys the user’s instruction to answer immediately.
+                  </p>
+                  <video class="is-fullwidth" autoplay loop muted playsinline>
+                    <source src="./static/images/hard_interrupt.mov" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+              
+              
+                  <p style="margin-top: 1rem; line-height: 1.6;">
+                    And remember the common "thinking tokens vs. accuracy" plot from prior work
+                    (<a href="https://qwen.ai/blog?id=1e3fa5c2d4662af2855586055ad037ed9e555125&from=research.research-list" target="_blank">Qwen3</a> 
+                    and 
+                    <a href="https://huggingface.co/nvidia/NVIDIA-Nemotron-Nano-12B-v2" target="_blank">NVIDIA’s Nemotron</a>)? 
+                    Our results show that this plot may not tell the full story. 
+                    Longer outputs often hide extra reasoning and quietly inflate compute cost, even when the model appears to stop thinking early.
+                  </p>
+                  
+                  <p style="margin-top: 1rem; line-height: 1.6;">
+                    Ideally, we want models that are aware of their own limits, able to estimate how much reasoning they can afford, and transparent when they cannot solve something in time. 
+                    Instead of secretly thinking more during the answer, they should strike a better balance between following instructions and producing correct results.
+                  </p>
+                  
+                  <p style="margin-top: 1rem; line-height: 1.6;">
+                    <strong>Takeaway:</strong> Current LRMs show fragile anytime behavior caused by reasoning leakage. 
+                    A promising next step is to revisit the "thinking tokens vs. accuracy" metric and address leakage, so that LRMs can be deployed safely in time-critical applications.
+                  </p>
                 </div>
-            </div>
+              </div>
             
             <!-- Speedup Subsection -->
             <div class="columns is-centered">
