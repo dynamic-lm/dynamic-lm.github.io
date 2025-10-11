@@ -44,21 +44,120 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
     <link rel="stylesheet" href="static/css/index.css">
 
+    <!-- Floating TOC Styles -->
+    <style>
+        .floating-toc {
+            position: fixed;
+            left: 5%;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            max-width: 250px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .floating-toc:hover {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .toc-title {
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 0.75rem;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .toc-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .toc-item {
+            margin-bottom: 0.5rem;
+        }
+        
+        .toc-link {
+            color: #64748b;
+            text-decoration: none;
+            display: block;
+            padding: 0.25rem 0;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            line-height: 1.4;
+        }
+        
+        .toc-link:hover {
+            color: #3b82f6;
+            background: rgba(59, 130, 246, 0.1);
+            padding-left: 0.5rem;
+        }
+        
+        .toc-link.active {
+            color: #1e293b;
+            font-weight: 600;
+            background: rgba(59, 130, 246, 0.15);
+            padding-left: 0.5rem;
+        }
+        
+        @media (max-width: 1200px) {
+            .floating-toc {
+                display: none;
+            }
+        }
+    </style>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
     <script defer src="static/fontawesome/js/fontawesome.min.js"></script>
     <script src="static/js/bulma-carousel.min.js"></script>
     <script src="static/js/bulma-slider.min.js"></script>
     <script src="static/js/index.js"></script>
+    
+    <!-- MathJax for LaTeX rendering -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 
 <body>
-    <section class="hero hero--landing">
+    <!-- Floating Table of Contents -->
+    <nav class="floating-toc">
+        <div class="toc-title">Contents</div>
+        <ul class="toc-list">
+            <li class="toc-item"><a href="#overview" class="toc-link">Overview</a></li>
+            <li class="toc-item"><a href="#problem-setup" class="toc-link">Problem Setup</a></li>
+            <li class="toc-item"><a href="#time-constrained" class="toc-link">Time-Constrained Interrupts</a></li>
+            <li class="toc-item"><a href="#update-driven" class="toc-link">Update-Driven Interrupts</a></li>
+            <li class="toc-item"><a href="#scaling-law" class="toc-link">Scaling Law Analysis</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero hero--landing" id="overview">
         <div class="hero-body" style="padding-top: 1.5rem;">
             <div class="container is-max-desktop">
                 <div class="columns is-centered is-vcentered hero-header">
                     <div class="column is-narrow hero-logo-column">
                         <img class="hero-logo" src="static/images/ilrm_logo.png" alt="IRLM Project Logo", style="height: 100px;">
+                        <div class="hero-logo-tooltip">
+                            Think of The Great Wave as a metaphor for dynamic context — the chatbot has to surf the changing tides of conversation, staying robust even as the waves keep moving.
+                        </div>
                     </div>
                     <div class="column has-text-centered hero-text-column">
                         <h1 class="title is-2 publication-title hero-title">Are Large Reasoning Models Interruptible?</h1>
@@ -141,20 +240,46 @@
                         </div>
                     </div>
                 </div>
+                    
+                <div class="carousel-container" style="position: relative; display: flex; align-items: center; justify-content: center; margin: 0rem 0;">
+                    <!-- Left Arrow -->
+                    <button class="carousel-arrow carousel-arrow-left" style="background: none; border: none; font-size: 1.5rem; color: #666; cursor: pointer; margin-right: 1rem;">‹</button>
+                    
+                     <!-- Carousel Content - Sliding Panels -->
+                     <div class="carousel-content" style="position: relative; width: 850px; height: 400px; overflow: hidden; margin: 0 auto;">
+                         <div class="carousel-track" style="position: absolute; top: 0; left: 0; width: 2550px; height: 100%; transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);">
+                             <div class="carousel-panel" style="float: left; width: 850px; height: 100%; background: white; text-align: center; padding: 0.5rem;">
+                                 <div style="background: white; border-radius: 4px; height: 360px; display: flex; align-items: center; justify-content: center;">
+                                     <img src="static/images/answer_length.png" alt="Hard Stop" style="max-width: 100%; max-height: 340px; object-fit: contain;">
+                                 </div>
+                                 <div style="text-align: center; font-weight: 500; color: #333;">Hard Stop → Reasoning Leakage</div>
+                             </div>
+                             <div class="carousel-panel" style="float: left; width: 850px; height: 100%; background: white; text-align: center; padding: 0.5rem;">
+                                 <div style="background: white; border-radius: 4px; height: 360px; display: flex; align-items: center; justify-content: center;">
+                                     <img src="static/images/answer_length.png" alt="Hurry Up" style="max-width: 100%; max-height: 340px; object-fit: contain;">
+                                 </div>
+                                 <div style="text-align: center; font-weight: 500; color: #333;">Hurry Up → Panic</div>
+                             </div>
+                             <div class="carousel-panel" style="float: left; width: 850px; height: 100%; background: white; text-align: center; padding: 0.5rem;">
+                                 <div style="background: white; border-radius: 4px; height: 360px; display: flex; align-items: center; justify-content: center;">
+                                     <img src="static/images/answer_length.png" alt="Info Update" style="max-width: 100%; max-height: 340px; object-fit: contain;">
+                                 </div>
+                                 <div style="text-align: center; font-weight: 500; color: #333; ">Info Update → Self-doubt</div>
+                             </div>
+                         </div>
+                     </div>
+                    
+                    <!-- Right Arrow -->
+                    <button class="carousel-arrow carousel-arrow-right" style="background: none; border: none; font-size: 1.5rem; color: #666; cursor: pointer; padding: 1rem; margin-left: 1rem;">›</button>
+                </div>
                 
-                <div id="results-carousel" class="carousel results-carousel" style="margin-top: -2rem;">
-                    <div class="item">
-                        <img src="static/images/answer_length.png"
-                            alt="Example 1." loading="lazy"/>
-                    </div>
-                    <div class="item">
-                        <img src="static/images/answer_length.png"
-                            alt="Example 2." loading="lazy"/>
-                    </div>
-                    <div class="item">
-                        <img src="static/images/answer_length.png"
-                            alt="Example 3." loading="lazy"/>
-                    </div>
+                <!-- Pagination Indicators -->
+                <div class="carousel-pagination" style="display: flex; justify-content: center; gap: 0.5rem; margin-top: 1rem;">
+                    <span class="pagination-dot active" style="width: 12px; height: 3px; background: #000; border-radius: 2px; display: inline-block;"></span>
+                    <span class="pagination-dot" style="width: 12px; height: 3px; background: #ccc; border-radius: 2px; display: inline-block;"></span>
+                    <span class="pagination-dot" style="width: 12px; height: 3px; background: #ccc; border-radius: 2px; display: inline-block;"></span>
+                    <!-- <span class="pagination-dot" style="width: 12px; height: 3px; background: #ccc; border-radius: 2px; display: inline-block;"></span> -->
+                    <!-- <span class="pagination-dot" style="width: 12px; height: 3px; background: #ccc; border-radius: 2px; display: inline-block;"></span> -->
                 </div>
             </div>
 
@@ -211,170 +336,121 @@
         </div>
       </section> -->
       
-    <!-- End paper abstract -->
-
-    <!-- REVERSE -->
-    <section class="section ">
+    <section class="section" id="problem-setup">
         <div class="container is-max-desktop">
             <div class="columns is-centered has-text-centered">
                 <div class="column is-full">
-                    <h2 class="title is-4">Why Interruptibility Matters
+                    <h2 class="title is-4">How Do LRMs Perform In Dynamic Worlds? 
                     </h2>
                 </div>
             </div>
             <p>
-                Ideal AGI must bend to the human loop. While reasoning models are powerful, people often wanna cut in during their reasoning: Engineers revise specs mid-trace, researchers force early answers, and grad students beg it to hurry up before a deadline. If models can’t handle these real-world interrupts, they fall out of sync with the teams they serve.
-            </p>
+                In the real world, users don’t just sit and wait for a large reasoning model (LRM) to finish: they interrupt, rush, and revise. Because LRM reasoning takes time, models need to handle updates mid-inference. We introduce a new evaluation suite that test how well LRMs cope with interruptions and dynamic context changes across math and coding tasks. While today’s models show some any-time ability, they still struggle to stay stable under real-world dynamics.</p>
             <br>
-            <div class="item is-vcentered" style="text-align: center;">
-                <img src="./static/images/fig1.png" style="width: 90%; height: auto;">
+            <div class="item is-vcentered" style="text-align: center; width: 90%; margin: 0 auto;">
+                <img src="./static/images/fig2.png" style="max-width: 100%; height: auto;">
             </div>
+            <br>
+            <p>We study three major types of interruptions: hard stop, hurry up, and info update. The evaluation protocol is shown above: we run a single inference session to obtain the full reasoning chain $r_X$ and then interrupt it at different stages of the reasoning process:</p>
+            <ul style="list-style-type: disc; padding-left: 2rem; margin-top: 0.5rem;">
+                <li><strong>Hard Stop → </strong> $i=\langle\text{end-think}\rangle$ or $\langle\text{force-answer}\rangle$; $r_X' = \emptyset$</li>
+                <li><strong>Hurry Up → </strong> $i=\text{Please provide the answer as soon as possible.}$</li>
+                <li><strong>Info Update →</strong> $i=\text{Update information}$</li>
+            </ul>
+            <p style="margin-top: 0.5rem;">For hard stop and hurry up evaluations, we directly utilized existing math and coding datasets, including GSM8K, MATH-500, AIME 24/25, and LiveCodeBench-v6. For the info update track specifically, we augmented these datasets to create a new collection containing 1401 reasoning problems with multiple conflicting information updates.</p>
+            <br>
+            <p>See more about out dataset (a Gallery below).</p>
         </div>
     </section>
 
-    <section class="section hero">
+    <section class="section" id="time-constrained">
         <div class="container is-max-desktop">
             <div class="columns is-centered has-text-centered">
                 <div class="column is-full">
-                    <h2 class="title is-4">REVERSE's Training Recipe: A New Training Data with Custom Loss</h2>
+                    <h2 class="title is-4">How Do LRMs Behave Under Time-Constrained Interruptions?</h2>
                 </div>
             </div>
-            <div class="content has-text-justified">
-                <ul>
-                    <li>
-                        <b>Introducing Three Special Tokens</b>: REVERSE training introduces three tokens which can be used to explicity mark key phrases to represent the model's confidence level: <code>&lt;SPAN&gt;</code> marks the start of a key phrase. The phrase then ends with either <code>&lt;/CN&gt;</code> (for confident/grounded) or <code>&lt;/UN&gt;</code> (for unconfident/potentially hallucinated). These tokens act like in-line confidence classifiers, enabling the model not only to flag uncertainty but also to determine  <em>where</em> to backtrack.
-                </ul>
-                <ul>
-                    <li>
-                        <b>A New Training Dataset</b>:
-                            Annotating our data with such tokens, we built <strong>1.3M-sample instruction-tuning dataset</strong>, augmenting LLaVA-v1.5.
-                            Our dataset maintains a similar overall composition from the LLaVA-v1.5. dataset, while preserving the data quality, the same average question-answer pairs per sample and a comparable question type distribution.
-                    </li> 
-                    <!-- TODO: Dataset example picture -->
-                </ul>
-                    <div class="item is-vcentered" style="text-align: center;">
-                        <!-- <img src="static/images/dataset_example.png" alt="" /> -->
-                        <img src="static/images/dataset_example2.png" alt="" style="width: 90%; height: auto;" />
-                    </div>
-                <ul>
-                    <li>
-                      <b>Hallucination-Aware Training Objectives</b>: 
-                      <ul>
-                        <li><strong>Standard next-token prediction:</strong> Retains conventional instruction tuning behavior for answer generation.</li>
-                        <li><strong>Avoiding hallucination modeling:</strong> Minimizes the likelihood of producing tokens labeled as hallucinated in the dataset.</li>
-                        <li><strong>Confidence tagging:</strong> Teaches the model when to emit <code>&lt;SPAN&gt;</code>, and whether to end with <code>&lt;/CN&gt;</code> or <code>&lt;/UN&gt;</code> as a signal of groundedness.</li>
-                      </ul>
-                    </li>
-                  </ul>
-                  <p style="margin-left: 2rem;">
-                    We achieve this through a <b>weighted token loss</b>: <b>positive weights</b> are applied to <code>&lt;SPAN&gt;</code> and <code>&lt;/CN&gt;</code> tokens, while <strong>zero weights</strong> are assigned to tokens inside <code>&lt;SPAN&gt;...&lt;/UN&gt;</code> sections—effectively masking them to avoid penalizing the model when generating ungrounded phrases.
-                  </p>
-            </div>
-        </div>
-    </section>
-    <section class="section hero">
-        <div class="container is-max-desktop">
-            <div class="columns is-centered has-text-centered">
+            
+            <!-- Hard Stop Subsection -->
+            <div class="columns is-centered">
                 <div class="column is-full">
-                    
-                    <!-- TODO: perhaps put Figure 3 -->
-                 
-                    <h2 class="title is-4">REVERSE's Inference Paradigm: Retrospective Resampling</h2>
-                    <div class="content has-text-justified">
-                        <p style="margin-left: 1rem;">
-                            During inference, REVERSE performs next-token prediction while monitoring the probability of <code>&lt;/UN&gt;</code>. Instead of passively waiting for a hallucination to fully appear, we proactively intervene when the probability exceeds a set confidence threshold (τ). This enables the model to identify and correct hallucinations before they are fully formed.
-                        </p>
-                        <ul>
-                            <li><strong>Backtracking Strategy:</strong>
-                                <ol>
-                                    <li>First, backtrack to the <b>most recent</b> <code>&lt;/CN&gt;</code> token.</li>
-                                    <li><b>(After <em>K</em> local correction attempts):</b> The model assumes the issue originates earlier and backtracks to the nearest prior punctuation.</li>
-                                    <li><b>(After <em>N</em> total attempts):</b> The model returns the output with a flag indicating that hallucination is unresolved.</li>
-                                </ol>
-                            </li>
-                            <li><strong>Self-Correction Strategies:</strong> 
-                                <ul>
-                                    <li><strong>Rejection Sampling:</strong> The model resamples multiple completions at a higher temperature (T+ΔT), searching for an alternative phrase that falls below the hallucination threshold.</li>
-                                    <li><strong>Query Rewriting:</strong> In addition to rejection sampling, REVERSE augments the prompt with hints to improve grounding. Specifically, the prompt is rewritten to include phrases like: <i>Hint: potential incorrect phrases</i>.
-                                        <br>
-                                        This instructs the model to revisit uncertain segments to provide a more reliable response. During training, Some of the queries are randomly injected with hint-based rewrites to help the model recognize and respond to them.
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                        <p style="margin-left: 1rem; margin-top: 1rem;">
-                            <strong>Open-ended tasks:</strong> In these tasks, models often encounter false premises or lack sufficient context. To address this, we adopt a prompting strategy that encourages the model to <b>identify missing information or invalid assumptions, rather than attempting to answer directly</b>. (Modified prompt): <i>"For this question, please point out the false premises or note what information is missing, rather than answering it directly."</i>
-                        </p>
-                    </div>
+                    <h3 class="title is-5" style="margin-top: 2rem; margin-bottom: 1rem;">(1) Hard Stop: Are LRMs anytime models?</h3>
+                    <p>When users abruptly interrupt the model's reasoning process, we observe significant reasoning leakage where models spill their incomplete thoughts into the final answer.</p>
                 </div>
             </div>
-            <video class="is-fullwidth" autoplay loop muted playsinline>
-                <source src="./static/images/fig3.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        </div>
-    </section>
-
-    <section class="section ">
-        <div class="container is-max-desktop">
-            <div class="columns is-centered has-text-centered">
+            
+            <!-- Hurry Up Subsection -->
+            <div class="columns is-centered">
                 <div class="column is-full">
-                    <h2 class="title is-4">Examples: Real Evaluation Result Examples</h2>
-                    <div class="content has-text-justified">
-                        <p> Examples from AMBER benchmark evaluation for comparison. Hallucinated objects from other VLMs are highlighted in red. </p>
-                        <div class="item is-vcentered">
-                            <img src="static/images/qualitative_examples_2.png" alt="" />
-                        </div><br>
-                        <div class="columns is-centered has-text-centered">
-                            <div class="column is-full">
-                                <h2 class="title is-4">Results: Performance Comparison Across Different Tasks</h2>
-                            </div>
-                        </div>
-                        <p>
-                            Our evaluations show that <b>REVERSE</b> achieves state-of-the-art hallucination reduction, <b>outperforming the best existing methods</b> by up to 12% on CHAIR-MSCOCO and 28% on HaloQuest.
-                        </p>
-                        <b> Image Captioning Tasks</b>
-                        <p>
-                            Performance comparison across different models on <b>CHAIR-MSCOCO</b> and <b>AMBER(g)</b> benchmark.
-                        </p>
-                        <div class="item is-vcentered">
-                            <img src="static/images/image_captioning_results.png" alt="" />
-                        </div>
-                        <br>
-                        <b> Open-ended Question Answering </b>
-                        <p>
-                            Performance comparison across different models on <b>mmHal</b> (Left), <b>HaloQuest</b> (Right) benchmark .
-                        </p>
-                        <div class="columns is-centered is-vcentered">
-                            <div class="column is-half">
-                                <img src="static/images/mmhal_results.png" alt="HaloQuest Results" style="width: 88%; height: auto;" />
-                            </div>
-                            <div class="column is-half">
-                                <img src="static/images/haloquest_results.png" alt="MMHal Results" style="width: 88%; height: auto;" />
-                            </div>
-                        </div>
-                        <br>
-
-                        <b> Discriminative Questions </b>
-                        <p>
-                            Performance comparison across different models on <b>AMBER(d)</b>, <b>POPE</b>, <b>MME-Hall</b>.
-                        </p>
-                        <div class="item is-vcentered">
-                            <img src="static/images/discriminative_results.png" alt="discriminative_results" style="width: 99%; height: auto;" />
-                        </div>
-                    </div>
+                    <h3 class="title is-5" style="margin-top: 2rem; margin-bottom: 1rem;">(2) Hurry Up: Can we reduce LRM's computes on-the-fly?</h3>
+                    <p>Under time pressure, models exhibit panic behavior, rushing to provide answers without completing their reasoning process, leading to decreased accuracy.</p>
                 </div>
             </div>
         </div>
     </section>
 
+    <section class="section" id="update-driven">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-full">
+                    <h2 class="title is-4">How Do LRMs Behave Under Update-Driven Interruptions?</h2>
+                </div>
+            </div>
+            <!-- Hard Stop Subsection -->
+            <div class="columns is-centered">
+                <div class="column is-full">
+                    <h3 class="title is-5" style="margin-top: 2rem; margin-bottom: 1rem;">(1) What's the best way to provide updates to LRMs?</h3>
+                    <p>When users abruptly interrupt the model's reasoning process, we observe significant reasoning leakage where models spill their incomplete thoughts into the final answer.</p>
+                </div>
+            </div>
+            
+            <!-- Hurry Up Subsection -->
+            <div class="columns is-centered">
+                <div class="column is-full">
+                    <h3 class="title is-5" style="margin-top: 2rem; margin-bottom: 1rem;">(2) What happens if we combine updates with time pressure?</h3>
+                    <p>Under time pressure, models exhibit panic behavior, rushing to provide answers without completing their reasoning process, leading to decreased accuracy.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="scaling-law">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-full">
+                    <h2 class="title is-4">Does scaling-law still hold here?</h2>
+                </div>
+            </div>
+            <!-- Hard Stop Subsection -->
+            <div class="columns is-centered">
+                <div class="column is-full">
+                    <h3 class="title is-5" style="margin-top: 2rem; margin-bottom: 1rem;">(1) Time-Constrained Interruptions</h3>
+                </div>
+            </div>
+            
+            <!-- Hurry Up Subsection -->
+            <div class="columns is-centered">
+                <div class="column is-full">
+                    <h3 class="title is-5" style="margin-top: 2rem; margin-bottom: 1rem;">(2) Update-Driven Interruptions</h3>
+                </div>
+            </div>
+        </div>
+    </section>
 
 
     <!--BibTex citation -->
     <section class="section" id="BibTeX">
         <div class="container is-max-desktop content">
-            <h2 class="title">BibTeX</h2>
-            <pre><code>@misc{wu2025interruptible,
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h3 class="title" style="margin-bottom: 0;">BibTeX</h3>
+                <button id="copy-bibtex" class="button is-small is-light" style="border: 1px solid #ddd; background: #f8f9fa;">
+                    <span class="icon is-small">
+                        <i class="fas fa-copy"></i>
+                    </span>
+                    <span>Copy</span>
+                </button>
+            </div>
+            <pre id="bibtex-content" style="position: relative; background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 6px; padding: 1rem; margin: 0;"><code>@misc{wu2025interruptible,
   title={Are Large Reasoning Models Interruptible?},
   author={Wu, Tsung-Han and Miroyan, Mihran and Chan, David M and Darrell, Trevor and Norouzi, Narges and Gonzalez, Joseph E},
   note={Project page},
@@ -413,6 +489,199 @@
     <!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
 
     <!-- End of Statcounter Code -->
+
+    <script>
+        // Carousel functionality
+        let currentSlide = 0;
+        const totalSlides = 3;
+        const images = [
+            'static/images/answer_length.png',
+            'static/images/answer_length.png', 
+            'static/images/answer_length.png'
+        ];
+        const labels = ['Hard Stop → Reasoning Leakage', 'Hurry Up → Panic', 'Info Update → Self-doubt'];
+
+        function updateCarousel() {
+            const track = document.querySelector('.carousel-track');
+            const dots = document.querySelectorAll('.pagination-dot');
+            
+            // Slide the track to show the current slide
+            const leftPosition = -currentSlide * 850; // 850px is the width of each panel
+            track.style.left = leftPosition + 'px';
+            
+            // Debug: log the position to ensure it's correct
+            console.log(`Slide ${currentSlide + 1}: moving to position ${leftPosition}px`);
+            
+            // Update pagination dots
+            dots.forEach((dot, index) => {
+                if (index === currentSlide) {
+                    dot.style.background = '#000';
+                } else {
+                    dot.style.background = '#ccc';
+                }
+            });
+        }
+
+        // Add event listeners to arrows
+        document.querySelector('.carousel-arrow-left').addEventListener('click', () => {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateCarousel();
+        });
+
+        document.querySelector('.carousel-arrow-right').addEventListener('click', () => {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateCarousel();
+        });
+
+        // Add event listeners to pagination dots
+        document.querySelectorAll('.pagination-dot').forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentSlide = index;
+                updateCarousel();
+            });
+        });
+
+        // Auto-play functionality
+        let autoPlayInterval;
+        
+        function startAutoPlay() {
+            autoPlayInterval = setInterval(() => {
+                currentSlide = (currentSlide + 1) % totalSlides;
+                updateCarousel();
+            }, 3000); // Change slide every 3 seconds
+        }
+        
+        function stopAutoPlay() {
+            clearInterval(autoPlayInterval);
+        }
+        
+        // Pause auto-play when user interacts with carousel
+        document.querySelector('.carousel-container').addEventListener('mouseenter', stopAutoPlay);
+        document.querySelector('.carousel-container').addEventListener('mouseleave', startAutoPlay);
+        
+        // Initialize carousel
+        updateCarousel();
+        startAutoPlay();
+        
+        // Floating TOC functionality
+        function updateActiveTOCLink() {
+            const sections = document.querySelectorAll('section[id]');
+            const tocLinks = document.querySelectorAll('.toc-link');
+            
+            let currentSection = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= (sectionTop - 200)) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+            
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + currentSection) {
+                    link.classList.add('active');
+                }
+            });
+        }
+        
+        // Update active link on scroll
+        window.addEventListener('scroll', updateActiveTOCLink);
+        
+        // Smooth scrolling for TOC links
+        document.querySelectorAll('.toc-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    targetSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Initialize active link
+        updateActiveTOCLink();
+        
+        // BibTeX copy functionality
+        function setupBibtexCopy() {
+            const copyButton = document.getElementById('copy-bibtex');
+            if (!copyButton) {
+                console.log('Copy button not found');
+                return;
+            }
+            
+            copyButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                const bibtexText = `@misc{wu2025interruptible,
+  title={Are Large Reasoning Models Interruptible?},
+  author={Wu, Tsung-Han and Miroyan, Mihran and Chan, David M and Darrell, Trevor and Norouzi, Narges and Gonzalez, Joseph E},
+  note={Project page},
+  year={2025}
+}`;
+                
+                // Try modern clipboard API first
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(bibtexText).then(function() {
+                        showCopySuccess(copyButton);
+                    }).catch(function(err) {
+                        console.error('Clipboard API failed:', err);
+                        fallbackCopy(bibtexText, copyButton);
+                    });
+                } else {
+                    // Fallback for older browsers
+                    fallbackCopy(bibtexText, copyButton);
+                }
+            });
+        }
+        
+        function showCopySuccess(button) {
+            const originalHTML = button.innerHTML;
+            button.innerHTML = '<span class="icon is-small"><i class="fas fa-check"></i></span><span>Copied!</span>';
+            button.style.background = '#d4edda';
+            button.style.borderColor = '#c3e6cb';
+            button.style.color = '#155724';
+            
+            setTimeout(function() {
+                button.innerHTML = originalHTML;
+                button.style.background = '#f8f9fa';
+                button.style.borderColor = '#ddd';
+                button.style.color = '';
+            }, 2000);
+        }
+        
+        function fallbackCopy(text, button) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                showCopySuccess(button);
+            } catch (err) {
+                console.error('Fallback copy failed:', err);
+                alert('Failed to copy. Please select and copy manually.');
+            }
+            
+            document.body.removeChild(textArea);
+        }
+        
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', setupBibtexCopy);
+        } else {
+            setupBibtexCopy();
+        }
+    </script>
 
 </body>
 
