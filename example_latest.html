@@ -31,22 +31,39 @@
     .math-answer, .final-answer { border-radius: 10px; line-height: 1.6; max-height: 180px; overflow-y: auto; }
     .math-answer { background: #f1f5f9; border-left: 4px solid #0ea5e9; padding: 12px 16px; }
     .final-answer { background: #e0f2fe; border-left: 4px solid #0284c7; padding: 12px 14px; font-weight: 600; color: #0f172a; }
-    pre { margin: 0; border-radius: 10px; overflow-y: auto; max-height: 260px; }
-    .code-block { position: relative; padding-left: 0.0rem; counter-reset: line-number; }
-    .code-block code { font-size: 0.9rem; line-height: 1.45; display: block; }
-    .code-line { display: block; padding: 0 0.6rem; white-space: pre; position: relative; }
-    .code-line::before {
-      counter-increment: line-number;
-      content: attr(data-line);
-      position: absolute;
-      left: -3.6rem;
-      width: 3.1rem;
-      padding-right: 0.5rem;
-      text-align: right;
-      color: #9ca3af;
-      border-right: 1px solid rgba(156, 163, 175, 0.35);
+    pre { margin: 0; border-radius: 10px; overflow: auto; max-height: 260px; }
+    pre.code-block {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      padding: 0;
+      background: #2d333b;
+      border: 1px solid #444c56;
     }
-    .code-line:nth-child(odd) { background: rgba(255, 255, 255, 0.03); }
+    pre.code-block code {
+      display: block;
+      font-size: 0.9rem;
+      line-height: 1.45;
+      padding: 12px 16px;
+      min-width: 0;
+      white-space: pre;
+    }
+    pre.code-block .line-numbers {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: flex-end;
+      padding: 12px 12px 12px 16px;
+      font-family: "JetBrains Mono", "Fira Code", Consolas, monospace;
+      font-size: 0.9rem;
+      line-height: 1.45;
+      color: #9ca3af;
+      background: rgba(15, 23, 42, 0.6);
+      border-right: 1px solid rgba(148, 163, 184, 0.35);
+      user-select: none;
+      min-width: 3ch;
+    }
+    pre.code-block .line-numbers span {
+      display: block;
+    }
     .inline-code {
       font-family: "JetBrains Mono", "Fira Code", Consolas, monospace;
       background: rgba(15, 23, 42, 0.08);
@@ -399,16 +416,39 @@
       if (!codeEl || codeEl.dataset.lineNumbers === "true") {
         return;
       }
-      const html = codeEl.innerHTML.replace(/\n$/, "");
-      const segments = html.split(/\n/);
-      const numbered = segments
-        .map((segment, index) => {
-          const safe = segment.length ? segment : "&nbsp;";
-          return `<span class="code-line" data-line="${index + 1}">${safe}</span>`;
-        })
-        .join("");
-      codeEl.innerHTML = numbered;
+
+      const pre = codeEl.parentElement;
+      if (!pre || !pre.classList.contains("code-block")) {
+        return;
+      }
+
+      const rawText = (codeEl.textContent || "").replace(/\r\n/g, "\n");
+      let totalLines = rawText.split("\n").length;
+
+      if (rawText.endsWith("\n")) {
+        totalLines -= 1;
+      }
+
+      if (totalLines < 1) {
+        totalLines = 1;
+      }
+
+      const numbers = document.createElement("span");
+      numbers.className = "line-numbers";
+      numbers.setAttribute("aria-hidden", "true");
+
+      const fragment = document.createDocumentFragment();
+      for (let idx = 1; idx <= totalLines; idx += 1) {
+        const marker = document.createElement("span");
+        marker.textContent = idx;
+        fragment.appendChild(marker);
+      }
+
+      numbers.appendChild(fragment);
+      pre.insertBefore(numbers, codeEl);
+
       codeEl.dataset.lineNumbers = "true";
+      pre.dataset.lineNumbers = "true";
     }
 
     function typesetMath(scope) {

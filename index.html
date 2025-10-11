@@ -42,6 +42,7 @@
     <link rel="stylesheet" href="static/css/bulma-slider.min.css">
     <link rel="stylesheet" href="static/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
     <link rel="stylesheet" href="static/css/index.css">
 
     <!-- Floating TOC Styles -->
@@ -115,6 +116,182 @@
                 display: none;
             }
         }
+        
+        /* Interactive Examples Styles */
+        .interactive-viz { margin: 0; font-family: "Inter", Arial, sans-serif; background: #eef2f7; color: #1c1c1c; }
+        .interactive-viz .wrapper { max-width: 1280px; margin: 32px auto; background: #fff; border-radius: 14px; box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12); overflow: hidden; }
+        .interactive-viz .header { padding: 22px 28px; background: linear-gradient(135deg, #1f3c88, #111827); color: #fff; display: flex; justify-content: space-between; align-items: center; }
+        .interactive-viz .header h1 { margin: 0; font-size: 1.2rem; font-weight: 600; max-width: 75%; }
+        .interactive-viz .header button { background: rgba(255,255,255,0.92); color: #111827; border: none; padding: 9px 18px; border-radius: 999px; font-weight: 600; cursor: pointer; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+        .interactive-viz .header button:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(255,255,255,0.35); }
+        .interactive-viz .question-details { padding: 22px 28px; border-bottom: 1px solid #e5e7eb; display: none; line-height: 1.55; background: #f8fafc; }
+        .interactive-viz .control-bar { padding: 20px 28px; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; border-bottom: 1px solid #e5e7eb; }
+        .interactive-viz .control-bar button { background: #2563eb; color: #fff; border: none; padding: 10px 18px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: background 0.15s ease; }
+        .interactive-viz .control-bar button:hover { background: #1d4ed8; }
+        .interactive-viz .model-selection { display: flex; flex-wrap: wrap; gap: 10px; }
+        .interactive-viz .model-checkbox { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 999px; background: #f9fafb; cursor: pointer; transition: border-color 0.15s ease, background 0.15s ease; }
+        .interactive-viz .model-checkbox input { accent-color: #2563eb; cursor: pointer; }
+        .interactive-viz .model-checkbox:hover { border-color: #2563eb; background: #f3f4ff; }
+        .interactive-viz .panels-container { padding: 12px 2% 16px; display: flex; flex-direction: column; gap: 16px; }
+        .interactive-viz .model-header { text-align: center; margin-bottom: 8px; }
+        .interactive-viz .model-header h2 { margin: 0; font-size: 1.1rem; font-weight: 600; color: #0f172a; }
+        .interactive-viz .model-panels { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); }
+        .interactive-viz .panel { border: none; border-radius: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; background: transparent; min-height: 450px; box-shadow: none; }
+        .interactive-viz .panel h3 { margin: 0; font-size: 0.95rem; color: #1f2937; font-weight: 700; }
+        .interactive-viz .reasoning-toggle { align-self: flex-start; background: #f97316; color: #fff; border: none; padding: 7px 16px; border-radius: 999px; font-weight: 600; cursor: pointer; transition: background 0.15s ease, transform 0.15s ease; }
+        .interactive-viz .reasoning-toggle:hover { background: #ea580c; transform: translateY(-1px); }
+        .interactive-viz .reasoning { display: none; background: #fff4ed; border-left: 4px solid #f97316; padding: 12px 14px; border-radius: 10px; font-size: 0.95rem; line-height: 1.55; color: #7c2d12; max-height: 180px; overflow-y: auto; }
+        .interactive-viz .math-answer, .interactive-viz .final-answer { border-radius: 10px; line-height: 1.6; max-height: 400px; overflow-y: auto; }
+        .interactive-viz .math-answer { background: #f1f5f9; border-left: 4px solid #0ea5e9; padding: 12px 16px; }
+        .interactive-viz .final-answer { background: #e0f2fe; border-left: 4px solid #0284c7; padding: 12px 14px; font-weight: 600; color: #0f172a; }
+        .interactive-viz pre { margin: 0; border-radius: 10px; overflow: auto; max-height: 400px; }
+        .interactive-viz pre.code-block {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            padding: 0;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+        }
+        .interactive-viz pre.code-block code {
+            display: block;
+            font-size: 0.9rem;
+            line-height: 1.45;
+            padding: 12px 16px;
+            min-width: 0;
+            white-space: pre;
+        }
+        .interactive-viz pre.code-block .line-numbers {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: flex-end;
+            padding: 12px 12px 12px 16px;
+            font-family: "JetBrains Mono", "Fira Code", Consolas, monospace;
+            font-size: 0.9rem;
+            line-height: 1.45;
+            color: #94a3b8;
+            background: rgba(148, 163, 184, 0.12);
+            border-right: 1px solid rgba(148, 163, 184, 0.35);
+            user-select: none;
+            min-width: 3ch;
+        }
+        .interactive-viz pre.code-block .line-numbers span {
+            display: block;
+        }
+        .interactive-viz .inline-code {
+            font-family: "JetBrains Mono", "Fira Code", Consolas, monospace;
+            background: rgba(15, 23, 42, 0.08);
+            color: #0f172a;
+            border-radius: 6px;
+            padding: 0.1rem 0.35rem;
+            font-size: 0.92em;
+            white-space: pre;
+        }
+        .interactive-viz .empty-state { text-align: center; padding: 40px; border: 1px dashed #cbd5f5; border-radius: 12px; color: #64748b; background: #f8fafc; }
+        
+        /* Hover view button styles */
+        .interactive-viz .content-container { position: relative; }
+        .interactive-viz .view-separate-btn { 
+            position: absolute; 
+            top: 8px; 
+            right: 8px; 
+            background: rgba(0, 0, 0, 0.7); 
+            color: white; 
+            border: none; 
+            padding: 6px 12px; 
+            border-radius: 6px; 
+            font-size: 0.8rem; 
+            cursor: pointer; 
+            opacity: 0; 
+            transition: opacity 0.2s ease; 
+            z-index: 10;
+        }
+        .interactive-viz .content-container:hover .view-separate-btn { opacity: 1; }
+        .interactive-viz .view-separate-btn:hover { background: rgba(0, 0, 0, 0.9); }
+        
+        /* Modal styles */
+        .interactive-viz .modal { 
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
+            left: 0; 
+            top: 0; 
+            width: 100%; 
+            height: 100%; 
+            background-color: rgba(0, 0, 0, 0.5); 
+        }
+        .interactive-viz .modal-content { 
+            background-color: #fff; 
+            margin: 5% auto; 
+            padding: 20px; 
+            border-radius: 12px; 
+            width: 90%; 
+            max-width: 1000px; 
+            height: 80vh; 
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .interactive-viz .modal-close { 
+            position: absolute; 
+            top: 16px; 
+            right: 20px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 24px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            color: #64748b;
+            line-height: 1;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+        .interactive-viz .modal-close:hover { 
+            color: #1f2933; 
+            background: rgba(148, 163, 184, 0.2);
+        }
+        .interactive-viz .modal-close::before,
+        .interactive-viz .modal-close::after {
+            content: none;
+        }
+        .interactive-viz .modal-header { 
+            margin-bottom: 20px; 
+            padding-bottom: 10px; 
+            border-bottom: 1px solid #eee; 
+            flex-shrink: 0;
+        }
+        .interactive-viz #modal-body { 
+            flex: 1; 
+            overflow: auto; 
+            min-height: 0;
+            padding-right: 4px;
+        }
+        .interactive-viz #modal-body pre { 
+            margin: 0;
+            background: #f8f8f8;
+            border: 1px solid #e1e4e8;
+            overflow: visible;
+        }
+        .interactive-viz #modal-body pre.code-block { 
+            height: auto; 
+            max-height: none; 
+            background: #f8f8f8;
+            border: 1px solid #e1e4e8;
+            overflow-x: auto;
+            overflow-y: visible;
+        }
+        .interactive-viz #modal-body pre.code-block .line-numbers {
+            background: #eef2f6;
+        }
+        .interactive-viz #modal-body .math-answer, 
+        .interactive-viz #modal-body .final-answer { 
+            height: 100%; 
+            max-height: none; 
+            overflow-y: auto;
+        }
     </style>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -123,6 +300,10 @@
     <script src="static/js/bulma-carousel.min.js"></script>
     <script src="static/js/bulma-slider.min.js"></script>
     <script src="static/js/index.js"></script>
+    
+    <!-- Highlight.js for code syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
     
     <!-- MathJax for LaTeX rendering -->
     <script>
@@ -506,6 +687,23 @@
     </section>
 
 
+    <!-- Interactive Examples Section -->
+    <section class="section" id="interactive-examples">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-full">
+                    <h2 class="title is-4">Interactive Examples</h2>
+                    <p style="margin-bottom: 2rem; color: #666;">Explore how different models handle interruptions in real coding and math problems</p>
+                </div>
+            </div>
+            
+            <!-- Interactive Visualization Container -->
+            <div id="interactive-viz-container" style="margin: 2rem 0;">
+                <!-- Content will be loaded here by JavaScript -->
+            </div>
+        </div>
+    </section>
+
     <!--BibTex citation -->
     <section class="section" id="BibTeX">
         <div class="container is-max-desktop content">
@@ -749,6 +947,455 @@
         } else {
             setupBibtexCopy();
         }
+        
+        // Interactive Examples functionality
+        let interactiveProblems = [];
+        let currentInteractiveProblemIndex = 0;
+
+        function escapeHTML(str = "") {
+            return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+
+        function truncate(text = "", limit = 96) {
+            const base = String(text);
+            return base.length > limit ? base.slice(0, limit).trim() + "…" : base;
+        }
+
+        function slugify(text = "model") {
+            return String(text).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "model";
+        }
+
+        function formatPlainText(value = "") {
+            const tokens = tokenizePlainText(String(value));
+            return tokens.map(renderPlainToken).join("");
+        }
+
+        function tokenizePlainText(input) {
+            const tokens = [];
+            let idx = 0;
+            let buffer = "";
+
+            const flushBuffer = () => {
+                if (buffer) {
+                    tokens.push({ type: "text", content: buffer });
+                    buffer = "";
+                }
+            };
+
+            while (idx < input.length) {
+                if (input.startsWith("```", idx)) {
+                    const fenceEnd = input.indexOf("```", idx + 3);
+                    if (fenceEnd === -1) {
+                        buffer += input.slice(idx);
+                        break;
+                    }
+
+                    flushBuffer();
+
+                    let lang = "";
+                    let contentStart = idx + 3;
+                    const newlineIdx = input.indexOf("\n", idx + 3);
+                    if (newlineIdx !== -1 && newlineIdx < fenceEnd) {
+                        lang = input.slice(idx + 3, newlineIdx).trim();
+                        contentStart = newlineIdx + 1;
+                    }
+                    const content = input.slice(contentStart, fenceEnd);
+                    tokens.push({ type: "codeblock", lang, content });
+                    idx = fenceEnd + 3;
+                    continue;
+                }
+
+                if (input.startsWith("**", idx)) {
+                    const end = input.indexOf("**", idx + 2);
+                    if (end === -1) {
+                        buffer += input[idx];
+                        idx += 1;
+                    } else {
+                        flushBuffer();
+                        const content = input.slice(idx + 2, end);
+                        tokens.push({ type: "bold", content });
+                        idx = end + 2;
+                    }
+                    continue;
+                }
+
+                if (input[idx] === "`") {
+                    const end = input.indexOf("`", idx + 1);
+                    if (end === -1) {
+                        buffer += input[idx];
+                        idx += 1;
+                    } else {
+                        flushBuffer();
+                        const content = input.slice(idx + 1, end);
+                        tokens.push({ type: "inline", content });
+                        idx = end + 1;
+                    }
+                    continue;
+                }
+
+                buffer += input[idx];
+                idx += 1;
+            }
+
+            if (idx >= input.length && buffer) {
+                tokens.push({ type: "text", content: buffer });
+            }
+
+            return tokens;
+        }
+
+        function renderPlainToken(token) {
+            switch (token.type) {
+                case "text":
+                    return escapeHTML(token.content).replace(/\n/g, "<br>");
+                case "bold":
+                    return `<strong>${formatPlainText(token.content)}</strong>`;
+                case "inline": {
+                    const trimmed = token.content.trim();
+                    if (/^latex[:\s]/i.test(trimmed)) {
+                        const latexContent = trimmed.replace(/^latex[:\s]*/i, "");
+                        return wrapLatex(latexContent);
+                    }
+                    return `<code class="inline-code">${escapeHTML(token.content)}</code>`;
+                }
+                case "codeblock": {
+                    const lang = (token.lang || "").trim().toLowerCase();
+                    if (lang === "latex" || lang === "math" || lang === "tex") {
+                        return wrapLatex(token.content.trim());
+                    }
+                    const languageClass = lang ? `language-${escapeHTML(lang)}` : "language-plaintext";
+                    return `<pre class="code-block"><code class="${languageClass}">${escapeHTML(token.content)}</code></pre>`;
+                }
+                default:
+                    return "";
+            }
+        }
+
+        function wrapLatex(value = "") {
+            const trimmed = value.trim();
+            if (!trimmed) return "";
+            const needsBlock = trimmed.includes("\n") || trimmed.includes("\\begin");
+            return needsBlock ? `<span class="mathjax-latex">\\[${trimmed}\\]</span>` : `<span class="mathjax-latex">\\(${trimmed}\\)</span>`;
+        }
+
+        function renderRich(content) {
+            if (!content) return "";
+            if (typeof content === "string") {
+                return formatPlainText(content);
+            }
+            const format = content.format || "text";
+            const value = content.value ?? "";
+            if (!value) return "";
+            if (format === "latex") return wrapLatex(String(value));
+            if (format === "html") return String(value);
+            return formatPlainText(value);
+        }
+
+        function normalizeContent(content, fallbackValue = "") {
+            if (!content && !fallbackValue) {
+                return null;
+            }
+            if (typeof content === "string") {
+                return { format: "text", value: content };
+            }
+            if (content && typeof content === "object") {
+                const value = content.value ?? fallbackValue;
+                return { format: content.format || "text", value };
+            }
+            return { format: "text", value: fallbackValue };
+        }
+
+        function extractQuestion(problem) {
+            const question = problem.question;
+            if (!question) {
+                return { title: "Untitled Problem", content: null };
+            }
+            if (typeof question === "string") {
+                return { title: question, content: { format: "text", value: question } };
+            }
+            const title = question.title || "Untitled Problem";
+            const content = normalizeContent(question.content, title);
+            return { title, content };
+        }
+
+        async function loadInteractiveProblems() {
+            try {
+                const container = document.getElementById('interactive-viz-container');
+                if (!container) return;
+                
+                container.innerHTML = '<div class="interactive-viz"><div class="wrapper"><div class="header"><h1>Loading problems…</h1></div></div></div>';
+                
+                const response = await fetch("./interactive_examples_data.json", { cache: "no-cache" });
+                if (!response.ok) {
+                    throw new Error(`Failed to load data (${response.status})`);
+                }
+                const payload = await response.json();
+                interactiveProblems = Array.isArray(payload.problems) ? payload.problems : [];
+                if (!interactiveProblems.length) {
+                    container.innerHTML = '<div class="interactive-viz"><div class="wrapper"><div class="header"><h1>No problems available.</h1></div></div></div>';
+                    return;
+                }
+                currentInteractiveProblemIndex = 0;
+                renderInteractiveProblem();
+            } catch (error) {
+                console.error(error);
+                const container = document.getElementById('interactive-viz-container');
+                if (container) {
+                    container.innerHTML = `<div class="interactive-viz"><div class="wrapper"><div class="header"><h1>Failed to load examples.</h1></div></div></div>`;
+                }
+            }
+        }
+
+        function renderInteractiveProblem() {
+            if (!interactiveProblems.length) {
+                return;
+            }
+            const problem = interactiveProblems[currentInteractiveProblemIndex];
+            const { title, content } = extractQuestion(problem);
+            
+            const container = document.getElementById('interactive-viz-container');
+            if (!container) return;
+            
+            container.innerHTML = `
+                <div class="interactive-viz">
+                    <div class="wrapper">
+                        <div class="header">
+                            <h1 id="interactive-question-title">${escapeHTML(title)}</h1>
+                            <div style="display: flex; gap: 12px;">
+                                <button id="interactive-toggle-question">View full context</button>
+                                <button id="interactive-next-problem" title="Cycle through the next problem">Next problem ▶</button>
+                            </div>
+                        </div>
+                        <div class="question-details" id="interactive-question-details">${renderRich(content)}</div>
+                        <div class="panels-container" id="interactive-panels-container"></div>
+                    </div>
+                </div>
+            `;
+            
+            const questionDetailsEl = document.getElementById('interactive-question-details');
+            const toggleQuestionBtn = document.getElementById('interactive-toggle-question');
+            const panelsContainerEl = document.getElementById('interactive-panels-container');
+            const nextProblemBtn = document.getElementById('interactive-next-problem');
+            
+            questionDetailsEl.style.display = "none";
+            toggleQuestionBtn.textContent = "View full context";
+
+            renderInteractivePanels(problem, panelsContainerEl);
+            typesetMath(questionDetailsEl);
+            
+            // Add event listeners
+            toggleQuestionBtn.addEventListener("click", () => {
+                const isHidden = questionDetailsEl.style.display === "none" || !questionDetailsEl.style.display;
+                questionDetailsEl.style.display = isHidden ? "block" : "none";
+                toggleQuestionBtn.textContent = isHidden ? "Hide full context" : "View full context";
+                if (isHidden) typesetMath(questionDetailsEl);
+            });
+            
+            nextProblemBtn.addEventListener("click", () => {
+                currentInteractiveProblemIndex = (currentInteractiveProblemIndex + 1) % interactiveProblems.length;
+                renderInteractiveProblem();
+            });
+        }
+
+
+        function renderInteractivePanels(problem, panelsContainerEl) {
+            // Get the first (and only) model from the problem
+            const models = problem.models || [];
+            if (!models.length) {
+                panelsContainerEl.innerHTML = '<div class="empty-state">No model data available for this problem.</div>';
+                typesetMath();
+                return;
+            }
+
+            const model = models[0]; // Use only the first model
+            const modelName = model.name || "Model";
+            const baseId = `${problem.id || "problem"}-${slugify(modelName)}`;
+
+            panelsContainerEl.innerHTML = `
+                <div class="model-header">
+                    <h2>${escapeHTML(modelName)}</h2>
+                </div>
+                <div class="model-panels">
+                    ${["draft", "revised"].map(stage => {
+                        const stageData = model[stage] || {};
+                        const stageLabel = stage === "draft" ? "[Full Thinking]" : "[Hard Interrupt @0.3]";
+                        const bodyLabel = stageData.code ? "Model Output" : "Model Output";
+                        const codeSection = stageData.code ? `
+                            <div class="content-container">
+                                <button class="view-separate-btn" data-content="${encodeURIComponent(stageData.code)}" data-type="code" data-title="Code - ${stageLabel}">View separately</button>
+                                <pre class="code-block"><code class="language-python">${escapeHTML(stageData.code)}</code></pre>
+                            </div>` : "";
+                        const answerSection = stageData.answer ? `
+                            <div class="content-container">
+                                <button class="view-separate-btn" data-content="${encodeURIComponent(renderRich(stageData.answer))}" data-type="math" data-title="Math Answer - ${stageLabel}">View separately</button>
+                                <div class="math-answer">${renderRich(stageData.answer)}</div>
+                            </div>` : "";
+                        const finalSection = stageData.final ? `
+                            <div class="content-container">
+                                <button class="view-separate-btn" data-content="${encodeURIComponent(renderRich(stageData.final))}" data-type="final" data-title="Final Answer - ${stageLabel}">View separately</button>
+                                <div class="final-answer">${renderRich(stageData.final)}</div>
+                            </div>` : "";
+                        return `
+                            <section class="panel">
+                                <h3>${bodyLabel} ${stageLabel}</h3>
+                                <button class="reasoning-toggle" data-target="${baseId}-${stage}">Show reasoning</button>
+                                <div class="reasoning" id="${baseId}-${stage}">${renderRich(stageData.reasoning)}</div>
+                                ${codeSection}
+                                ${answerSection}
+                                ${finalSection}
+                            </section>
+                        `;
+                    }).join("")}
+                </div>
+            `;
+
+            panelsContainerEl.querySelectorAll(".reasoning-toggle").forEach(btn => {
+                btn.addEventListener("click", () => {
+                    const target = document.getElementById(btn.dataset.target);
+                    if (!target) return;
+                    const isHidden = target.style.display === "none" || !target.style.display;
+                    target.style.display = isHidden ? "block" : "none";
+                    btn.textContent = isHidden ? "Hide reasoning" : "Show reasoning";
+                    if (isHidden) typesetMath(target);
+                });
+            });
+
+            panelsContainerEl.querySelectorAll("pre code").forEach(block => {
+                if (window.hljs) {
+                    // Force Python syntax highlighting
+                    block.className = 'language-python';
+                    hljs.highlightElement(block);
+                    // Apply line numbers after highlighting
+                    applyLineNumbers(block);
+                }
+            });
+
+            typesetMath();
+            
+            // Add event listeners for view separate buttons
+            panelsContainerEl.querySelectorAll(".view-separate-btn").forEach(btn => {
+                btn.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    const content = btn.dataset.content;
+                    const type = btn.dataset.type;
+                    const title = btn.dataset.title;
+                    showSeparateView(content, type, title);
+                });
+            });
+        }
+
+        function showSeparateView(content, type, title) {
+            // Create modal if it doesn't exist
+            let modal = document.getElementById('separate-view-modal');
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = 'separate-view-modal';
+                modal.className = 'interactive-viz modal';
+                modal.innerHTML = `
+                    <div class="modal-content">
+                        <span class="modal-close">&times;</span>
+                        <div class="modal-header">
+                            <h2 id="modal-title"></h2>
+                        </div>
+                        <div id="modal-body"></div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+                
+                // Add close functionality
+                modal.querySelector('.modal-close').addEventListener('click', () => {
+                    modal.style.display = 'none';
+                });
+                
+                // Close modal when clicking outside
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Set content
+            document.getElementById('modal-title').textContent = title;
+            const modalBody = document.getElementById('modal-body');
+            
+            if (type === 'code') {
+                const decodedContent = decodeURIComponent(content);
+                modalBody.innerHTML = `<pre class="code-block"><code class="language-python">${escapeHTML(decodedContent)}</code></pre>`;
+                // Apply syntax highlighting first, then line numbers
+                modalBody.querySelectorAll("pre code").forEach(block => {
+                    if (window.hljs) {
+                        // Apply syntax highlighting first
+                        block.className = 'language-python';
+                        hljs.highlightElement(block);
+                        // Then apply line numbers to the highlighted content
+                        applyLineNumbers(block);
+                    }
+                });
+            } else {
+                const decodedContent = decodeURIComponent(content);
+                modalBody.innerHTML = decodedContent;
+                typesetMath(modalBody);
+            }
+            
+            // Show modal
+            modal.style.display = 'block';
+        }
+
+        function applyLineNumbers(codeEl) {
+            if (!codeEl || codeEl.dataset.lineNumbers === "true") {
+                return;
+            }
+
+            const pre = codeEl.parentElement;
+            if (!pre || !pre.classList.contains("code-block")) {
+                return;
+            }
+
+            const rawText = (codeEl.textContent || "").replace(/\r\n/g, "\n");
+            let totalLines = rawText.split("\n").length;
+
+            if (rawText.endsWith("\n")) {
+                totalLines -= 1;
+            }
+
+            if (totalLines < 1) {
+                totalLines = 1;
+            }
+
+            const numbers = document.createElement("span");
+            numbers.className = "line-numbers";
+            numbers.setAttribute("aria-hidden", "true");
+
+            const fragment = document.createDocumentFragment();
+            for (let idx = 1; idx <= totalLines; idx += 1) {
+                const marker = document.createElement("span");
+                marker.textContent = idx;
+                fragment.appendChild(marker);
+            }
+
+            numbers.appendChild(fragment);
+            pre.insertBefore(numbers, codeEl);
+
+            codeEl.dataset.lineNumbers = "true";
+            pre.dataset.lineNumbers = "true";
+        }
+
+        function typesetMath(scope) {
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                if (scope) {
+                    MathJax.typesetPromise([scope]);
+                } else {
+                    MathJax.typesetPromise();
+                }
+            }
+        }
+
+        // Initialize interactive examples when page loads
+        window.addEventListener("load", () => {
+            typesetMath();
+            loadInteractiveProblems();
+        });
     </script>
 
 </body>
