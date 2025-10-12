@@ -1,4 +1,12 @@
-# REVERSE
+# Dynamic-LRM
+
+## Local Test
+
+```
+python3 -m http.server [PORT]
+```
+
+Then, open your browser with http://localhost:[PORT]
 
 This is an academic paper project page template.
 
