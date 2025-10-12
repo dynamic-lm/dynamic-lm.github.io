@@ -120,11 +120,161 @@
         /* Interactive Examples Styles */
         .interactive-viz { margin: 0; font-family: "Inter", Arial, sans-serif; background: #eef2f7; color: #1c1c1c; }
         .interactive-viz .wrapper { max-width: 1280px; margin: 32px auto; background: #fff; border-radius: 14px; box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12); overflow: hidden; }
-        .interactive-viz .header { padding: 22px 28px; background: linear-gradient(135deg, #1f3c88, #111827); color: #fff; display: flex; justify-content: space-between; align-items: center; }
-        .interactive-viz .header h1 { margin: 0; font-size: 1.2rem; font-weight: 600; max-width: 75%; }
+        .interactive-viz .header { padding: 12px 20px; background: linear-gradient(135deg, #1f3c88, #111827); color: #fff; display: flex; justify-content: space-between; align-items: center; }
+        .interactive-viz .header h1 { margin: 0; font-size: 0.95rem; font-weight: 600; max-width: 75%; letter-spacing: 0.01em; }
+        .interactive-viz .header h1 a {
+            color: inherit;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255,255,255,0.35);
+            transition: color 0.15s ease, border-bottom-color 0.15s ease;
+        }
+        .interactive-viz .header h1 a:hover {
+            color: #bfdbfe;
+            border-bottom-color: rgba(191, 219, 254, 0.75);
+        }
+        .interactive-viz .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .interactive-viz .header-actions .button-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255,255,255,0.12);
+            color: #fff;
+            border: none;
+            padding: 9px 18px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+        }
+        .interactive-viz .header-actions .button-link:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+            background: rgba(255,255,255,0.18);
+        }
         .interactive-viz .header button { background: rgba(255,255,255,0.92); color: #111827; border: none; padding: 9px 18px; border-radius: 999px; font-weight: 600; cursor: pointer; transition: transform 0.15s ease, box-shadow 0.15s ease; }
         .interactive-viz .header button:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(255,255,255,0.35); }
-        .interactive-viz .question-details { padding: 22px 28px; border-bottom: 1px solid #e5e7eb; display: none; line-height: 1.55; background: #f8fafc; }
+        .interactive-viz .question-details { 
+            position: relative;
+            padding: 18px 24px 40px; 
+            border-bottom: 1px solid #e5e7eb; 
+            display: block; 
+            background: #f8fafc; 
+            line-height: 1.55;
+            overflow: hidden;
+            max-height: calc(1.35em * 3 + 1.55em * 2 + 1em);
+        }
+        .interactive-viz .question-preview-title {
+            margin: 0 0 0.15rem;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #0f172a;
+            line-height: 1.35;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .interactive-viz .question-preview-title a {
+            color: inherit;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(15, 23, 42, 0.2);
+            transition: border-bottom-color 0.2s ease;
+        }
+        .interactive-viz .question-preview-title a:hover {
+            border-bottom-color: rgba(15, 23, 42, 0.6);
+        }
+        .interactive-viz .question-details::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 20px;
+            background: linear-gradient(180deg, rgba(248, 250, 252, 0) 0%, #f8fafc 90%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        .interactive-viz .question-details .question-content {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1.55;
+            min-height: calc(1.55em * 2);
+            font-size: 0.98rem;
+            margin-bottom: 4px;
+        }
+        .interactive-viz .question-details .question-content > * {
+            display: inline;
+            margin: 0;
+        }
+        .interactive-viz .question-details .question-content p + p::before {
+            content: " ";
+        }
+        .interactive-viz .question-details .view-full-context-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            position: static;
+            background: none;
+            color: #1d4ed8;
+            border: none;
+            border-radius: 0;
+            padding: 4px 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            opacity: 1;
+            pointer-events: auto;
+            transition: color 0.2s ease, transform 0.2s ease;
+            transform: translateY(0);
+            box-shadow: none;
+        }
+        .interactive-viz .question-details .view-full-context-btn:hover,
+        .interactive-viz .question-details .view-full-context-btn:focus-visible {
+            transform: translateY(0);
+            color: #0b3b9c;
+        }
+        .interactive-viz .question-details .view-full-context-btn:focus-visible {
+            outline: 2px solid rgba(59, 130, 246, 0.4);
+            outline-offset: 2px;
+        }
+        .interactive-viz .question-details.is-clamped::after {
+            opacity: 1;
+        }
+        .interactive-viz .answer-line-count {
+            margin: 0 0 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #1d4ed8;
+        }
+        .interactive-viz .view-reasoning-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: none;
+            color: #1d4ed8;
+            border: none;
+            font-weight: 600;
+            padding: 4px 0;
+            cursor: pointer;
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+        }
+        .interactive-viz .view-reasoning-btn:hover,
+        .interactive-viz .view-reasoning-btn:focus-visible {
+            color: #0b3b9c;
+        }
         .interactive-viz .control-bar { padding: 20px 28px; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; border-bottom: 1px solid #e5e7eb; }
         .interactive-viz .control-bar button { background: #2563eb; color: #fff; border: none; padding: 10px 18px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: background 0.15s ease; }
         .interactive-viz .control-bar button:hover { background: #1d4ed8; }
@@ -133,17 +283,25 @@
         .interactive-viz .model-checkbox input { accent-color: #2563eb; cursor: pointer; }
         .interactive-viz .model-checkbox:hover { border-color: #2563eb; background: #f3f4ff; }
         .interactive-viz .panels-container { padding: 12px 2% 16px; display: flex; flex-direction: column; gap: 16px; }
-        .interactive-viz .model-header { text-align: center; margin-bottom: 8px; }
-        .interactive-viz .model-header h2 { margin: 0; font-size: 1.1rem; font-weight: 600; color: #0f172a; }
+        .interactive-viz .model-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .interactive-viz .model-header img { width: 36px; height: 36px; object-fit: contain; border-radius: 8px; background: #fff; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12); }
+        .interactive-viz .model-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: #0f172a; }
+        .interactive-viz .model-header h2 a {
+            color: inherit;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(37, 99, 235, 0.35);
+            transition: color 0.15s ease, border-bottom-color 0.15s ease;
+        }
+        .interactive-viz .model-header h2 a:hover {
+            color: #2563eb;
+            border-bottom-color: rgba(37, 99, 235, 0.8);
+        }
         .interactive-viz .model-panels { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); }
         .interactive-viz .panel { border: none; border-radius: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; background: transparent; min-height: 450px; box-shadow: none; }
         .interactive-viz .panel h3 { margin: 0; font-size: 0.95rem; color: #1f2937; font-weight: 700; }
-        .interactive-viz .reasoning-toggle { align-self: flex-start; background: #f97316; color: #fff; border: none; padding: 7px 16px; border-radius: 999px; font-weight: 600; cursor: pointer; transition: background 0.15s ease, transform 0.15s ease; }
-        .interactive-viz .reasoning-toggle:hover { background: #ea580c; transform: translateY(-1px); }
-        .interactive-viz .reasoning { display: none; background: #fff4ed; border-left: 4px solid #f97316; padding: 12px 14px; border-radius: 10px; font-size: 0.95rem; line-height: 1.55; color: #7c2d12; max-height: 180px; overflow-y: auto; }
         .interactive-viz .math-answer, .interactive-viz .final-answer { border-radius: 10px; line-height: 1.6; max-height: 400px; overflow-y: auto; }
-        .interactive-viz .math-answer { background: #f1f5f9; border-left: 4px solid #0ea5e9; padding: 12px 16px; }
-        .interactive-viz .final-answer { background: #e0f2fe; border-left: 4px solid #0284c7; padding: 12px 14px; font-weight: 600; color: #0f172a; }
+        .interactive-viz .math-answer { background: #f1f5f9; border-left: 4px solid #0ea5e9; padding: 12px 12px; }
+        .interactive-viz .final-answer { background: #e0f2fe; border-left: 4px solid #0284c7; padding: 12px 12px; font-weight: 600; color: #0f172a; }
         .interactive-viz pre { margin: 0; border-radius: 10px; overflow: auto; max-height: 400px; }
         .interactive-viz pre.code-block {
             display: grid;
@@ -156,7 +314,7 @@
             display: block;
             font-size: 0.9rem;
             line-height: 1.45;
-            padding: 12px 16px;
+            padding: 12px 12px;
             min-width: 0;
             white-space: pre;
         }
@@ -164,7 +322,7 @@
             display: inline-flex;
             flex-direction: column;
             align-items: flex-end;
-            padding: 12px 12px 12px 16px;
+            padding: 12px 12px 12px 12px;
             font-family: "JetBrains Mono", "Fira Code", Consolas, monospace;
             font-size: 0.9rem;
             line-height: 1.45;
@@ -524,6 +682,9 @@
                     Things get even trickier in coding tasks. Models still "think" through inline comments in the force-answering setup, producing up to 10× longer code to reason their way out. 
                     It is clever, but it breaks the idea of controlled computation and disobeys the user’s instruction to answer immediately.
                   </p>
+                  <div id="interactive-viz-container" style="margin: 2rem 0;">
+                    <!-- Content will be loaded here by JavaScript -->
+                 </div>
                   <video class="is-fullwidth" autoplay loop muted playsinline>
                     <source src="./static/images/hard_interrupt.mov" type="video/mp4">
                     Your browser does not support the video tag.
@@ -690,17 +851,15 @@
     <!-- Interactive Examples Section -->
     <section class="section" id="interactive-examples">
         <div class="container is-max-desktop">
-            <div class="columns is-centered has-text-centered">
+            <!-- <div class="columns is-centered has-text-centered">
                 <div class="column is-full">
                     <h2 class="title is-4">Interactive Examples</h2>
                     <p style="margin-bottom: 2rem; color: #666;">Explore how different models handle interruptions in real coding and math problems</p>
                 </div>
-            </div>
+            </div> -->
             
             <!-- Interactive Visualization Container -->
-            <div id="interactive-viz-container" style="margin: 2rem 0;">
-                <!-- Content will be loaded here by JavaScript -->
-            </div>
+
         </div>
     </section>
 
@@ -956,6 +1115,15 @@
             return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
         }
 
+        function escapeAttribute(str = "") {
+            return String(str)
+                .replace(/&/g, "&amp;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#39;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;");
+        }
+
         function truncate(text = "", limit = 96) {
             const base = String(text);
             return base.length > limit ? base.slice(0, limit).trim() + "…" : base;
@@ -1105,17 +1273,46 @@
             return { format: "text", value: fallbackValue };
         }
 
+        function getContentString(raw, fallbackValue = "") {
+            if (raw == null) {
+                return fallbackValue;
+            }
+            if (typeof raw === "string") {
+                return raw;
+            }
+            if (typeof raw === "object") {
+                const value = raw.value ?? fallbackValue;
+                return typeof value === "string" ? value : String(value ?? "");
+            }
+            return String(raw);
+        }
+
+        function countLines(text = "") {
+            if (!text) return 0;
+            const normalized = String(text).replace(/\r\n/g, "\n");
+            let lines = normalized.split("\n").length;
+            if (normalized.endsWith("\n")) {
+                lines -= 1;
+            }
+            if (lines < 1) {
+                lines = 1;
+            }
+            return lines;
+        }
+
         function extractQuestion(problem) {
             const question = problem.question;
+            const fallbackUrl = problem && typeof problem === "object" ? (problem.url || problem.href || null) : null;
             if (!question) {
-                return { title: "Untitled Problem", content: null };
+                return { title: "Untitled Problem", content: null, url: fallbackUrl };
             }
             if (typeof question === "string") {
-                return { title: question, content: { format: "text", value: question } };
+                return { title: question, content: { format: "text", value: question }, url: fallbackUrl };
             }
             const title = question.title || "Untitled Problem";
             const content = normalizeContent(question.content, title);
-            return { title, content };
+            const url = question.url || question.href || fallbackUrl || null;
+            return { title, content, url };
         }
 
         async function loadInteractiveProblems() {
@@ -1151,45 +1348,77 @@
                 return;
             }
             const problem = interactiveProblems[currentInteractiveProblemIndex];
-            const { title, content } = extractQuestion(problem);
+            const { title, content, url: questionUrl } = extractQuestion(problem);
             
             const container = document.getElementById('interactive-viz-container');
             if (!container) return;
+            
+            const questionHTML = renderRich(content);
+            const encodedQuestion = encodeURIComponent(questionHTML || "");
+            const questionTitleHTML = questionUrl
+                ? `<a href="${escapeAttribute(questionUrl)}" target="_blank" rel="noopener">${escapeHTML(title)}</a>`
+                : escapeHTML(title);
+            const headerTitleHTML = "Examples of Reasoning Leakage";
+            const headerActions = `
+                <div class="header-actions">
+                    <button id="interactive-next-problem" title="Cycle through the next problem">Next problem ▶</button>
+                </div>
+            `;
             
             container.innerHTML = `
                 <div class="interactive-viz">
                     <div class="wrapper">
                         <div class="header">
-                            <h1 id="interactive-question-title">${escapeHTML(title)}</h1>
-                            <div style="display: flex; gap: 12px;">
-                                <button id="interactive-toggle-question">View full context</button>
-                                <button id="interactive-next-problem" title="Cycle through the next problem">Next problem ▶</button>
-                            </div>
+                            <h1 id="interactive-question-title">${headerTitleHTML}</h1>
+                            ${headerActions}
                         </div>
-                        <div class="question-details" id="interactive-question-details">${renderRich(content)}</div>
+                        <div class="question-details" id="interactive-question-details">
+                            <h2 class="question-preview-title">${questionTitleHTML}</h2>
+                            <div class="question-content">${questionHTML}</div>
+                            <button 
+                                class="view-full-context-btn" 
+                                data-type="question" 
+                                data-title="${encodeURIComponent(title)}"
+                                data-content="${encodedQuestion}">
+                                View Full Problem
+                            </button>
+                        </div>
                         <div class="panels-container" id="interactive-panels-container"></div>
                     </div>
                 </div>
             `;
             
             const questionDetailsEl = document.getElementById('interactive-question-details');
-            const toggleQuestionBtn = document.getElementById('interactive-toggle-question');
+            const viewFullQuestionBtn = questionDetailsEl ? questionDetailsEl.querySelector('.view-full-context-btn') : null;
             const panelsContainerEl = document.getElementById('interactive-panels-container');
             const nextProblemBtn = document.getElementById('interactive-next-problem');
-            
-            questionDetailsEl.style.display = "none";
-            toggleQuestionBtn.textContent = "View full context";
 
             renderInteractivePanels(problem, panelsContainerEl);
-            typesetMath(questionDetailsEl);
+            if (questionDetailsEl) {
+                typesetMath(questionDetailsEl);
+            }
             
-            // Add event listeners
-            toggleQuestionBtn.addEventListener("click", () => {
-                const isHidden = questionDetailsEl.style.display === "none" || !questionDetailsEl.style.display;
-                questionDetailsEl.style.display = isHidden ? "block" : "none";
-                toggleQuestionBtn.textContent = isHidden ? "Hide full context" : "View full context";
-                if (isHidden) typesetMath(questionDetailsEl);
-            });
+            const updateQuestionClamp = () => {
+                if (!questionDetailsEl) return;
+                const isOverflowing = Math.ceil(questionDetailsEl.scrollHeight - questionDetailsEl.clientHeight) > 4;
+                questionDetailsEl.classList.toggle('is-clamped', isOverflowing);
+            };
+            
+            updateQuestionClamp();
+            setTimeout(updateQuestionClamp, 200);
+            setTimeout(updateQuestionClamp, 600);
+            requestAnimationFrame(updateQuestionClamp);
+            
+            if (viewFullQuestionBtn) {
+                viewFullQuestionBtn.addEventListener("click", (event) => {
+                    event.preventDefault();
+                    const contentValue = viewFullQuestionBtn.dataset.content || "";
+                    if (!contentValue) return;
+                    const encodedTitle = viewFullQuestionBtn.dataset.title;
+                    const titleValue = encodedTitle ? decodeURIComponent(encodedTitle) : title;
+                    showSeparateView(contentValue, viewFullQuestionBtn.dataset.type || "question", `Full context - ${titleValue}`);
+                });
+            }
             
             nextProblemBtn.addEventListener("click", () => {
                 currentInteractiveProblemIndex = (currentInteractiveProblemIndex + 1) % interactiveProblems.length;
@@ -1199,47 +1428,62 @@
 
 
         function renderInteractivePanels(problem, panelsContainerEl) {
-            // Get the first (and only) model from the problem
-            const models = problem.models || [];
-            if (!models.length) {
+            const model = problem && typeof problem === "object" ? problem.model : null;
+            if (!model || typeof model !== "object") {
                 panelsContainerEl.innerHTML = '<div class="empty-state">No model data available for this problem.</div>';
                 typesetMath();
                 return;
             }
 
-            const model = models[0]; // Use only the first model
             const modelName = model.name || "Model";
+            const modelLink = model && typeof model === "object" ? (model.url || model.href || null) : null;
             const baseId = `${problem.id || "problem"}-${slugify(modelName)}`;
+            const logoSrc = model.logo ? escapeAttribute(model.logo) : null;
+            const modelHeading = modelLink
+                ? `<a href="${escapeAttribute(modelLink)}" target="_blank" rel="noopener">${escapeHTML(modelName)}</a>`
+                : escapeHTML(modelName);
 
             panelsContainerEl.innerHTML = `
                 <div class="model-header">
-                    <h2>${escapeHTML(modelName)}</h2>
+                    ${logoSrc ? `<img src="${logoSrc}" alt="${escapeAttribute(modelName)} logo">` : ""}
+                    <h2>${modelHeading}</h2>
                 </div>
                 <div class="model-panels">
-                    ${["draft", "revised"].map(stage => {
+                    ${["oracle", "interrupt"].map(stage => {
                         const stageData = model[stage] || {};
-                        const stageLabel = stage === "draft" ? "[Full Thinking]" : "[Hard Interrupt @0.3]";
-                        const bodyLabel = stageData.code ? "Model Output" : "Model Output";
+                        const stageLabel = stageData.label || (stage === "oracle" ? "Full Thinking" : "Hard Interrupt @0.3");
+                        const bodyLabel = stage === "oracle" ? "Oracle Output" : "Interrupt Output";
+                        const renderedAnswer = stageData.answer ? renderRich(stageData.answer) : "";
+                        const renderedFinal = stageData.final ? renderRich(stageData.final) : "";
+                        const renderedReasoning = stageData.reasoning ? renderRich(stageData.reasoning) : "";
+                        const codeLineCount = stageData.code ? countLines(stageData.code) : 0;
+                        const answerLineCount = stageData.answer ? countLines(getContentString(stageData.answer)) : 0;
+                        const codeLineLabel = codeLineCount > 0 ? `<p class="answer-line-count">Answer section: ${codeLineCount} LINES</p>` : "";
+                        const answerLineLabel = answerLineCount > 0 ? `<p class="answer-line-count">Answer section: ${answerLineCount} LINES</p>` : "";
+                        const reasoningSection = renderedReasoning ? `
+                            <button class="view-reasoning-btn" data-content="${encodeURIComponent(renderedReasoning)}" data-title="Reasoning - ${stageLabel}">View reasoning</button>
+                        ` : "";
                         const codeSection = stageData.code ? `
                             <div class="content-container">
+                                ${codeLineLabel}
                                 <button class="view-separate-btn" data-content="${encodeURIComponent(stageData.code)}" data-type="code" data-title="Code - ${stageLabel}">View separately</button>
                                 <pre class="code-block"><code class="language-python">${escapeHTML(stageData.code)}</code></pre>
                             </div>` : "";
                         const answerSection = stageData.answer ? `
                             <div class="content-container">
-                                <button class="view-separate-btn" data-content="${encodeURIComponent(renderRich(stageData.answer))}" data-type="math" data-title="Math Answer - ${stageLabel}">View separately</button>
-                                <div class="math-answer">${renderRich(stageData.answer)}</div>
+                                ${answerLineLabel}
+                                <button class="view-separate-btn" data-content="${encodeURIComponent(renderedAnswer)}" data-type="math" data-title="Math Answer - ${stageLabel}">View separately</button>
+                                <div class="math-answer">${renderedAnswer}</div>
                             </div>` : "";
                         const finalSection = stageData.final ? `
                             <div class="content-container">
-                                <button class="view-separate-btn" data-content="${encodeURIComponent(renderRich(stageData.final))}" data-type="final" data-title="Final Answer - ${stageLabel}">View separately</button>
-                                <div class="final-answer">${renderRich(stageData.final)}</div>
+                                <button class="view-separate-btn" data-content="${encodeURIComponent(renderedFinal)}" data-type="final" data-title="Final Answer - ${stageLabel}">View separately</button>
+                                <div class="final-answer">${renderedFinal}</div>
                             </div>` : "";
                         return `
                             <section class="panel">
-                                <h3>${bodyLabel} ${stageLabel}</h3>
-                                <button class="reasoning-toggle" data-target="${baseId}-${stage}">Show reasoning</button>
-                                <div class="reasoning" id="${baseId}-${stage}">${renderRich(stageData.reasoning)}</div>
+                                <h3>${bodyLabel} &mdash; ${stageLabel}</h3>
+                                ${reasoningSection}
                                 ${codeSection}
                                 ${answerSection}
                                 ${finalSection}
@@ -1249,17 +1493,6 @@
                 </div>
             `;
 
-            panelsContainerEl.querySelectorAll(".reasoning-toggle").forEach(btn => {
-                btn.addEventListener("click", () => {
-                    const target = document.getElementById(btn.dataset.target);
-                    if (!target) return;
-                    const isHidden = target.style.display === "none" || !target.style.display;
-                    target.style.display = isHidden ? "block" : "none";
-                    btn.textContent = isHidden ? "Hide reasoning" : "Show reasoning";
-                    if (isHidden) typesetMath(target);
-                });
-            });
-
             panelsContainerEl.querySelectorAll("pre code").forEach(block => {
                 if (window.hljs) {
                     // Force Python syntax highlighting
@@ -1268,6 +1501,16 @@
                     // Apply line numbers after highlighting
                     applyLineNumbers(block);
                 }
+            });
+
+            panelsContainerEl.querySelectorAll(".view-reasoning-btn").forEach(btn => {
+                btn.addEventListener("click", (event) => {
+                    event.preventDefault();
+                    const encoded = btn.dataset.content || "";
+                    if (!encoded) return;
+                    const title = btn.dataset.title || "Reasoning";
+                    showSeparateView(encoded, "reasoning", title);
+                });
             });
 
             typesetMath();
@@ -1337,6 +1580,7 @@
                 modalBody.innerHTML = decodedContent;
                 typesetMath(modalBody);
             }
+            modalBody.scrollTop = 0;
             
             // Show modal
             modal.style.display = 'block';

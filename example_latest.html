@@ -7,11 +7,164 @@
   <style>
     body { margin: 0; font-family: "Inter", Arial, sans-serif; background: #eef2f7; color: #1c1c1c; }
     .wrapper { max-width: 1280px; margin: 32px auto; background: #fff; border-radius: 14px; box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12); overflow: hidden; }
-    .header { padding: 22px 28px; background: linear-gradient(135deg, #1f3c88, #111827); color: #fff; display: flex; justify-content: space-between; align-items: center; }
-    .header h1 { margin: 0; font-size: 1.2rem; font-weight: 600; max-width: 75%; }
+    .header { padding: 12px 20px; background: linear-gradient(135deg, #1f3c88, #111827); color: #fff; display: flex; justify-content: space-between; align-items: center; }
+    .header h1 { margin: 0; font-size: 0.95rem; font-weight: 600; max-width: 75%; letter-spacing: 0.01em; }
     .header button { background: rgba(255,255,255,0.92); color: #111827; border: none; padding: 9px 18px; border-radius: 999px; font-weight: 600; cursor: pointer; transition: transform 0.15s ease, box-shadow 0.15s ease; }
     .header button:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(255,255,255,0.35); }
-    .question-details { padding: 22px 28px; border-bottom: 1px solid #e5e7eb; display: none; line-height: 1.55; background: #f8fafc; }
+    .header h1 a {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.35);
+      transition: color 0.15s ease, border-bottom-color 0.15s ease;
+    }
+    .header h1 a:hover {
+      color: #bfdbfe;
+      border-bottom-color: rgba(191, 219, 254, 0.75);
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .header-actions .button-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      border-radius: 999px;
+      padding: 9px 18px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    }
+    .header-actions .button-link:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+      background: rgba(255,255,255,0.18);
+    }
+    .question-details { 
+      position: relative;
+      padding: 18px 24px 40px; 
+      border-bottom: 1px solid #e5e7eb; 
+      display: block; 
+      background: #f8fafc;
+      line-height: 1.55;
+      overflow: hidden;
+      max-height: calc(1.35em * 3 + 1.55em * 2 + 72px);
+    }
+    .question-preview-title {
+      margin: 0 0 0.15rem;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #0f172a;
+      line-height: 1.35;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .question-preview-title a {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(15, 23, 42, 0.2);
+      transition: border-bottom-color 0.2s ease;
+    }
+    .question-preview-title a:hover {
+      border-bottom-color: rgba(15, 23, 42, 0.6);
+    }
+    .question-details::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 26px;
+      background: linear-gradient(180deg, rgba(248, 250, 252, 0) 0%, #f8fafc 90%);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    .question-details .question-content {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.55;
+      min-height: calc(1.55em * 2);
+      font-size: 0.98rem;
+      margin-bottom: 4px;
+    }
+    .question-details .question-content > * {
+      display: inline;
+      margin: 0;
+    }
+    .question-details .question-content p + p::before {
+      content: " ";
+    }
+    .question-details .view-full-context-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      position: static;
+      background: none;
+      color: #1d4ed8;
+      border: none;
+      border-radius: 0;
+      padding: 4px 0;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      opacity: 1;
+      pointer-events: auto;
+      transition: color 0.2s ease, transform 0.2s ease;
+      transform: translateY(0);
+      box-shadow: none;
+    }
+    .question-details .view-full-context-btn:hover,
+    .question-details .view-full-context-btn:focus-visible {
+      transform: translateY(0);
+      color: #0b3b9c;
+    }
+    .question-details .view-full-context-btn:focus-visible {
+      outline: 2px solid rgba(59, 130, 246, 0.4);
+      outline-offset: 2px;
+    }
+    .question-details.is-clamped::after {
+      opacity: 1;
+    }
+    .math-answer-block,
+    .code-answer-block { display: flex; flex-direction: column; gap: 8px; }
+    .model-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .model-header img { width: 36px; height: 36px; object-fit: contain; border-radius: 8px; background: #fff; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12); }
+    .answer-line-count {
+      margin: 0 0 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #1d4ed8;
+    }
+    .view-reasoning-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: none;
+      color: #1d4ed8;
+      border: none;
+      font-weight: 600;
+      padding: 4px 0;
+      cursor: pointer;
+      font-size: 0.85rem;
+      margin-bottom: 6px;
+    }
+    .view-reasoning-btn:hover,
+    .view-reasoning-btn:focus-visible {
+      color: #0b3b9c;
+    }
     .control-bar { padding: 20px 28px; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; border-bottom: 1px solid #e5e7eb; }
     .control-bar button { background: #2563eb; color: #fff; border: none; padding: 10px 18px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: background 0.15s ease; }
     .control-bar button:hover { background: #1d4ed8; }
@@ -22,12 +175,19 @@
     .panels-container { padding: 24px 28px 32px; display: flex; flex-direction: column; gap: 28px; }
     .model-block { border: 1px solid #e5e7eb; border-radius: 14px; padding: 22px; background: #fbfcfe; display: flex; flex-direction: column; gap: 20px; }
     .model-block h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: #0f172a; }
+    .model-block h2 a {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(37, 99, 235, 0.35);
+      transition: color 0.15s ease, border-bottom-color 0.15s ease;
+    }
+    .model-block h2 a:hover {
+      color: #2563eb;
+      border-bottom-color: rgba(37, 99, 235, 0.8);
+    }
     .model-panels { display: grid; gap: 22px; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
     .panel { border: 1px solid #dbe3f4; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 14px; background: #fff; min-height: 300px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.4); }
     .panel h3 { margin: 0; font-size: 0.95rem; color: #1f2937; }
-    .reasoning-toggle { align-self: flex-start; background: #f97316; color: #fff; border: none; padding: 7px 16px; border-radius: 999px; font-weight: 600; cursor: pointer; transition: background 0.15s ease, transform 0.15s ease; }
-    .reasoning-toggle:hover { background: #ea580c; transform: translateY(-1px); }
-    .reasoning { display: none; background: #fff4ed; border-left: 4px solid #f97316; padding: 12px 14px; border-radius: 10px; font-size: 0.95rem; line-height: 1.55; color: #7c2d12; max-height: 180px; overflow-y: auto; }
     .math-answer, .final-answer { border-radius: 10px; line-height: 1.6; max-height: 180px; overflow-y: auto; }
     .math-answer { background: #f1f5f9; border-left: 4px solid #0ea5e9; padding: 12px 16px; }
     .final-answer { background: #e0f2fe; border-left: 4px solid #0284c7; padding: 12px 14px; font-weight: 600; color: #0f172a; }
@@ -85,14 +245,15 @@
 <body>
   <div class="wrapper">
     <div class="header">
-      <h1 id="question-title">Loading problem…</h1>
-      <button id="toggle-question">View full context</button>
+      <h1 id="question-title">Examples of Reasoning Leakage</h1>
+      <div class="header-actions">
+        <button id="next-problem" title="Cycle through the next problem">Next problem ▶</button>
+      </div>
     </div>
     <div class="question-details" id="question-details"></div>
 
     <div class="control-bar">
       <div class="model-selection" id="model-selection"></div>
-      <button id="next-problem" title="Cycle through the next problem">Next problem ▶</button>
     </div>
 
     <div class="panels-container" id="panels-container"></div>
@@ -104,13 +265,23 @@
 
     const questionTitleEl = document.getElementById("question-title");
     const questionDetailsEl = document.getElementById("question-details");
-    const toggleQuestionBtn = document.getElementById("toggle-question");
     const modelSelectionEl = document.getElementById("model-selection");
     const panelsContainerEl = document.getElementById("panels-container");
     const nextProblemBtn = document.getElementById("next-problem");
+    const HEADER_TITLE = "Examples of Reasoning Leakage";
+    questionTitleEl.textContent = HEADER_TITLE;
 
     function escapeHTML(str = "") {
       return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    function escapeAttribute(str = "") {
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
     }
 
     function truncate(text = "", limit = 96) {
@@ -248,36 +419,65 @@
       return formatPlainText(value);
     }
 
-    function normalizeContent(content, fallbackValue = "") {
-      if (!content && !fallbackValue) {
-        return null;
+   function normalizeContent(content, fallbackValue = "") {
+     if (!content && !fallbackValue) {
+       return null;
+     }
+     if (typeof content === "string") {
+       return { format: "text", value: content };
+     }
+     if (content && typeof content === "object") {
+       const value = content.value ?? fallbackValue;
+       return { format: content.format || "text", value };
+     }
+     return { format: "text", value: fallbackValue };
+   }
+
+    function getContentString(raw, fallbackValue = "") {
+      if (raw == null) {
+        return fallbackValue;
       }
-      if (typeof content === "string") {
-        return { format: "text", value: content };
+      if (typeof raw === "string") {
+        return raw;
       }
-      if (content && typeof content === "object") {
-        const value = content.value ?? fallbackValue;
-        return { format: content.format || "text", value };
+      if (typeof raw === "object") {
+        const value = raw.value ?? fallbackValue;
+        return typeof value === "string" ? value : String(value ?? "");
       }
-      return { format: "text", value: fallbackValue };
+      return String(raw);
+    }
+
+    function countLines(text = "") {
+      if (!text) return 0;
+      const normalized = String(text).replace(/\r\n/g, "\n");
+      let lines = normalized.split("\n").length;
+      if (normalized.endsWith("\n")) {
+        lines -= 1;
+      }
+      if (lines < 1) {
+        lines = 1;
+      }
+      return lines;
     }
 
     function extractQuestion(problem) {
       const question = problem.question;
+      const fallbackUrl = problem && typeof problem === "object" ? (problem.url || problem.href || null) : null;
       if (!question) {
-        return { title: "Untitled Problem", content: null };
+        return { title: "Untitled Problem", content: null, url: fallbackUrl };
       }
       if (typeof question === "string") {
-        return { title: question, content: { format: "text", value: question } };
+        return { title: question, content: { format: "text", value: question }, url: fallbackUrl };
       }
       const title = question.title || "Untitled Problem";
       const content = normalizeContent(question.content, title);
-      return { title, content };
+      const url = question.url || question.href || fallbackUrl || null;
+      return { title, content, url };
     }
 
     async function loadProblems() {
       try {
-        questionTitleEl.textContent = "Loading problem…";
+        questionDetailsEl.innerHTML = "<p>Loading problem…</p>";
         panelsContainerEl.innerHTML = "";
         const response = await fetch("./interactive_examples_data.json", { cache: "no-cache" });
         if (!response.ok) {
@@ -286,7 +486,7 @@
         const payload = await response.json();
         problems = Array.isArray(payload.problems) ? payload.problems : [];
         if (!problems.length) {
-          questionTitleEl.textContent = "No problems available.";
+          questionDetailsEl.innerHTML = "<p>No problems available.</p>";
           panelsContainerEl.innerHTML = '<div class="empty-state">Add entries to interactive_examples_data.json to get started.</div>';
           return;
         }
@@ -294,7 +494,7 @@
         renderProblem();
       } catch (error) {
         console.error(error);
-        questionTitleEl.textContent = "Failed to load examples.";
+        questionDetailsEl.innerHTML = `<p>Failed to load examples.</p>`;
         panelsContainerEl.innerHTML = `<div class="empty-state">Unable to load interactive_examples_data.json.<br>${escapeHTML(error.message)}</div>`;
       }
     }
@@ -304,22 +504,107 @@
         return;
       }
       const problem = problems[currentProblemIndex];
-      const { title, content } = extractQuestion(problem);
-      questionTitleEl.textContent = title;
-      questionTitleEl.setAttribute("title", title);
-      questionDetailsEl.innerHTML = renderRich(content);
-      questionDetailsEl.style.display = "none";
-      toggleQuestionBtn.textContent = "View full context";
+      const { title, content, url: questionUrl } = extractQuestion(problem);
+      const questionHTML = renderRich(content);
+      const questionTitleMarkup = questionUrl
+        ? `<a href="${escapeAttribute(questionUrl)}" target="_blank" rel="noopener">${escapeHTML(title)}</a>`
+        : escapeHTML(title);
+      questionTitleEl.textContent = HEADER_TITLE;
+      const encodedQuestion = encodeURIComponent(questionHTML || "");
+      questionDetailsEl.innerHTML = `
+        <h2 class="question-preview-title">${questionTitleMarkup}</h2>
+        <div class="question-content">${questionHTML}</div>
+        <button 
+          class="view-full-context-btn" 
+          data-content="${encodedQuestion}"
+          data-title="${encodeURIComponent(title)}">
+          View Full Problem
+        </button>
+      `;
+      questionDetailsEl.classList.remove("is-clamped");
+
+      const viewFullContextBtn = questionDetailsEl.querySelector(".view-full-context-btn");
+      const updateClampState = () => {
+        const isOverflowing = Math.ceil(questionDetailsEl.scrollHeight - questionDetailsEl.clientHeight) > 4;
+        questionDetailsEl.classList.toggle("is-clamped", isOverflowing);
+      };
+
+      typesetMath(questionDetailsEl);
+      updateClampState();
+      setTimeout(updateClampState, 200);
+      setTimeout(updateClampState, 600);
+      requestAnimationFrame(updateClampState);
+
+      if (viewFullContextBtn) {
+        viewFullContextBtn.addEventListener("click", (event) => {
+          event.preventDefault();
+          const contentValue = viewFullContextBtn.dataset.content || "";
+          if (!contentValue) {
+            return;
+          }
+          const decoded = decodeURIComponent(contentValue);
+          const encodedTitle = viewFullContextBtn.dataset.title;
+          const modalTitle = encodedTitle ? decodeURIComponent(encodedTitle) : title;
+          const win = window.open("", "_blank", "noopener");
+          if (!win) {
+            return;
+          }
+          win.opener = null;
+          win.document.write(`
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+              <meta charset="utf-8">
+              <title>${escapeHTML(modalTitle)}</title>
+              <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+              <style>
+                body { font-family: "Inter", Arial, sans-serif; background: #eef2f7; color: #1c1c1c; margin: 0; padding: 32px; }
+                main { max-width: 960px; margin: 0 auto; background: #fff; border-radius: 12px; padding: 32px; box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12); }
+                h1 { margin-top: 0; font-size: 1.6rem; }
+              </style>
+              <script>
+                window.MathJax = {
+                  tex: {
+                    inlineMath: [['$', '$'], ['\\(', '\\)']],
+                    displayMath: [['$$', '$$'], ['\\[', '\\]']]
+                  }
+                };
+              </script>
+              <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+            </head>
+            <body>
+              <main>
+                <h1>${escapeHTML(modalTitle)}</h1>
+                <div>${decoded}</div>
+              </main>
+            </body>
+            </html>
+          `);
+          win.document.close();
+        });
+      }
 
       const defaultSelection = renderModelSelection(problem);
       renderPanels(problem, defaultSelection);
-      typesetMath(questionDetailsEl);
+    }
+    function normalizeModels(problem) {
+      if (!problem || typeof problem !== "object") {
+        return [];
+      }
+      if (Array.isArray(problem.models)) {
+        return problem.models;
+      }
+      if (problem.model && typeof problem.model === "object") {
+        return [problem.model];
+      }
+      return [];
     }
 
     function renderModelSelection(problem) {
       modelSelectionEl.innerHTML = "";
       const names = [];
-      (problem.models || []).forEach((model, idx) => {
+      const models = normalizeModels(problem);
+      models.forEach((model, idx) => {
         const modelName = model.name || `Model ${idx + 1}`;
         names.push(modelName);
         const id = `${problem.id || "problem"}-${slugify(modelName)}-option`;
@@ -351,14 +636,16 @@
     }
 
     function renderPanels(problem, selectedModelNames) {
+      const models = normalizeModels(problem);
       const activeNames = Array.isArray(selectedModelNames) ? selectedModelNames : [];
-      const entries = (problem.models || []).map((model, idx) => ({
+      const entries = models.map((model, idx) => ({
         model,
         name: model.name || `Model ${idx + 1}`
       }));
       const selectedModels = entries.filter(entry => activeNames.includes(entry.name));
+      const stageNames = ["oracle", "interrupt"];
       if (!selectedModels.length) {
-        panelsContainerEl.innerHTML = '<div class="empty-state">Select at least one model to view its draft and revised outputs.</div>';
+        panelsContainerEl.innerHTML = '<div class="empty-state">Select at least one model to view its oracle and interrupt outputs.</div>';
         typesetMath();
         return;
       }
@@ -366,22 +653,47 @@
       panelsContainerEl.innerHTML = selectedModels.map((entry, idx) => {
         const { model, name: modelName } = entry;
         const baseId = `${problem.id || "problem"}-${slugify(modelName)}-${idx}`;
+        const modelLink = model && typeof model === "object" ? (model.url || model.href || null) : null;
+        const logoSrc = model.logo ? escapeAttribute(model.logo) : null;
+        const modelHeading = modelLink
+          ? `<a href="${escapeAttribute(modelLink)}" target="_blank" rel="noopener">${escapeHTML(modelName)}</a>`
+          : escapeHTML(modelName);
         return `
           <div class="model-block">
-            <h2>${escapeHTML(modelName)}</h2>
+            <div class="model-header">
+              ${logoSrc ? `<img src="${logoSrc}" alt="${escapeAttribute(modelName)} logo">` : ""}
+              <h2>${modelHeading}</h2>
+            </div>
             <div class="model-panels">
-              ${["draft", "revised"].map(stage => {
+              ${stageNames.map(stage => {
                 const stageData = model[stage] || {};
-                const codeSection = stageData.code ? `<pre class="code-block"><code class="language-python">${escapeHTML(stageData.code)}</code></pre>` : "";
-                const answerSection = stageData.answer ? `<div class="math-answer">${renderRich(stageData.answer)}</div>` : "";
-                const finalSection = stageData.final ? `<div class="final-answer">${renderRich(stageData.final)}</div>` : "";
-                const stageLabel = stage === "draft" ? "[Full Thinking]" : "[Hard Interrupt @0.3]";
-                const bodyLabel = stageData.code ? "Model Output" : "Model Output";
+                const renderedAnswer = stageData.answer ? renderRich(stageData.answer) : "";
+                const renderedFinal = stageData.final ? renderRich(stageData.final) : "";
+                const renderedReasoning = stageData.reasoning ? renderRich(stageData.reasoning) : "";
+                const stageLabel = stageData.label || (stage === "oracle" ? "Full Thinking" : "Hard Interrupt @0.3");
+                const codeLineCount = stageData.code ? countLines(stageData.code) : 0;
+                const answerLineCount = stageData.answer ? countLines(getContentString(stageData.answer)) : 0;
+                const codeLineLabel = codeLineCount > 0 ? `<p class="answer-line-count">Answer section: ${codeLineCount} LINES</p>` : "";
+                const answerLineLabel = answerLineCount > 0 ? `<p class="answer-line-count">Answer section: ${answerLineCount} LINES</p>` : "";
+                const reasoningSection = renderedReasoning ? `
+                  <button class="view-reasoning-btn" data-content="${encodeURIComponent(renderedReasoning)}" data-title="Reasoning - ${stageLabel}">View reasoning</button>
+                ` : "";
+                const codeSection = stageData.code ? `
+                  <div class="code-answer-block">
+                    ${codeLineLabel}
+                    <pre class="code-block"><code class="language-python">${escapeHTML(stageData.code)}</code></pre>
+                  </div>` : "";
+                const answerSection = stageData.answer ? `
+                  <div class="math-answer-block">
+                    ${answerLineLabel}
+                    <div class="math-answer">${renderedAnswer}</div>
+                  </div>` : "";
+                const finalSection = stageData.final ? `<div class="final-answer">${renderedFinal}</div>` : "";
+                const bodyLabel = stage === "oracle" ? "Oracle Output" : "Interrupt Output";
                 return `
                   <section class="panel">
-                    <h3>${bodyLabel} ${stageLabel}</h3>
-                    <button class="reasoning-toggle" data-target="${baseId}-${stage}">Show reasoning</button>
-                    <div class="reasoning" id="${baseId}-${stage}">${renderRich(stageData.reasoning)}</div>
+                    <h3>${bodyLabel} &mdash; ${stageLabel}</h3>
+                    ${reasoningSection}
                     ${codeSection}
                     ${answerSection}
                     ${finalSection}
@@ -393,14 +705,39 @@
         `;
       }).join("");
 
-      panelsContainerEl.querySelectorAll(".reasoning-toggle").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const target = document.getElementById(btn.dataset.target);
-          if (!target) return;
-          const isHidden = target.style.display === "none" || !target.style.display;
-          target.style.display = isHidden ? "block" : "none";
-          btn.textContent = isHidden ? "Hide reasoning" : "Show reasoning";
-          if (isHidden) typesetMath(target);
+      panelsContainerEl.querySelectorAll(".view-reasoning-btn").forEach(btn => {
+        btn.addEventListener("click", (event) => {
+          event.preventDefault();
+          const encoded = btn.dataset.content || "";
+          if (!encoded) return;
+          const title = btn.dataset.title || "Reasoning";
+          const decoded = decodeURIComponent(encoded);
+          const win = window.open("", "_blank", "noopener");
+          if (!win) return;
+          win.opener = null;
+          win.document.write(`
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+              <meta charset="utf-8">
+              <title>${title}</title>
+              <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+              <style>
+                body { font-family: "Inter", Arial, sans-serif; background: #eef2f7; color: #1c1c1c; margin: 0; padding: 32px; }
+                main { max-width: 960px; margin: 0 auto; background: #fff; border-radius: 12px; padding: 32px; box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12); }
+                h1 { margin-top: 0; font-size: 1.6rem; }
+              </style>
+              <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+            </head>
+            <body>
+              <main>
+                <h1>${title}</h1>
+                <div>${decoded}</div>
+              </main>
+            </body>
+            </html>
+          `);
+          win.document.close();
         });
       });
 
@@ -460,16 +797,6 @@
         }
       }
     }
-
-    toggleQuestionBtn.addEventListener("click", () => {
-      if (!problems.length) {
-        return;
-      }
-      const isHidden = questionDetailsEl.style.display === "none" || !questionDetailsEl.style.display;
-      questionDetailsEl.style.display = isHidden ? "block" : "none";
-      toggleQuestionBtn.textContent = isHidden ? "Hide full context" : "View full context";
-      if (isHidden) typesetMath(questionDetailsEl);
-    });
 
     nextProblemBtn.addEventListener("click", () => {
       if (!problems.length) {
