@@ -482,9 +482,10 @@
         <ul class="toc-list">
             <li class="toc-item"><a href="#overview" class="toc-link">Overview</a></li>
             <li class="toc-item"><a href="#problem-setup" class="toc-link">Problem Setup</a></li>
-            <li class="toc-item"><a href="#time-constrained" class="toc-link">Time-Constrained Interrupts</a></li>
-            <li class="toc-item"><a href="#update-driven" class="toc-link">Update-Driven Interrupts</a></li>
-            <li class="toc-item"><a href="#scaling-law" class="toc-link">Scaling Law Analysis</a></li>
+            <li class="toc-item"><a href="#hard-interrupt" class="toc-link">#1 Hard Interrupt</a></li>
+            <li class="toc-item"><a href="#speedup" class="toc-link">#2 Speedup</a></li>
+            <li class="toc-item"><a href="#update-driven" class="toc-link">#3 Info Update</a></li>
+            <li class="toc-item"><a href="#acknowledgements" class="toc-link">Acknowledgment</a></li>
             <li class="toc-item"><a href="#BibTeX" class="toc-link">BibTeX</a></li>
         </ul>
     </nav>
@@ -653,20 +654,17 @@
         </div>
     </section>
 
-    <section class="section" id="time-constrained">
+    <section class="section" id="hard-interrupt">
         <div class="container is-max-desktop">
             <div class="columns is-centered has-text-centered">
                 <div class="column is-full">
-                    <h2 class="title is-4">How Do LRMs Behave Under Time-Constrained Interruptions?</h2>
+                    <h2 class="title is-4">Hard Interrupt: Are LRMs Truly Anytime Models?</h2>
                 </div>
             </div>
             
-            <!-- Hard Interrupt Subsection -->
+            <!-- Hard Interrupt Content -->
             <div class="columns is-centered">
                 <div class="column is-full">
-                  <h3 class="title is-5" style="margin-top: 0; margin-bottom: 0;">
-                    (1) Hard Interrupt: Are LRMs Truly Anytime Models?
-                  </h3>
               
                   <p style="margin-top: 1rem; margin-bottom: 0; line-height: 1.6;">
                     When cutting LRMs’ thinking budget in the end-thinking setup, the results look surprisingly good at first: Pass@1 does not drop much.
@@ -711,13 +709,20 @@
                   </p>
                 </div>
               </div>
+        </div>
+    </section>
+
+    <section class="section" id="speedup">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-full">
+                    <h2 class="title is-4">Speedup: Can We Reduce LRM Computation On the Fly?</h2>
+                </div>
+            </div>
             
-            <!-- Speedup Subsection -->
+            <!-- Speedup Content -->
             <div class="columns is-centered">
                 <div class="column is-full">
-                  <h3 class="title is-5" style="margin-top: 2rem; margin-bottom: 1rem;">
-                    (2) Speedup: Can We Reduce LRM Computation On the Fly?
-                  </h3>
                   <ul style="list-style-type: disc; padding-left: 2rem; margin: 1rem 0 0.5rem 0;">
                     <li style="margin-bottom: 0.5rem;">Magistral & Qwen (Math): Achieve near “free-lunch” speedups — thinking faster mid-process with fewer tokens consumed.</li>
                     <li style="margin-bottom: 0;">GPT-OSS & Qwen (Coding): Tend to <strong>panic</strong> under pressure — up to a 25% performance drop from rushing to answer before finishing its first reasoning cycle.</li>
@@ -815,51 +820,24 @@
         </div>
       </section>
 
-    <section class="section" id="scaling-law">
+
+
+
+    <!-- Acknowledgements Section -->
+    <section class="section" id="acknowledgements">
         <div class="container is-max-desktop">
             <div class="columns is-centered has-text-centered">
                 <div class="column is-full">
-                    <h2 class="title is-4">Does scaling-law still hold here?</h2>
+                    <h2 class="title is-4">Acknowledgment</h2>
                 </div>
             </div>
-            <!-- Hard Interrupt Subsection -->
             <div class="columns is-centered">
                 <div class="column is-full">
-                    <h3 class="title is-5" style="margin-top: 2rem; margin-bottom: 1rem;">(1) Hard Interruptions</h3>
-                    <img src="static/images/figures_new/hard_interrupt_acc_and_len_size_ablation.png" style="max-width: 100%; height: auto;">
+                    <p style="line-height: 1.6;">
+                        We are deeply grateful to <a href="https://lisabdunlap.com/" target="_blank" rel="noopener">Lisa Dunlap</a> for her invaluable feedback and thoughtful discussions. We also thank <strong><a href="https://modal.com/" target="_blank" rel="noopener">Modal</a></strong> for supporting this work through their Academics Compute Grant. <a href="https://sky.cs.berkeley.edu/" target="_blank" rel="noopener">Sky Computing Lab</a> is supported by gifts from Accenture, AMD, Anyscale, Cisco, Google, IBM, Intel, Intesa Sanpaolo, Lambda, Lightspeed, Mibura, Microsoft, NVIDIA, Samsung SDS, and SAP. Authors, as part of their affiliation with UC Berkeley, were supported in part by the National Science Foundation, US Department of Defense, and/or the <a href="https://bair.berkeley.edu/" target="_blank" rel="noopener">Berkeley Artificial Intelligence Research (BAIR)</a> industrial alliance program, as well as gifts from Amazon.
+                    </p>
                 </div>
             </div>
-            
-            <!-- Speedup Subsection -->
-            <div class="columns is-centered">
-                <div class="column is-full">
-                    <h3 class="title is-5" style="margin-top: 2rem; margin-bottom: 1rem;">(2) Speedup</h3>
-                    <img src="static/images/figures_new/soft_interrupt_ratio_size_ablation.png" style="max-width: 100%; height: auto;">
-                </div>
-            </div>
-
-            <div class="columns is-centered">
-                <div class="column is-full">
-                    <h3 class="title is-5" style="margin-top: 2rem; margin-bottom: 1rem;">(3) Info Updates</h3>
-                    <img src="static/images/figures_new/intervene_ratio_size_ablation.png" style="max-width: 100%; height: auto;">
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- Interactive Examples Section -->
-    <section class="section" id="interactive-examples">
-        <div class="container is-max-desktop">
-            <!-- <div class="columns is-centered has-text-centered">
-                <div class="column is-full">
-                    <h2 class="title is-4">Interactive Examples</h2>
-                    <p style="margin-bottom: 2rem; color: #666;">Explore how different models handle interruptions in real coding and math problems</p>
-                </div>
-            </div> -->
-            
-            <!-- Interactive Visualization Container -->
-
         </div>
     </section>
 
