@@ -188,17 +188,9 @@ function getContentString(raw, fallbackValue = "") {
     return String(raw);
 }
 
-function countLines(text = "") {
+function countCharacters(text = "") {
     if (!text) return 0;
-    const normalized = String(text).replace(/\r\n/g, "\n");
-    let lines = normalized.split("\n").length;
-    if (normalized.endsWith("\n")) {
-        lines -= 1;
-    }
-    if (lines < 1) {
-        lines = 1;
-    }
-    return lines;
+    return String(text).length;
 }
 
 function extractQuestion(problem) {
@@ -691,45 +683,44 @@ function renderInteractivePanels(problem, panelsContainerEl) {
         <div class="model-panels">
             ${["oracle", "interrupt"].map(stage => {
                 const stageData = model[stage] || {};
-                const stageLabel = stageData.label || (stage === "oracle" ? "Full Thinking" : "Hard Interrupt @0.3");
-                const bodyLabel = stage === "oracle" ? "Oracle Output" : "Interrupt Output";
+                const label = stageData.label || (stage === "oracle" ? "Full Thinking" : "Hard Interrupt @0.3");
                 const renderedAnswer = stageData.answer ? renderRich(stageData.answer) : "";
                 const renderedFinal = stageData.final ? renderRich(stageData.final) : "";
                 const previewReason = stageData.preview_reason ? renderRich(stageData.preview_reason) : "";
                 const fullReasoningTrace = stageData.full_reasoning_trace ? renderRich(stageData.full_reasoning_trace) : "";
-                const codeLineCount = stageData.code ? countLines(stageData.code) : 0;
-                const answerLineCount = stageData.answer ? countLines(getContentString(stageData.answer)) : 0;
-                const reasoningLineCount = stageData.preview_reason ? countLines(getContentString(stageData.preview_reason)) : 0;
-                const codeLineLabel = codeLineCount > 0 ? `<p class="answer-line-count">Answer section: ${codeLineCount} LINES</p>` : "";
-                const answerLineLabel = answerLineCount > 0 ? `<p class="answer-line-count">Answer section: ${answerLineCount} LINES</p>` : "";
-                const reasoningLineLabel = reasoningLineCount > 0 ? `<p class="answer-line-count">Reasoning Section: ${reasoningLineCount} LINES</p>` : "";
+                const codeCharCount = stageData.code ? countCharacters(stageData.code) : 0;
+                const answerCharCount = stageData.answer ? countCharacters(getContentString(stageData.answer)) : 0;
+                const reasoningCharCount = stageData.preview_reason ? countCharacters(getContentString(stageData.preview_reason)) : 0;
+                const codeCharLabel = codeCharCount > 0 ? `<p class="answer-line-count">Answer section: ${codeCharCount} CHARACTERS</p>` : "";
+                const answerCharLabel = answerCharCount > 0 ? `<p class="answer-line-count">Answer section: ${answerCharCount} CHARACTERS</p>` : "";
+                const reasoningCharLabel = reasoningCharCount > 0 ? `<p class="answer-line-count">Reasoning Section: ${reasoningCharCount} CHARACTERS</p>` : "";
                 const reasoningSection = previewReason ? `
                     <div class="content-container">
-                        ${reasoningLineLabel}
-                        <button class="view-separate-btn" data-content="${encodeURIComponent(fullReasoningTrace)}" data-type="reasoning" data-title="Reasoning - ${stageLabel}">Open full view</button>
+                        ${reasoningCharLabel}
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(fullReasoningTrace)}" data-type="reasoning" data-title="Reasoning - ${label}">Open full view</button>
                         <div class="reasoning-answer limited">${previewReason}</div>
                     </div>
                 ` : "";
                 const codeSection = stageData.code ? `
                     <div class="content-container">
-                        ${codeLineLabel}
-                        <button class="view-separate-btn" data-content="${encodeURIComponent(stageData.code)}" data-type="code" data-title="Code - ${stageLabel}">Open full view</button>
+                        ${codeCharLabel}
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(stageData.code)}" data-type="code" data-title="Code - ${label}">Open full view</button>
                         <pre class="code-block"><code class="language-python">${escapeHTML(stageData.code)}</code></pre>
                     </div>` : "";
                 const answerSection = stageData.answer ? `
                     <div class="content-container">
-                        ${answerLineLabel}
-                        <button class="view-separate-btn" data-content="${encodeURIComponent(renderedAnswer)}" data-type="math" data-title="Math Answer - ${stageLabel}">Open full view</button>
+                        ${answerCharLabel}
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(renderedAnswer)}" data-type="math" data-title="Math Answer - ${label}">Open full view</button>
                         <div class="math-answer">${renderedAnswer}</div>
                     </div>` : "";
                 const finalSection = stageData.final ? `
                     <div class="content-container">
-                        <button class="view-separate-btn" data-content="${encodeURIComponent(renderedFinal)}" data-type="final" data-title="Final Answer - ${stageLabel}">Open full view</button>
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(renderedFinal)}" data-type="final" data-title="Final Answer - ${label}">Open full view</button>
                         <div class="final-answer">${renderedFinal}</div>
                     </div>` : "";
                 return `
                     <section class="panel">
-                        <h3>${bodyLabel} &mdash; ${stageLabel}</h3>
+                        <h3>${label}</h3>
                         ${reasoningSection}
                         ${codeSection}
                         ${answerSection}
@@ -790,45 +781,44 @@ function renderInteractivePanelsLeakage(problem, panelsContainerEl) {
         <div class="model-panels">
             ${["oracle", "interrupt"].map(stage => {
                 const stageData = model[stage] || {};
-                const stageLabel = stageData.label || (stage === "oracle" ? "Full Thinking" : "Hard Interrupt @0.3");
-                const bodyLabel = stage === "oracle" ? "Oracle Output" : "Interrupt Output";
+                const label = stageData.label || (stage === "oracle" ? "Full Thinking" : "Hard Interrupt @0.3");
                 const renderedAnswer = stageData.answer ? renderRich(stageData.answer) : "";
                 const renderedFinal = stageData.final ? renderRich(stageData.final) : "";
                 const previewReason = stageData.preview_reason ? renderRich(stageData.preview_reason) : "";
                 const fullReasoningTrace = stageData.full_reasoning_trace ? renderRich(stageData.full_reasoning_trace) : "";
-                const codeLineCount = stageData.code ? countLines(stageData.code) : 0;
-                const answerLineCount = stageData.answer ? countLines(getContentString(stageData.answer)) : 0;
-                const reasoningLineCount = stageData.preview_reason ? countLines(getContentString(stageData.preview_reason)) : 0;
-                const codeLineLabel = codeLineCount > 0 ? `<p class="answer-line-count">Answer section: ${codeLineCount} LINES</p>` : "";
-                const answerLineLabel = answerLineCount > 0 ? `<p class="answer-line-count">Answer section: ${answerLineCount} LINES</p>` : "";
-                const reasoningLineLabel = reasoningLineCount > 0 ? `<p class="answer-line-count">Reasoning Section: ${reasoningLineCount} LINES</p>` : "";
+                const codeCharCount = stageData.code ? countCharacters(stageData.code) : 0;
+                const answerCharCount = stageData.answer ? countCharacters(getContentString(stageData.answer)) : 0;
+                const reasoningCharCount = stageData.preview_reason ? countCharacters(getContentString(stageData.preview_reason)) : 0;
+                const codeCharLabel = codeCharCount > 0 ? `<p class="answer-line-count">Answer section: ${codeCharCount} CHARACTERS</p>` : "";
+                const answerCharLabel = answerCharCount > 0 ? `<p class="answer-line-count">Answer section: ${answerCharCount} CHARACTERS</p>` : "";
+                const reasoningCharLabel = reasoningCharCount > 0 ? `<p class="answer-line-count">Reasoning Section: ${reasoningCharCount} CHARACTERS</p>` : "";
                 const reasoningSection = previewReason ? `
                     <div class="content-container">
-                        ${reasoningLineLabel}
-                        <button class="view-separate-btn" data-content="${encodeURIComponent(fullReasoningTrace)}" data-type="reasoning" data-title="Reasoning - ${stageLabel}">Open full view</button>
+                        ${reasoningCharLabel}
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(fullReasoningTrace)}" data-type="reasoning" data-title="Reasoning - ${label}">Open full view</button>
                         <div class="reasoning-answer limited">${previewReason}</div>
                     </div>
                 ` : "";
                 const codeSection = stageData.code ? `
                     <div class="content-container">
-                        ${codeLineLabel}
-                        <button class="view-separate-btn" data-content="${encodeURIComponent(stageData.code)}" data-type="code" data-title="Code - ${stageLabel}">Open full view</button>
+                        ${codeCharLabel}
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(stageData.code)}" data-type="code" data-title="Code - ${label}">Open full view</button>
                         <pre class="code-block"><code class="language-python">${escapeHTML(stageData.code)}</code></pre>
                     </div>` : "";
                 const answerSection = stageData.answer ? `
                     <div class="content-container">
-                        ${answerLineLabel}
-                        <button class="view-separate-btn" data-content="${encodeURIComponent(renderedAnswer)}" data-type="math" data-title="Math Answer - ${stageLabel}">Open full view</button>
+                        ${answerCharLabel}
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(renderedAnswer)}" data-type="math" data-title="Math Answer - ${label}">Open full view</button>
                         <div class="math-answer">${renderedAnswer}</div>
                     </div>` : "";
                 const finalSection = stageData.final ? `
                     <div class="content-container">
-                        <button class="view-separate-btn" data-content="${encodeURIComponent(renderedFinal)}" data-type="final" data-title="Final Answer - ${stageLabel}">Open full view</button>
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(renderedFinal)}" data-type="final" data-title="Final Answer - ${label}">Open full view</button>
                         <div class="final-answer">${renderedFinal}</div>
                     </div>` : "";
                 return `
                     <section class="panel">
-                        <h3>${bodyLabel} &mdash; ${stageLabel}</h3>
+                        <h3>${label}</h3>
                         ${reasoningSection}
                         ${codeSection}
                         ${answerSection}
@@ -898,45 +888,44 @@ function renderInteractivePanelsPanic(problem, panelsContainerEl) {
         <div class="model-panels">
             ${["oracle"].map(stage => {
                 const stageData = model[stage] || {};
-                const stageLabel = stageData.label || "Full Thinking";
-                const bodyLabel = "Oracle Output";
+                const label = stageData.label || "Full Thinking";
                 const renderedAnswer = stageData.answer ? renderRich(stageData.answer) : "";
                 const renderedFinal = stageData.final ? renderRich(stageData.final) : "";
                 const previewReason = stageData.preview_reason ? renderRich(stageData.preview_reason) : "";
                 const fullReasoningTrace = stageData.full_reasoning_trace ? renderRich(stageData.full_reasoning_trace) : "";
-                const codeLineCount = stageData.code ? countLines(stageData.code) : 0;
-                const answerLineCount = stageData.answer ? countLines(getContentString(stageData.answer)) : 0;
-                const reasoningLineCount = stageData.preview_reason ? countLines(getContentString(stageData.preview_reason)) : 0;
-                const codeLineLabel = codeLineCount > 0 ? `<p class="answer-line-count">Answer section: ${codeLineCount} LINES</p>` : "";
-                const answerLineLabel = answerLineCount > 0 ? `<p class="answer-line-count">Answer section: ${answerLineCount} LINES</p>` : "";
-                const reasoningLineLabel = reasoningLineCount > 0 ? `<p class="answer-line-count">Reasoning Section: ${reasoningLineCount} LINES</p>` : "";
+                const codeCharCount = stageData.code ? countCharacters(stageData.code) : 0;
+                const answerCharCount = stageData.answer ? countCharacters(getContentString(stageData.answer)) : 0;
+                const reasoningCharCount = stageData.preview_reason ? countCharacters(getContentString(stageData.preview_reason)) : 0;
+                const codeCharLabel = codeCharCount > 0 ? `<p class="answer-line-count">Answer section: ${codeCharCount} CHARACTERS</p>` : "";
+                const answerCharLabel = answerCharCount > 0 ? `<p class="answer-line-count">Answer section: ${answerCharCount} CHARACTERS</p>` : "";
+                const reasoningCharLabel = reasoningCharCount > 0 ? `<p class="answer-line-count">Reasoning Section: ${reasoningCharCount} CHARACTERS</p>` : "";
                 const reasoningSection = previewReason ? `
                     <div class="content-container">
-                        ${reasoningLineLabel}
-                        <button class="view-separate-btn" data-content="${encodeURIComponent(fullReasoningTrace)}" data-type="reasoning" data-title="Reasoning - ${stageLabel}">Open full view</button>
+                        ${reasoningCharLabel}
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(fullReasoningTrace)}" data-type="reasoning" data-title="Reasoning - ${label}">Open full view</button>
                         <div class="reasoning-answer limited">${previewReason}</div>
                     </div>
                 ` : "";
                 const codeSection = stageData.code ? `
                     <div class="content-container">
-                        ${codeLineLabel}
-                        <button class="view-separate-btn" data-content="${encodeURIComponent(stageData.code)}" data-type="code" data-title="Code - ${stageLabel}">Open full view</button>
+                        ${codeCharLabel}
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(stageData.code)}" data-type="code" data-title="Code - ${label}">Open full view</button>
                         <pre class="code-block"><code class="language-python">${escapeHTML(stageData.code)}</code></pre>
                     </div>` : "";
                 const answerSection = stageData.answer ? `
                     <div class="content-container">
-                        ${answerLineLabel}
-                        <button class="view-separate-btn" data-content="${encodeURIComponent(renderedAnswer)}" data-type="math" data-title="Math Answer - ${stageLabel}">Open full view</button>
+                        ${answerCharLabel}
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(renderedAnswer)}" data-type="math" data-title="Math Answer - ${label}">Open full view</button>
                         <div class="math-answer">${renderedAnswer}</div>
                     </div>` : "";
                 const finalSection = stageData.final ? `
                     <div class="content-container">
-                        <button class="view-separate-btn" data-content="${encodeURIComponent(renderedFinal)}" data-type="final" data-title="Final Answer - ${stageLabel}">Open full view</button>
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(renderedFinal)}" data-type="final" data-title="Final Answer - ${label}">Open full view</button>
                         <div class="final-answer">${renderedFinal}</div>
                     </div>` : "";
                 return `
                     <section class="panel">
-                        <h3>${bodyLabel} &mdash; ${stageLabel}</h3>
+                        <h3>${label}</h3>
                         ${reasoningSection}
                         ${codeSection}
                         ${answerSection}
@@ -1006,45 +995,44 @@ function renderInteractivePanelsDoubt(problem, panelsContainerEl) {
         <div class="model-panels">
             ${["oracle", "interrupt"].map(stage => {
                 const stageData = model[stage] || {};
-                const stageLabel = stageData.label || (stage === "oracle" ? "Full Thinking" : "Info Update @0.3");
-                const bodyLabel = stage === "oracle" ? "Oracle Output" : "Update Output";
+                const label = stageData.label || (stage === "oracle" ? "Full Thinking" : "Info Update @0.3");
                 const renderedAnswer = stageData.answer ? renderRich(stageData.answer) : "";
                 const renderedFinal = stageData.final ? renderRich(stageData.final) : "";
                 const previewReason = stageData.preview_reason ? renderRich(stageData.preview_reason) : "";
                 const fullReasoningTrace = stageData.full_reasoning_trace ? renderRich(stageData.full_reasoning_trace) : "";
-                const codeLineCount = stageData.code ? countLines(stageData.code) : 0;
-                const answerLineCount = stageData.answer ? countLines(getContentString(stageData.answer)) : 0;
-                const reasoningLineCount = stageData.preview_reason ? countLines(getContentString(stageData.preview_reason)) : 0;
-                const codeLineLabel = codeLineCount > 0 ? `<p class="answer-line-count">Answer section: ${codeLineCount} LINES</p>` : "";
-                const answerLineLabel = answerLineCount > 0 ? `<p class="answer-line-count">Answer section: ${answerLineCount} LINES</p>` : "";
-                const reasoningLineLabel = reasoningLineCount > 0 ? `<p class="answer-line-count">Reasoning Section: ${reasoningLineCount} LINES</p>` : "";
+                const codeCharCount = stageData.code ? countCharacters(stageData.code) : 0;
+                const answerCharCount = stageData.answer ? countCharacters(getContentString(stageData.answer)) : 0;
+                const reasoningCharCount = stageData.preview_reason ? countCharacters(getContentString(stageData.preview_reason)) : 0;
+                const codeCharLabel = codeCharCount > 0 ? `<p class="answer-line-count">Answer section: ${codeCharCount} CHARACTERS</p>` : "";
+                const answerCharLabel = answerCharCount > 0 ? `<p class="answer-line-count">Answer section: ${answerCharCount} CHARACTERS</p>` : "";
+                const reasoningCharLabel = reasoningCharCount > 0 ? `<p class="answer-line-count">Reasoning Section: ${reasoningCharCount} CHARACTERS</p>` : "";
                 const reasoningSection = previewReason ? `
                     <div class="content-container">
-                        ${reasoningLineLabel}
-                        <button class="view-separate-btn" data-content="${encodeURIComponent(fullReasoningTrace)}" data-type="reasoning" data-title="Reasoning - ${stageLabel}">Open full view</button>
+                        ${reasoningCharLabel}
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(fullReasoningTrace)}" data-type="reasoning" data-title="Reasoning - ${label}">Open full view</button>
                         <div class="reasoning-answer limited">${previewReason}</div>
                     </div>
                 ` : "";
                 const codeSection = stageData.code ? `
                     <div class="content-container">
-                        ${codeLineLabel}
-                        <button class="view-separate-btn" data-content="${encodeURIComponent(stageData.code)}" data-type="code" data-title="Code - ${stageLabel}">Open full view</button>
+                        ${codeCharLabel}
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(stageData.code)}" data-type="code" data-title="Code - ${label}">Open full view</button>
                         <pre class="code-block"><code class="language-python">${escapeHTML(stageData.code)}</code></pre>
                     </div>` : "";
                 const answerSection = stageData.answer ? `
                     <div class="content-container">
-                        ${answerLineLabel}
-                        <button class="view-separate-btn" data-content="${encodeURIComponent(renderedAnswer)}" data-type="math" data-title="Math Answer - ${stageLabel}">Open full view</button>
+                        ${answerCharLabel}
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(renderedAnswer)}" data-type="math" data-title="Math Answer - ${label}">Open full view</button>
                         <div class="math-answer">${renderedAnswer}</div>
                     </div>` : "";
                 const finalSection = stageData.final ? `
                     <div class="content-container">
-                        <button class="view-separate-btn" data-content="${encodeURIComponent(renderedFinal)}" data-type="final" data-title="Final Answer - ${stageLabel}">Open full view</button>
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(renderedFinal)}" data-type="final" data-title="Final Answer - ${label}">Open full view</button>
                         <div class="final-answer">${renderedFinal}</div>
                     </div>` : "";
                 return `
                     <section class="panel">
-                        <h3>${bodyLabel} &mdash; ${stageLabel}</h3>
+                        <h3>${label}</h3>
                         ${reasoningSection}
                         ${codeSection}
                         ${answerSection}
