@@ -450,6 +450,213 @@
             max-height: none; 
             overflow-y: auto;
         }
+        
+        /* Leakage container styles */
+        .interactive-viz-leakage { margin: 0; font-family: "Inter", Arial, sans-serif; background: #eef2f7; color: #1c1c1c; }
+        .interactive-viz-leakage .wrapper { max-width: 1280px; margin: 32px auto; background: #fff; border-radius: 14px; box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12); overflow: hidden; }
+        .interactive-viz-leakage .header { padding: 12px 20px; background: linear-gradient(135deg, #dc2626, #991b1b); color: #fff; display: flex; justify-content: space-between; align-items: center; }
+        .interactive-viz-leakage .header h1 { margin: 0; font-size: 0.95rem; font-weight: 600; max-width: 75%; letter-spacing: 0.01em; }
+        .interactive-viz-leakage .header h1 a { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.35); transition: color 0.15s ease, border-bottom-color 0.15s ease; }
+        .interactive-viz-leakage .header h1 a:hover { color: #fca5a5; border-bottom-color: rgba(252, 165, 165, 0.75); }
+        .interactive-viz-leakage .header-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .interactive-viz-leakage .header-actions .button-link { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.12); color: #fff; border: none; padding: 9px 18px; border-radius: 999px; font-weight: 600; font-size: 0.9rem; text-decoration: none; transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease; }
+        .interactive-viz-leakage .header-actions .button-link:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,0.25); background: rgba(255,255,255,0.18); }
+        .interactive-viz-leakage .header button { background: rgba(255,255,255,0.92); color: #991b1b; border: none; padding: 9px 18px; border-radius: 999px; font-weight: 600; cursor: pointer; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+        .interactive-viz-leakage .header button:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(255,255,255,0.35); }
+        .interactive-viz-leakage .question-details { position: relative; padding: 18px 24px 40px; border-bottom: 1px solid #e5e7eb; display: block; background: #fef2f2; line-height: 1.55; overflow: hidden; max-height: calc(1.35em * 3 + 1.55em * 2 + 1em); }
+        .interactive-viz-leakage .question-preview-title { margin: 0 0 0.15rem; font-size: 1.05rem; font-weight: 600; color: #0f172a; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .interactive-viz-leakage .question-preview-title a { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(15, 23, 42, 0.2); transition: border-bottom-color 0.2s ease; }
+        .interactive-viz-leakage .question-preview-title a:hover { border-bottom-color: rgba(15, 23, 42, 0.6); }
+        .interactive-viz-leakage .question-details::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 20px; background: linear-gradient(180deg, rgba(254, 242, 242, 0) 0%, #fef2f2 90%); pointer-events: none; opacity: 0; transition: opacity 0.2s ease; }
+        .interactive-viz-leakage .question-details .question-content { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; line-height: 1.55; min-height: calc(1.55em * 2); font-size: 0.98rem; margin-bottom: 4px; }
+        .interactive-viz-leakage .question-details .question-content > * { display: inline; margin: 0; }
+        .interactive-viz-leakage .question-details .question-content p + p::before { content: " "; }
+        .interactive-viz-leakage .question-details .view-full-context-btn { display: inline-flex; align-items: center; gap: 6px; position: static; background: none; color: #dc2626; border: none; border-radius: 0; padding: 4px 0; font-size: 0.85rem; font-weight: 600; cursor: pointer; opacity: 1; pointer-events: auto; transition: color 0.2s ease, transform 0.2s ease; transform: translateY(0); box-shadow: none; }
+        .interactive-viz-leakage .question-details .view-full-context-btn:hover, .interactive-viz-leakage .question-details .view-full-context-btn:focus-visible { transform: translateY(0); color: #991b1b; }
+        .interactive-viz-leakage .question-details .view-full-context-btn:focus-visible { outline: 2px solid rgba(220, 38, 38, 0.4); outline-offset: 2px; }
+        .interactive-viz-leakage .question-details.is-clamped::after { opacity: 1; }
+        .interactive-viz-leakage .answer-line-count { margin: 0 0 6px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: #dc2626; }
+        .interactive-viz-leakage .view-reasoning-btn { display: inline-flex; align-items: center; gap: 6px; background: none; color: #dc2626; border: none; font-weight: 600; padding: 4px 0; cursor: pointer; font-size: 0.85rem; margin-bottom: 6px; }
+        .interactive-viz-leakage .view-reasoning-btn:hover, .interactive-viz-leakage .view-reasoning-btn:focus-visible { color: #991b1b; }
+        .interactive-viz-leakage .control-bar { padding: 20px 28px; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; border-bottom: 1px solid #e5e7eb; }
+        .interactive-viz-leakage .control-bar button { background: #dc2626; color: #fff; border: none; padding: 10px 18px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: background 0.15s ease; }
+        .interactive-viz-leakage .control-bar button:hover { background: #b91c1c; }
+        .interactive-viz-leakage .model-selection { display: flex; flex-wrap: wrap; gap: 10px; }
+        .interactive-viz-leakage .model-checkbox { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 999px; background: #f9fafb; cursor: pointer; transition: border-color 0.15s ease, background 0.15s ease; }
+        .interactive-viz-leakage .model-checkbox input { accent-color: #dc2626; cursor: pointer; }
+        .interactive-viz-leakage .model-checkbox:hover { border-color: #dc2626; background: #fef2f2; }
+        .interactive-viz-leakage .panels-container { padding: 12px 2% 16px; display: flex; flex-direction: column; gap: 16px; }
+        .interactive-viz-leakage .model-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .interactive-viz-leakage .model-header img { width: 36px; height: 36px; object-fit: contain; border-radius: 8px; background: #fff; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12); }
+        .interactive-viz-leakage .model-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: #0f172a; }
+        .interactive-viz-leakage .model-header h2 a { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(220, 38, 38, 0.35); transition: color 0.15s ease, border-bottom-color 0.15s ease; }
+        .interactive-viz-leakage .model-header h2 a:hover { color: #dc2626; border-bottom-color: rgba(220, 38, 38, 0.8); }
+        .interactive-viz-leakage .model-panels { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); }
+        .interactive-viz-leakage .panel { border: none; border-radius: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; background: transparent; min-height: 450px; box-shadow: none; }
+        .interactive-viz-leakage .panel h3 { margin: 0; font-size: 0.95rem; color: #1f2937; font-weight: 700; }
+        .interactive-viz-leakage .math-answer, .interactive-viz-leakage .final-answer { border-radius: 10px; line-height: 1.6; max-height: 400px; overflow-y: auto; }
+        .interactive-viz-leakage .math-answer { background: #fef2f2; border-left: 4px solid #dc2626; padding: 12px 12px; }
+        .interactive-viz-leakage .final-answer { background: #fee2e2; border-left: 4px solid #b91c1c; padding: 12px 12px; font-weight: 600; color: #0f172a; }
+        .interactive-viz-leakage pre { margin: 0; border-radius: 10px; overflow: auto; max-height: 400px; }
+        .interactive-viz-leakage pre.code-block { display: grid; grid-template-columns: auto 1fr; padding: 0; background: #fef2f2; border: 1px solid #fecaca; }
+        .interactive-viz-leakage pre.code-block code { display: block; font-size: 0.9rem; line-height: 1.45; padding: 12px 12px; min-width: 0; white-space: pre; }
+        .interactive-viz-leakage pre.code-block .line-numbers { display: inline-flex; flex-direction: column; align-items: flex-end; padding: 12px 12px 12px 12px; font-family: "JetBrains Mono", "Fira Code", Consolas, monospace; font-size: 0.9rem; line-height: 1.45; color: #94a3b8; background: rgba(220, 38, 38, 0.12); border-right: 1px solid rgba(220, 38, 38, 0.35); user-select: none; min-width: 3ch; }
+        .interactive-viz-leakage pre.code-block .line-numbers span { display: block; }
+        .interactive-viz-leakage .inline-code { font-family: "JetBrains Mono", "Fira Code", Consolas, monospace; background: rgba(220, 38, 38, 0.08); color: #0f172a; border-radius: 6px; padding: 0.1rem 0.35rem; font-size: 0.92em; white-space: pre; }
+        .interactive-viz-leakage .empty-state { text-align: center; padding: 40px; border: 1px dashed #fecaca; border-radius: 12px; color: #64748b; background: #fef2f2; }
+        .interactive-viz-leakage .content-container { position: relative; }
+        .interactive-viz-leakage .view-separate-btn { position: absolute; top: 8px; right: 8px; background: rgba(0, 0, 0, 0.7); color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; cursor: pointer; opacity: 0; transition: opacity 0.2s ease; z-index: 10; }
+        .interactive-viz-leakage .content-container:hover .view-separate-btn { opacity: 1; }
+        .interactive-viz-leakage .view-separate-btn:hover { background: rgba(0, 0, 0, 0.9); }
+        .interactive-viz-leakage .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); }
+        .interactive-viz-leakage .modal-content { background-color: #fff; margin: 5% auto; padding: 20px; border-radius: 12px; width: 90%; max-width: 1000px; height: 80vh; position: relative; display: flex; flex-direction: column; overflow: hidden; }
+        .interactive-viz-leakage .modal-close { position: absolute; top: 16px; right: 20px; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; font-size: 24px; font-weight: bold; cursor: pointer; color: #64748b; line-height: 1; transition: background 0.2s ease, color 0.2s ease; }
+        .interactive-viz-leakage .modal-close:hover { color: #1f2933; background: rgba(148, 163, 184, 0.2); }
+        .interactive-viz-leakage .modal-close::before, .interactive-viz-leakage .modal-close::after { content: none; }
+        .interactive-viz-leakage .modal-header { margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #eee; flex-shrink: 0; }
+        .interactive-viz-leakage #modal-body-leakage { flex: 1; overflow: auto; min-height: 0; padding-right: 4px; }
+        .interactive-viz-leakage #modal-body-leakage pre { margin: 0; background: #fef2f2; border: 1px solid #fecaca; overflow: visible; }
+        .interactive-viz-leakage #modal-body-leakage pre.code-block { height: auto; max-height: none; background: #fef2f2; border: 1px solid #fecaca; overflow-x: auto; overflow-y: visible; }
+        .interactive-viz-leakage #modal-body-leakage pre.code-block .line-numbers { background: #fee2e2; }
+        .interactive-viz-leakage #modal-body-leakage .math-answer, .interactive-viz-leakage #modal-body-leakage .final-answer { height: 100%; max-height: none; overflow-y: auto; }
+        
+        /* Panic container styles */
+        .interactive-viz-panic { margin: 0; font-family: "Inter", Arial, sans-serif; background: #eef2f7; color: #1c1c1c; }
+        .interactive-viz-panic .wrapper { max-width: 1280px; margin: 32px auto; background: #fff; border-radius: 14px; box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12); overflow: hidden; }
+        .interactive-viz-panic .header { padding: 12px 20px; background: linear-gradient(135deg, #ea580c, #c2410c); color: #fff; display: flex; justify-content: space-between; align-items: center; }
+        .interactive-viz-panic .header h1 { margin: 0; font-size: 0.95rem; font-weight: 600; max-width: 75%; letter-spacing: 0.01em; }
+        .interactive-viz-panic .header h1 a { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.35); transition: color 0.15s ease, border-bottom-color 0.15s ease; }
+        .interactive-viz-panic .header h1 a:hover { color: #fed7aa; border-bottom-color: rgba(254, 215, 170, 0.75); }
+        .interactive-viz-panic .header-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .interactive-viz-panic .header-actions .button-link { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.12); color: #fff; border: none; padding: 9px 18px; border-radius: 999px; font-weight: 600; font-size: 0.9rem; text-decoration: none; transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease; }
+        .interactive-viz-panic .header-actions .button-link:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,0.25); background: rgba(255,255,255,0.18); }
+        .interactive-viz-panic .header button { background: rgba(255,255,255,0.92); color: #c2410c; border: none; padding: 9px 18px; border-radius: 999px; font-weight: 600; cursor: pointer; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+        .interactive-viz-panic .header button:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(255,255,255,0.35); }
+        .interactive-viz-panic .question-details { position: relative; padding: 18px 24px 40px; border-bottom: 1px solid #e5e7eb; display: block; background: #fff7ed; line-height: 1.55; overflow: hidden; max-height: calc(1.35em * 3 + 1.55em * 2 + 1em); }
+        .interactive-viz-panic .question-preview-title { margin: 0 0 0.15rem; font-size: 1.05rem; font-weight: 600; color: #0f172a; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .interactive-viz-panic .question-preview-title a { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(15, 23, 42, 0.2); transition: border-bottom-color 0.2s ease; }
+        .interactive-viz-panic .question-preview-title a:hover { border-bottom-color: rgba(15, 23, 42, 0.6); }
+        .interactive-viz-panic .question-details::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 20px; background: linear-gradient(180deg, rgba(255, 247, 237, 0) 0%, #fff7ed 90%); pointer-events: none; opacity: 0; transition: opacity 0.2s ease; }
+        .interactive-viz-panic .question-details .question-content { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; line-height: 1.55; min-height: calc(1.55em * 2); font-size: 0.98rem; margin-bottom: 4px; }
+        .interactive-viz-panic .question-details .question-content > * { display: inline; margin: 0; }
+        .interactive-viz-panic .question-details .question-content p + p::before { content: " "; }
+        .interactive-viz-panic .question-details .view-full-context-btn { display: inline-flex; align-items: center; gap: 6px; position: static; background: none; color: #ea580c; border: none; border-radius: 0; padding: 4px 0; font-size: 0.85rem; font-weight: 600; cursor: pointer; opacity: 1; pointer-events: auto; transition: color 0.2s ease, transform 0.2s ease; transform: translateY(0); box-shadow: none; }
+        .interactive-viz-panic .question-details .view-full-context-btn:hover, .interactive-viz-panic .question-details .view-full-context-btn:focus-visible { transform: translateY(0); color: #c2410c; }
+        .interactive-viz-panic .question-details .view-full-context-btn:focus-visible { outline: 2px solid rgba(234, 88, 12, 0.4); outline-offset: 2px; }
+        .interactive-viz-panic .question-details.is-clamped::after { opacity: 1; }
+        .interactive-viz-panic .answer-line-count { margin: 0 0 6px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: #ea580c; }
+        .interactive-viz-panic .view-reasoning-btn { display: inline-flex; align-items: center; gap: 6px; background: none; color: #ea580c; border: none; font-weight: 600; padding: 4px 0; cursor: pointer; font-size: 0.85rem; margin-bottom: 6px; }
+        .interactive-viz-panic .view-reasoning-btn:hover, .interactive-viz-panic .view-reasoning-btn:focus-visible { color: #c2410c; }
+        .interactive-viz-panic .control-bar { padding: 20px 28px; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; border-bottom: 1px solid #e5e7eb; }
+        .interactive-viz-panic .control-bar button { background: #ea580c; color: #fff; border: none; padding: 10px 18px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: background 0.15s ease; }
+        .interactive-viz-panic .control-bar button:hover { background: #c2410c; }
+        .interactive-viz-panic .model-selection { display: flex; flex-wrap: wrap; gap: 10px; }
+        .interactive-viz-panic .model-checkbox { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 999px; background: #f9fafb; cursor: pointer; transition: border-color 0.15s ease, background 0.15s ease; }
+        .interactive-viz-panic .model-checkbox input { accent-color: #ea580c; cursor: pointer; }
+        .interactive-viz-panic .model-checkbox:hover { border-color: #ea580c; background: #fff7ed; }
+        .interactive-viz-panic .panels-container { padding: 12px 2% 16px; display: flex; flex-direction: column; gap: 16px; }
+        .interactive-viz-panic .model-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .interactive-viz-panic .model-header img { width: 36px; height: 36px; object-fit: contain; border-radius: 8px; background: #fff; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12); }
+        .interactive-viz-panic .model-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: #0f172a; }
+        .interactive-viz-panic .model-header h2 a { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(234, 88, 12, 0.35); transition: color 0.15s ease, border-bottom-color 0.15s ease; }
+        .interactive-viz-panic .model-header h2 a:hover { color: #ea580c; border-bottom-color: rgba(234, 88, 12, 0.8); }
+        .interactive-viz-panic .model-panels { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); }
+        .interactive-viz-panic .panel { border: none; border-radius: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; background: transparent; min-height: 450px; box-shadow: none; }
+        .interactive-viz-panic .panel h3 { margin: 0; font-size: 0.95rem; color: #1f2937; font-weight: 700; }
+        .interactive-viz-panic .math-answer, .interactive-viz-panic .final-answer { border-radius: 10px; line-height: 1.6; max-height: 400px; overflow-y: auto; }
+        .interactive-viz-panic .math-answer { background: #fff7ed; border-left: 4px solid #ea580c; padding: 12px 12px; }
+        .interactive-viz-panic .final-answer { background: #fed7aa; border-left: 4px solid #c2410c; padding: 12px 12px; font-weight: 600; color: #0f172a; }
+        .interactive-viz-panic pre { margin: 0; border-radius: 10px; overflow: auto; max-height: 400px; }
+        .interactive-viz-panic pre.code-block { display: grid; grid-template-columns: auto 1fr; padding: 0; background: #fff7ed; border: 1px solid #fed7aa; }
+        .interactive-viz-panic pre.code-block code { display: block; font-size: 0.9rem; line-height: 1.45; padding: 12px 12px; min-width: 0; white-space: pre; }
+        .interactive-viz-panic pre.code-block .line-numbers { display: inline-flex; flex-direction: column; align-items: flex-end; padding: 12px 12px 12px 12px; font-family: "JetBrains Mono", "Fira Code", Consolas, monospace; font-size: 0.9rem; line-height: 1.45; color: #94a3b8; background: rgba(234, 88, 12, 0.12); border-right: 1px solid rgba(234, 88, 12, 0.35); user-select: none; min-width: 3ch; }
+        .interactive-viz-panic pre.code-block .line-numbers span { display: block; }
+        .interactive-viz-panic .inline-code { font-family: "JetBrains Mono", "Fira Code", Consolas, monospace; background: rgba(234, 88, 12, 0.08); color: #0f172a; border-radius: 6px; padding: 0.1rem 0.35rem; font-size: 0.92em; white-space: pre; }
+        .interactive-viz-panic .empty-state { text-align: center; padding: 40px; border: 1px dashed #fed7aa; border-radius: 12px; color: #64748b; background: #fff7ed; }
+        .interactive-viz-panic .content-container { position: relative; }
+        .interactive-viz-panic .view-separate-btn { position: absolute; top: 8px; right: 8px; background: rgba(0, 0, 0, 0.7); color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; cursor: pointer; opacity: 0; transition: opacity 0.2s ease; z-index: 10; }
+        .interactive-viz-panic .content-container:hover .view-separate-btn { opacity: 1; }
+        .interactive-viz-panic .view-separate-btn:hover { background: rgba(0, 0, 0, 0.9); }
+        .interactive-viz-panic .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); }
+        .interactive-viz-panic .modal-content { background-color: #fff; margin: 5% auto; padding: 20px; border-radius: 12px; width: 90%; max-width: 1000px; height: 80vh; position: relative; display: flex; flex-direction: column; overflow: hidden; }
+        .interactive-viz-panic .modal-close { position: absolute; top: 16px; right: 20px; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; font-size: 24px; font-weight: bold; cursor: pointer; color: #64748b; line-height: 1; transition: background 0.2s ease, color 0.2s ease; }
+        .interactive-viz-panic .modal-close:hover { color: #1f2933; background: rgba(148, 163, 184, 0.2); }
+        .interactive-viz-panic .modal-close::before, .interactive-viz-panic .modal-close::after { content: none; }
+        .interactive-viz-panic .modal-header { margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #eee; flex-shrink: 0; }
+        .interactive-viz-panic #modal-body-panic { flex: 1; overflow: auto; min-height: 0; padding-right: 4px; }
+        .interactive-viz-panic #modal-body-panic pre { margin: 0; background: #fff7ed; border: 1px solid #fed7aa; overflow: visible; }
+        .interactive-viz-panic #modal-body-panic pre.code-block { height: auto; max-height: none; background: #fff7ed; border: 1px solid #fed7aa; overflow-x: auto; overflow-y: visible; }
+        .interactive-viz-panic #modal-body-panic pre.code-block .line-numbers { background: #fed7aa; }
+        .interactive-viz-panic #modal-body-panic .math-answer, .interactive-viz-panic #modal-body-panic .final-answer { height: 100%; max-height: none; overflow-y: auto; }
+        
+        /* Doubt container styles */
+        .interactive-viz-doubt { margin: 0; font-family: "Inter", Arial, sans-serif; background: #eef2f7; color: #1c1c1c; }
+        .interactive-viz-doubt .wrapper { max-width: 1280px; margin: 32px auto; background: #fff; border-radius: 14px; box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12); overflow: hidden; }
+        .interactive-viz-doubt .header { padding: 12px 20px; background: linear-gradient(135deg, #7c3aed, #5b21b6); color: #fff; display: flex; justify-content: space-between; align-items: center; }
+        .interactive-viz-doubt .header h1 { margin: 0; font-size: 0.95rem; font-weight: 600; max-width: 75%; letter-spacing: 0.01em; }
+        .interactive-viz-doubt .header h1 a { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.35); transition: color 0.15s ease, border-bottom-color 0.15s ease; }
+        .interactive-viz-doubt .header h1 a:hover { color: #c4b5fd; border-bottom-color: rgba(196, 181, 253, 0.75); }
+        .interactive-viz-doubt .header-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .interactive-viz-doubt .header-actions .button-link { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.12); color: #fff; border: none; padding: 9px 18px; border-radius: 999px; font-weight: 600; font-size: 0.9rem; text-decoration: none; transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease; }
+        .interactive-viz-doubt .header-actions .button-link:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,0.25); background: rgba(255,255,255,0.18); }
+        .interactive-viz-doubt .header button { background: rgba(255,255,255,0.92); color: #5b21b6; border: none; padding: 9px 18px; border-radius: 999px; font-weight: 600; cursor: pointer; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+        .interactive-viz-doubt .header button:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(255,255,255,0.35); }
+        .interactive-viz-doubt .question-details { position: relative; padding: 18px 24px 40px; border-bottom: 1px solid #e5e7eb; display: block; background: #faf5ff; line-height: 1.55; overflow: hidden; max-height: calc(1.35em * 3 + 1.55em * 2 + 1em); }
+        .interactive-viz-doubt .question-preview-title { margin: 0 0 0.15rem; font-size: 1.05rem; font-weight: 600; color: #0f172a; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .interactive-viz-doubt .question-preview-title a { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(15, 23, 42, 0.2); transition: border-bottom-color 0.2s ease; }
+        .interactive-viz-doubt .question-preview-title a:hover { border-bottom-color: rgba(15, 23, 42, 0.6); }
+        .interactive-viz-doubt .question-details::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 20px; background: linear-gradient(180deg, rgba(250, 245, 255, 0) 0%, #faf5ff 90%); pointer-events: none; opacity: 0; transition: opacity 0.2s ease; }
+        .interactive-viz-doubt .question-details .question-content { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; line-height: 1.55; min-height: calc(1.55em * 2); font-size: 0.98rem; margin-bottom: 4px; }
+        .interactive-viz-doubt .question-details .question-content > * { display: inline; margin: 0; }
+        .interactive-viz-doubt .question-details .question-content p + p::before { content: " "; }
+        .interactive-viz-doubt .question-details .view-full-context-btn { display: inline-flex; align-items: center; gap: 6px; position: static; background: none; color: #7c3aed; border: none; border-radius: 0; padding: 4px 0; font-size: 0.85rem; font-weight: 600; cursor: pointer; opacity: 1; pointer-events: auto; transition: color 0.2s ease, transform 0.2s ease; transform: translateY(0); box-shadow: none; }
+        .interactive-viz-doubt .question-details .view-full-context-btn:hover, .interactive-viz-doubt .question-details .view-full-context-btn:focus-visible { transform: translateY(0); color: #5b21b6; }
+        .interactive-viz-doubt .question-details .view-full-context-btn:focus-visible { outline: 2px solid rgba(124, 58, 237, 0.4); outline-offset: 2px; }
+        .interactive-viz-doubt .question-details.is-clamped::after { opacity: 1; }
+        .interactive-viz-doubt .answer-line-count { margin: 0 0 6px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: #7c3aed; }
+        .interactive-viz-doubt .view-reasoning-btn { display: inline-flex; align-items: center; gap: 6px; background: none; color: #7c3aed; border: none; font-weight: 600; padding: 4px 0; cursor: pointer; font-size: 0.85rem; margin-bottom: 6px; }
+        .interactive-viz-doubt .view-reasoning-btn:hover, .interactive-viz-doubt .view-reasoning-btn:focus-visible { color: #5b21b6; }
+        .interactive-viz-doubt .control-bar { padding: 20px 28px; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; border-bottom: 1px solid #e5e7eb; }
+        .interactive-viz-doubt .control-bar button { background: #7c3aed; color: #fff; border: none; padding: 10px 18px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: background 0.15s ease; }
+        .interactive-viz-doubt .control-bar button:hover { background: #5b21b6; }
+        .interactive-viz-doubt .model-selection { display: flex; flex-wrap: wrap; gap: 10px; }
+        .interactive-viz-doubt .model-checkbox { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 999px; background: #f9fafb; cursor: pointer; transition: border-color 0.15s ease, background 0.15s ease; }
+        .interactive-viz-doubt .model-checkbox input { accent-color: #7c3aed; cursor: pointer; }
+        .interactive-viz-doubt .model-checkbox:hover { border-color: #7c3aed; background: #faf5ff; }
+        .interactive-viz-doubt .panels-container { padding: 12px 2% 16px; display: flex; flex-direction: column; gap: 16px; }
+        .interactive-viz-doubt .model-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .interactive-viz-doubt .model-header img { width: 36px; height: 36px; object-fit: contain; border-radius: 8px; background: #fff; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12); }
+        .interactive-viz-doubt .model-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: #0f172a; }
+        .interactive-viz-doubt .model-header h2 a { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(124, 58, 237, 0.35); transition: color 0.15s ease, border-bottom-color 0.15s ease; }
+        .interactive-viz-doubt .model-header h2 a:hover { color: #7c3aed; border-bottom-color: rgba(124, 58, 237, 0.8); }
+        .interactive-viz-doubt .model-panels { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); }
+        .interactive-viz-doubt .panel { border: none; border-radius: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; background: transparent; min-height: 450px; box-shadow: none; }
+        .interactive-viz-doubt .panel h3 { margin: 0; font-size: 0.95rem; color: #1f2937; font-weight: 700; }
+        .interactive-viz-doubt .math-answer, .interactive-viz-doubt .final-answer { border-radius: 10px; line-height: 1.6; max-height: 400px; overflow-y: auto; }
+        .interactive-viz-doubt .math-answer { background: #faf5ff; border-left: 4px solid #7c3aed; padding: 12px 12px; }
+        .interactive-viz-doubt .final-answer { background: #e9d5ff; border-left: 4px solid #5b21b6; padding: 12px 12px; font-weight: 600; color: #0f172a; }
+        .interactive-viz-doubt pre { margin: 0; border-radius: 10px; overflow: auto; max-height: 400px; }
+        .interactive-viz-doubt pre.code-block { display: grid; grid-template-columns: auto 1fr; padding: 0; background: #faf5ff; border: 1px solid #e9d5ff; }
+        .interactive-viz-doubt pre.code-block code { display: block; font-size: 0.9rem; line-height: 1.45; padding: 12px 12px; min-width: 0; white-space: pre; }
+        .interactive-viz-doubt pre.code-block .line-numbers { display: inline-flex; flex-direction: column; align-items: flex-end; padding: 12px 12px 12px 12px; font-family: "JetBrains Mono", "Fira Code", Consolas, monospace; font-size: 0.9rem; line-height: 1.45; color: #94a3b8; background: rgba(124, 58, 237, 0.12); border-right: 1px solid rgba(124, 58, 237, 0.35); user-select: none; min-width: 3ch; }
+        .interactive-viz-doubt pre.code-block .line-numbers span { display: block; }
+        .interactive-viz-doubt .inline-code { font-family: "JetBrains Mono", "Fira Code", Consolas, monospace; background: rgba(124, 58, 237, 0.08); color: #0f172a; border-radius: 6px; padding: 0.1rem 0.35rem; font-size: 0.92em; white-space: pre; }
+        .interactive-viz-doubt .empty-state { text-align: center; padding: 40px; border: 1px dashed #e9d5ff; border-radius: 12px; color: #64748b; background: #faf5ff; }
+        .interactive-viz-doubt .content-container { position: relative; }
+        .interactive-viz-doubt .view-separate-btn { position: absolute; top: 8px; right: 8px; background: rgba(0, 0, 0, 0.7); color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; cursor: pointer; opacity: 0; transition: opacity 0.2s ease; z-index: 10; }
+        .interactive-viz-doubt .content-container:hover .view-separate-btn { opacity: 1; }
+        .interactive-viz-doubt .view-separate-btn:hover { background: rgba(0, 0, 0, 0.9); }
+        .interactive-viz-doubt .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); }
+        .interactive-viz-doubt .modal-content { background-color: #fff; margin: 5% auto; padding: 20px; border-radius: 12px; width: 90%; max-width: 1000px; height: 80vh; position: relative; display: flex; flex-direction: column; overflow: hidden; }
+        .interactive-viz-doubt .modal-close { position: absolute; top: 16px; right: 20px; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; font-size: 24px; font-weight: bold; cursor: pointer; color: #64748b; line-height: 1; transition: background 0.2s ease, color 0.2s ease; }
+        .interactive-viz-doubt .modal-close:hover { color: #1f2933; background: rgba(148, 163, 184, 0.2); }
+        .interactive-viz-doubt .modal-close::before, .interactive-viz-doubt .modal-close::after { content: none; }
+        .interactive-viz-doubt .modal-header { margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #eee; flex-shrink: 0; }
+        .interactive-viz-doubt #modal-body-doubt { flex: 1; overflow: auto; min-height: 0; padding-right: 4px; }
+        .interactive-viz-doubt #modal-body-doubt pre { margin: 0; background: #faf5ff; border: 1px solid #e9d5ff; overflow: visible; }
+        .interactive-viz-doubt #modal-body-doubt pre.code-block { height: auto; max-height: none; background: #faf5ff; border: 1px solid #e9d5ff; overflow-x: auto; overflow-y: visible; }
+        .interactive-viz-doubt #modal-body-doubt pre.code-block .line-numbers { background: #e9d5ff; }
+        .interactive-viz-doubt #modal-body-doubt .math-answer, .interactive-viz-doubt #modal-body-doubt .final-answer { height: 100%; max-height: none; overflow-y: auto; }
     </style>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -680,7 +887,7 @@
                     Things get even trickier in coding tasks. Models still "think" through inline comments in the force-answering setup, producing up to 10× longer code to reason their way out. 
                     It is clever, but it breaks the idea of controlled computation and disobeys the user’s instruction to answer immediately.
                   </p>
-                  <div id="interactive-viz-container" style="margin: 2rem 0;">
+                  <div id="interactive-vis-container-leakage" style="margin: 2rem 0;">
                     <!-- Content will be loaded here by JavaScript -->
                  </div>
                   <video class="is-fullwidth" autoplay loop muted playsinline>
@@ -716,7 +923,7 @@
         <div class="container is-max-desktop">
             <div class="columns is-centered has-text-centered">
                 <div class="column is-full">
-                    <h2 class="title is-4">Speedup: Can We Reduce LRM Computation On the Fly?</h2>
+                    <h2 class="title is-4">Speedup: Can We Reduce LRM Computation Mid-Reasoning?</h2>
                 </div>
             </div>
             
@@ -727,7 +934,7 @@
                     <li style="margin-bottom: 0.5rem;">Magistral & Qwen (Math): Achieve near “free-lunch” speedups — thinking faster mid-process with fewer tokens consumed.</li>
                     <li style="margin-bottom: 0;">GPT-OSS & Qwen (Coding): Tend to <strong>panic</strong> under pressure — up to a 25% performance drop from rushing to answer before finishing its first reasoning cycle.</li>
                   </ul>
-                  <img src="static/images/figures_new/soft_interrupt_ratio.png" style="max-width: 100%; height: auto;">
+                  <img src="static/images/figures_new/soft_interrupt_output_length.png" style="max-width: 100%; height: auto;">
                   
                   <p style="margin-top: 1rem; line-height: 1.6;">
                     Complementary to prior work on efficient reasoning via pre-planning, we are the first to examine the efficacy of <b>on-the-fly speedup</b>. 
@@ -738,6 +945,10 @@
                     However, some models like Qwen and GPT-OSS exhibit <b>panic answering</b>, especially on coding tasks. 
                     While performance drops are expected under acceleration, the ideal behavior should be a smooth drop than a complete collapse into rushed, low-quality answers.
                   </p>
+                  
+                  <div id="interactive-vis-container-panic" style="margin: 2rem 0;">
+                    <!-- Content will be loaded here by JavaScript -->
+                 </div>
                 </div>
               </div>
         </div>
@@ -753,11 +964,7 @@
       
           <!-- (1) Update Prompting Subsection -->
           <div class="columns is-centered">
-            <div class="column is-full">
-              <h3 class="title is-5" style="margin-top: 0rem; margin-bottom: 1rem;">
-                (1) What's the Best Way to Provide Updates to LRMs?
-              </h3>
-      
+            <div class="column is-full">      
               <p>
                 To simulate real-time context changes, we prompt the model with a system instruction
                 explaining that updates will appear between <code>&lt;update&gt;...&lt;/update&gt;</code> tags,
@@ -770,7 +977,14 @@
                 This almost eliminates the <b>self-doubt</b> issue and significantly stabilizes performance,
                 as shown in the chart below.
               </p>
-      
+              <p style="margin-top: 1rem; line-height: 1.6;">
+                We revisit the main intervention experiments to study the trade-off between
+                performance retention and output-length expansion after receiving information updates.
+                In some cases, models maintain strong performance—even outperforming the
+                “stop-and-redo” baseline. For example, GPT-OSS on <i>LiveCodeBench-v6</i> and
+                Qwen on <i>GSM8k</i> preserve around <b>95%</b> of oracle accuracy with much lower computation cost.
+                However, this efficiency remains inconsistent across other settings.
+              </p>
               <img src="static/images/figures_new/intervene_acc.png" style="max-width: 100%; height: auto;">
       
               <p style="margin-top: 1rem; line-height: 1.6;">
@@ -784,37 +998,11 @@
                 inject a user update, and reopen it. To validate this, we performed an ablation study simulating that setup,
                 confirming that current LRMs remain fragile under such mid-thinking interruptions, performing worse than our guided prompting baseline.
               </p>
+              
+              <div id="interactive-vis-container-doubt" style="margin: 2rem 0;">
+                <!-- Content will be loaded here by JavaScript -->
+             </div>
       
-              <img src="static/images/figures_new/intervene_acc_turn_ablation.png" style="max-width: 100%; height: auto;">
-            </div>
-          </div>
-      
-          <!-- (2) Efficiency Subsection -->
-          <div class="columns is-centered">
-            <div class="column is-full">
-              <h3 class="title is-5" style="margin-top: 0rem; margin-bottom: 1rem;">
-                (2) What Happens If We Consider Efficiency as Well?
-              </h3>
-              <p style="margin-top: 1rem; line-height: 1.6;">
-                We revisit the main intervention experiments to study the trade-off between
-                performance retention and output-length expansion after receiving information updates.
-                In some cases, models maintain strong performance—even outperforming the
-                “stop-and-redo” baseline. For example, GPT-OSS on <i>LiveCodeBench-v6</i> and
-                Qwen on <i>GSM8k</i> preserve around <b>95%</b> of oracle accuracy with much lower computation cost.
-                However, this efficiency remains inconsistent across other settings.
-              </p>
-              <img src="static/images/figures_new/intervene_ratio.png" style="max-width: 100%; height: auto;">
-      
-              <p style="margin-top: 1rem; line-height: 1.6;">
-                Finally, we combine our <b>speedup</b> (Case 2) and <b>update-driven</b> (Case 3) scenarios.
-                Interestingly, we find another “free lunch”: Qwen3 and Magistral achieve comparable performance
-                to the standard setup while using fewer tokens after updates.
-                GPT-OSS shows more stable behavior without panic, though the token savings are modest.
-              </p>
-      
-              <img src="static/images/figures_new/intervene_output_length_speedup_ablation.png" style="max-width: 100%; height: auto;">
-      
-
             </div>
           </div>
         </div>
@@ -1088,6 +1276,14 @@
         // Interactive Examples functionality
         let interactiveProblems = [];
         let currentInteractiveProblemIndex = 0;
+        
+        // Separate variables for each container
+        let interactiveProblemsLeakage = [];
+        let currentInteractiveProblemIndexLeakage = 0;
+        let interactiveProblemsPanic = [];
+        let currentInteractiveProblemIndexPanic = 0;
+        let interactiveProblemsDoubt = [];
+        let currentInteractiveProblemIndexDoubt = 0;
 
         function escapeHTML(str = "") {
             return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -1321,6 +1517,93 @@
             }
         }
 
+        // Leakage container functions
+        async function loadInteractiveProblemsLeakage() {
+            try {
+                const container = document.getElementById('interactive-vis-container-leakage');
+                if (!container) return;
+                
+                container.innerHTML = '<div class="interactive-viz-leakage"><div class="wrapper"><div class="header"><h1>Loading problems…</h1></div></div></div>';
+                
+                const response = await fetch("./interactive_examples_data.json", { cache: "no-cache" });
+                if (!response.ok) {
+                    throw new Error(`Failed to load data (${response.status})`);
+                }
+                const payload = await response.json();
+                interactiveProblemsLeakage = Array.isArray(payload.problems) ? payload.problems : [];
+                if (!interactiveProblemsLeakage.length) {
+                    container.innerHTML = '<div class="interactive-viz-leakage"><div class="wrapper"><div class="header"><h1>No problems available.</h1></div></div></div>';
+                    return;
+                }
+                currentInteractiveProblemIndexLeakage = 0;
+                renderInteractiveProblemLeakage();
+            } catch (error) {
+                console.error(error);
+                const container = document.getElementById('interactive-vis-container-leakage');
+                if (container) {
+                    container.innerHTML = `<div class="interactive-viz-leakage"><div class="wrapper"><div class="header"><h1>Failed to load examples.</h1></div></div></div>`;
+                }
+            }
+        }
+
+        // Panic container functions
+        async function loadInteractiveProblemsPanic() {
+            try {
+                const container = document.getElementById('interactive-vis-container-panic');
+                if (!container) return;
+                
+                container.innerHTML = '<div class="interactive-viz-panic"><div class="wrapper"><div class="header"><h1>Loading problems…</h1></div></div></div>';
+                
+                const response = await fetch("./interactive_examples_data.json", { cache: "no-cache" });
+                if (!response.ok) {
+                    throw new Error(`Failed to load data (${response.status})`);
+                }
+                const payload = await response.json();
+                interactiveProblemsPanic = Array.isArray(payload.problems) ? payload.problems : [];
+                if (!interactiveProblemsPanic.length) {
+                    container.innerHTML = '<div class="interactive-viz-panic"><div class="wrapper"><div class="header"><h1>No problems available.</h1></div></div></div>';
+                    return;
+                }
+                currentInteractiveProblemIndexPanic = 0;
+                renderInteractiveProblemPanic();
+            } catch (error) {
+                console.error(error);
+                const container = document.getElementById('interactive-vis-container-panic');
+                if (container) {
+                    container.innerHTML = `<div class="interactive-viz-panic"><div class="wrapper"><div class="header"><h1>Failed to load examples.</h1></div></div></div>`;
+                }
+            }
+        }
+
+        // Doubt container functions
+        async function loadInteractiveProblemsDoubt() {
+            try {
+                const container = document.getElementById('interactive-vis-container-doubt');
+                if (!container) return;
+                
+                container.innerHTML = '<div class="interactive-viz-doubt"><div class="wrapper"><div class="header"><h1>Loading problems…</h1></div></div></div>';
+                
+                const response = await fetch("./interactive_examples_data.json", { cache: "no-cache" });
+                if (!response.ok) {
+                    throw new Error(`Failed to load data (${response.status})`);
+                }
+                const payload = await response.json();
+                interactiveProblemsDoubt = Array.isArray(payload.problems) ? payload.problems : [];
+                if (!interactiveProblemsDoubt.length) {
+                    container.innerHTML = '<div class="interactive-viz-doubt"><div class="wrapper"><div class="header"><h1>No problems available.</h1></div></div></div>';
+                    return;
+                }
+                currentInteractiveProblemIndexDoubt = 0;
+                renderInteractiveProblemDoubt();
+            } catch (error) {
+                console.error(error);
+                const container = document.getElementById('interactive-vis-container-doubt');
+                if (container) {
+                    container.innerHTML = `<div class="interactive-viz-doubt"><div class="wrapper"><div class="header"><h1>Failed to load examples.</h1></div></div></div>`;
+                }
+            }
+        }
+
         function renderInteractiveProblem() {
             if (!interactiveProblems.length) {
                 return;
@@ -1401,6 +1684,258 @@
             nextProblemBtn.addEventListener("click", () => {
                 currentInteractiveProblemIndex = (currentInteractiveProblemIndex + 1) % interactiveProblems.length;
                 renderInteractiveProblem();
+            });
+        }
+
+        // Leakage render function
+        function renderInteractiveProblemLeakage() {
+            if (!interactiveProblemsLeakage.length) {
+                return;
+            }
+            const problem = interactiveProblemsLeakage[currentInteractiveProblemIndexLeakage];
+            const { title, content, url: questionUrl } = extractQuestion(problem);
+            
+            const container = document.getElementById('interactive-vis-container-leakage');
+            if (!container) return;
+            
+            const questionHTML = renderRich(content);
+            const encodedQuestion = encodeURIComponent(questionHTML || "");
+            const questionTitleHTML = questionUrl
+                ? `<a href="${escapeAttribute(questionUrl)}" target="_blank" rel="noopener">${escapeHTML(title)}</a>`
+                : escapeHTML(title);
+            const headerTitleHTML = "Examples of Reasoning Leakage";
+            const headerActions = `
+                <div class="header-actions">
+                    <button id="interactive-next-problem-leakage" title="Cycle through the next problem">Next problem ▶</button>
+                </div>
+            `;
+            
+            container.innerHTML = `
+                <div class="interactive-viz-leakage">
+                    <div class="wrapper">
+                        <div class="header">
+                            <h1 id="interactive-question-title-leakage">${headerTitleHTML}</h1>
+                            ${headerActions}
+                        </div>
+                        <div class="question-details" id="interactive-question-details-leakage">
+                            <h2 class="question-preview-title">${questionTitleHTML}</h2>
+                            <div class="question-content">${questionHTML}</div>
+                            <button 
+                                class="view-full-context-btn" 
+                                data-type="question" 
+                                data-title="${encodeURIComponent(title)}"
+                                data-content="${encodedQuestion}">
+                                View Full Problem
+                            </button>
+                        </div>
+                        <div class="panels-container" id="interactive-panels-container-leakage"></div>
+                    </div>
+                </div>
+            `;
+            
+            const questionDetailsEl = document.getElementById('interactive-question-details-leakage');
+            const viewFullQuestionBtn = questionDetailsEl ? questionDetailsEl.querySelector('.view-full-context-btn') : null;
+            const panelsContainerEl = document.getElementById('interactive-panels-container-leakage');
+            const nextProblemBtn = document.getElementById('interactive-next-problem-leakage');
+
+            renderInteractivePanelsLeakage(problem, panelsContainerEl);
+            if (questionDetailsEl) {
+                typesetMath(questionDetailsEl);
+            }
+            
+            const updateQuestionClamp = () => {
+                if (!questionDetailsEl) return;
+                const isOverflowing = Math.ceil(questionDetailsEl.scrollHeight - questionDetailsEl.clientHeight) > 4;
+                questionDetailsEl.classList.toggle('is-clamped', isOverflowing);
+            };
+            
+            updateQuestionClamp();
+            setTimeout(updateQuestionClamp, 200);
+            setTimeout(updateQuestionClamp, 600);
+            requestAnimationFrame(updateQuestionClamp);
+            
+            if (viewFullQuestionBtn) {
+                viewFullQuestionBtn.addEventListener("click", (event) => {
+                    event.preventDefault();
+                    const contentValue = viewFullQuestionBtn.dataset.content || "";
+                    if (!contentValue) return;
+                    const encodedTitle = viewFullQuestionBtn.dataset.title;
+                    const titleValue = encodedTitle ? decodeURIComponent(encodedTitle) : title;
+                    showSeparateViewLeakage(contentValue, viewFullQuestionBtn.dataset.type || "question", `Full context - ${titleValue}`);
+                });
+            }
+            
+            nextProblemBtn.addEventListener("click", () => {
+                currentInteractiveProblemIndexLeakage = (currentInteractiveProblemIndexLeakage + 1) % interactiveProblemsLeakage.length;
+                renderInteractiveProblemLeakage();
+            });
+        }
+
+        // Panic render function
+        function renderInteractiveProblemPanic() {
+            if (!interactiveProblemsPanic.length) {
+                return;
+            }
+            const problem = interactiveProblemsPanic[currentInteractiveProblemIndexPanic];
+            const { title, content, url: questionUrl } = extractQuestion(problem);
+            
+            const container = document.getElementById('interactive-vis-container-panic');
+            if (!container) return;
+            
+            const questionHTML = renderRich(content);
+            const encodedQuestion = encodeURIComponent(questionHTML || "");
+            const questionTitleHTML = questionUrl
+                ? `<a href="${escapeAttribute(questionUrl)}" target="_blank" rel="noopener">${escapeHTML(title)}</a>`
+                : escapeHTML(title);
+            const headerTitleHTML = "Examples of Panic Answering";
+            const headerActions = `
+                <div class="header-actions">
+                    <button id="interactive-next-problem-panic" title="Cycle through the next problem">Next problem ▶</button>
+                </div>
+            `;
+            
+            container.innerHTML = `
+                <div class="interactive-viz-panic">
+                    <div class="wrapper">
+                        <div class="header">
+                            <h1 id="interactive-question-title-panic">${headerTitleHTML}</h1>
+                            ${headerActions}
+                        </div>
+                        <div class="question-details" id="interactive-question-details-panic">
+                            <h2 class="question-preview-title">${questionTitleHTML}</h2>
+                            <div class="question-content">${questionHTML}</div>
+                            <button 
+                                class="view-full-context-btn" 
+                                data-type="question" 
+                                data-title="${encodeURIComponent(title)}"
+                                data-content="${encodedQuestion}">
+                                View Full Problem
+                            </button>
+                        </div>
+                        <div class="panels-container" id="interactive-panels-container-panic"></div>
+                    </div>
+                </div>
+            `;
+            
+            const questionDetailsEl = document.getElementById('interactive-question-details-panic');
+            const viewFullQuestionBtn = questionDetailsEl ? questionDetailsEl.querySelector('.view-full-context-btn') : null;
+            const panelsContainerEl = document.getElementById('interactive-panels-container-panic');
+            const nextProblemBtn = document.getElementById('interactive-next-problem-panic');
+
+            renderInteractivePanelsPanic(problem, panelsContainerEl);
+            if (questionDetailsEl) {
+                typesetMath(questionDetailsEl);
+            }
+            
+            const updateQuestionClamp = () => {
+                if (!questionDetailsEl) return;
+                const isOverflowing = Math.ceil(questionDetailsEl.scrollHeight - questionDetailsEl.clientHeight) > 4;
+                questionDetailsEl.classList.toggle('is-clamped', isOverflowing);
+            };
+            
+            updateQuestionClamp();
+            setTimeout(updateQuestionClamp, 200);
+            setTimeout(updateQuestionClamp, 600);
+            requestAnimationFrame(updateQuestionClamp);
+            
+            if (viewFullQuestionBtn) {
+                viewFullQuestionBtn.addEventListener("click", (event) => {
+                    event.preventDefault();
+                    const contentValue = viewFullQuestionBtn.dataset.content || "";
+                    if (!contentValue) return;
+                    const encodedTitle = viewFullQuestionBtn.dataset.title;
+                    const titleValue = encodedTitle ? decodeURIComponent(encodedTitle) : title;
+                    showSeparateViewPanic(contentValue, viewFullQuestionBtn.dataset.type || "question", `Full context - ${titleValue}`);
+                });
+            }
+            
+            nextProblemBtn.addEventListener("click", () => {
+                currentInteractiveProblemIndexPanic = (currentInteractiveProblemIndexPanic + 1) % interactiveProblemsPanic.length;
+                renderInteractiveProblemPanic();
+            });
+        }
+
+        // Doubt render function
+        function renderInteractiveProblemDoubt() {
+            if (!interactiveProblemsDoubt.length) {
+                return;
+            }
+            const problem = interactiveProblemsDoubt[currentInteractiveProblemIndexDoubt];
+            const { title, content, url: questionUrl } = extractQuestion(problem);
+            
+            const container = document.getElementById('interactive-vis-container-doubt');
+            if (!container) return;
+            
+            const questionHTML = renderRich(content);
+            const encodedQuestion = encodeURIComponent(questionHTML || "");
+            const questionTitleHTML = questionUrl
+                ? `<a href="${escapeAttribute(questionUrl)}" target="_blank" rel="noopener">${escapeHTML(title)}</a>`
+                : escapeHTML(title);
+            const headerTitleHTML = "Examples of Self-Doubt";
+            const headerActions = `
+                <div class="header-actions">
+                    <button id="interactive-next-problem-doubt" title="Cycle through the next problem">Next problem ▶</button>
+                </div>
+            `;
+            
+            container.innerHTML = `
+                <div class="interactive-viz-doubt">
+                    <div class="wrapper">
+                        <div class="header">
+                            <h1 id="interactive-question-title-doubt">${headerTitleHTML}</h1>
+                            ${headerActions}
+                        </div>
+                        <div class="question-details" id="interactive-question-details-doubt">
+                            <h2 class="question-preview-title">${questionTitleHTML}</h2>
+                            <div class="question-content">${questionHTML}</div>
+                            <button 
+                                class="view-full-context-btn" 
+                                data-type="question" 
+                                data-title="${encodeURIComponent(title)}"
+                                data-content="${encodedQuestion}">
+                                View Full Problem
+                            </button>
+                        </div>
+                        <div class="panels-container" id="interactive-panels-container-doubt"></div>
+                    </div>
+                </div>
+            `;
+            
+            const questionDetailsEl = document.getElementById('interactive-question-details-doubt');
+            const viewFullQuestionBtn = questionDetailsEl ? questionDetailsEl.querySelector('.view-full-context-btn') : null;
+            const panelsContainerEl = document.getElementById('interactive-panels-container-doubt');
+            const nextProblemBtn = document.getElementById('interactive-next-problem-doubt');
+
+            renderInteractivePanelsDoubt(problem, panelsContainerEl);
+            if (questionDetailsEl) {
+                typesetMath(questionDetailsEl);
+            }
+            
+            const updateQuestionClamp = () => {
+                if (!questionDetailsEl) return;
+                const isOverflowing = Math.ceil(questionDetailsEl.scrollHeight - questionDetailsEl.clientHeight) > 4;
+                questionDetailsEl.classList.toggle('is-clamped', isOverflowing);
+            };
+            
+            updateQuestionClamp();
+            setTimeout(updateQuestionClamp, 200);
+            setTimeout(updateQuestionClamp, 600);
+            requestAnimationFrame(updateQuestionClamp);
+            
+            if (viewFullQuestionBtn) {
+                viewFullQuestionBtn.addEventListener("click", (event) => {
+                    event.preventDefault();
+                    const contentValue = viewFullQuestionBtn.dataset.content || "";
+                    if (!contentValue) return;
+                    const encodedTitle = viewFullQuestionBtn.dataset.title;
+                    const titleValue = encodedTitle ? decodeURIComponent(encodedTitle) : title;
+                    showSeparateViewDoubt(contentValue, viewFullQuestionBtn.dataset.type || "question", `Full context - ${titleValue}`);
+                });
+            }
+            
+            nextProblemBtn.addEventListener("click", () => {
+                currentInteractiveProblemIndexDoubt = (currentInteractiveProblemIndexDoubt + 1) % interactiveProblemsDoubt.length;
+                renderInteractiveProblemDoubt();
             });
         }
 
@@ -1505,6 +2040,309 @@
             });
         }
 
+        // Leakage panels function
+        function renderInteractivePanelsLeakage(problem, panelsContainerEl) {
+            const model = problem && typeof problem === "object" ? problem.model : null;
+            if (!model || typeof model !== "object") {
+                panelsContainerEl.innerHTML = '<div class="empty-state">No model data available for this problem.</div>';
+                typesetMath();
+                return;
+            }
+
+            const modelName = model.name || "Model";
+            const modelLink = model && typeof model === "object" ? (model.url || model.href || null) : null;
+            const baseId = `${problem.id || "problem"}-${slugify(modelName)}`;
+            const logoSrc = model.logo ? escapeAttribute(model.logo) : null;
+            const modelHeading = modelLink
+                ? `<a href="${escapeAttribute(modelLink)}" target="_blank" rel="noopener">${escapeHTML(modelName)}</a>`
+                : escapeHTML(modelName);
+
+            panelsContainerEl.innerHTML = `
+                <div class="model-header">
+                    ${logoSrc ? `<img src="${logoSrc}" alt="${escapeAttribute(modelName)} logo">` : ""}
+                    <h2>${modelHeading}</h2>
+                </div>
+                <div class="model-panels">
+                    ${["oracle", "interrupt"].map(stage => {
+                        const stageData = model[stage] || {};
+                        const stageLabel = stageData.label || (stage === "oracle" ? "Full Thinking" : "Hard Interrupt @0.3");
+                        const bodyLabel = stage === "oracle" ? "Oracle Output" : "Interrupt Output";
+                        const renderedAnswer = stageData.answer ? renderRich(stageData.answer) : "";
+                        const renderedFinal = stageData.final ? renderRich(stageData.final) : "";
+                        const renderedReasoning = stageData.reasoning ? renderRich(stageData.reasoning) : "";
+                        const codeLineCount = stageData.code ? countLines(stageData.code) : 0;
+                        const answerLineCount = stageData.answer ? countLines(getContentString(stageData.answer)) : 0;
+                        const codeLineLabel = codeLineCount > 0 ? `<p class="answer-line-count">Answer section: ${codeLineCount} LINES</p>` : "";
+                        const answerLineLabel = answerLineCount > 0 ? `<p class="answer-line-count">Answer section: ${answerLineCount} LINES</p>` : "";
+                        const reasoningSection = renderedReasoning ? `
+                            <button class="view-reasoning-btn" data-content="${encodeURIComponent(renderedReasoning)}" data-title="Reasoning - ${stageLabel}">View reasoning</button>
+                        ` : "";
+                        const codeSection = stageData.code ? `
+                            <div class="content-container">
+                                ${codeLineLabel}
+                                <button class="view-separate-btn" data-content="${encodeURIComponent(stageData.code)}" data-type="code" data-title="Code - ${stageLabel}">View separately</button>
+                                <pre class="code-block"><code class="language-python">${escapeHTML(stageData.code)}</code></pre>
+                            </div>` : "";
+                        const answerSection = stageData.answer ? `
+                            <div class="content-container">
+                                ${answerLineLabel}
+                                <button class="view-separate-btn" data-content="${encodeURIComponent(renderedAnswer)}" data-type="math" data-title="Math Answer - ${stageLabel}">View separately</button>
+                                <div class="math-answer">${renderedAnswer}</div>
+                            </div>` : "";
+                        const finalSection = stageData.final ? `
+                            <div class="content-container">
+                                <button class="view-separate-btn" data-content="${encodeURIComponent(renderedFinal)}" data-type="final" data-title="Final Answer - ${stageLabel}">View separately</button>
+                                <div class="final-answer">${renderedFinal}</div>
+                            </div>` : "";
+                        return `
+                            <section class="panel">
+                                <h3>${bodyLabel} &mdash; ${stageLabel}</h3>
+                                ${reasoningSection}
+                                ${codeSection}
+                                ${answerSection}
+                                ${finalSection}
+                            </section>
+                        `;
+                    }).join("")}
+                </div>
+            `;
+
+            panelsContainerEl.querySelectorAll("pre code").forEach(block => {
+                if (window.hljs) {
+                    // Force Python syntax highlighting
+                    block.className = 'language-python';
+                    hljs.highlightElement(block);
+                    // Apply line numbers after highlighting
+                    applyLineNumbers(block);
+                }
+            });
+
+            panelsContainerEl.querySelectorAll(".view-reasoning-btn").forEach(btn => {
+                btn.addEventListener("click", (event) => {
+                    event.preventDefault();
+                    const encoded = btn.dataset.content || "";
+                    if (!encoded) return;
+                    const title = btn.dataset.title || "Reasoning";
+                    showSeparateViewLeakage(encoded, "reasoning", title);
+                });
+            });
+
+            typesetMath();
+            
+            // Add event listeners for view separate buttons
+            panelsContainerEl.querySelectorAll(".view-separate-btn").forEach(btn => {
+                btn.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    const content = btn.dataset.content;
+                    const type = btn.dataset.type;
+                    const title = btn.dataset.title;
+                    showSeparateViewLeakage(content, type, title);
+                });
+            });
+        }
+
+        // Panic panels function
+        function renderInteractivePanelsPanic(problem, panelsContainerEl) {
+            const model = problem && typeof problem === "object" ? problem.model : null;
+            if (!model || typeof model !== "object") {
+                panelsContainerEl.innerHTML = '<div class="empty-state">No model data available for this problem.</div>';
+                typesetMath();
+                return;
+            }
+
+            const modelName = model.name || "Model";
+            const modelLink = model && typeof model === "object" ? (model.url || model.href || null) : null;
+            const baseId = `${problem.id || "problem"}-${slugify(modelName)}`;
+            const logoSrc = model.logo ? escapeAttribute(model.logo) : null;
+            const modelHeading = modelLink
+                ? `<a href="${escapeAttribute(modelLink)}" target="_blank" rel="noopener">${escapeHTML(modelName)}</a>`
+                : escapeHTML(modelName);
+
+            panelsContainerEl.innerHTML = `
+                <div class="model-header">
+                    ${logoSrc ? `<img src="${logoSrc}" alt="${escapeAttribute(modelName)} logo">` : ""}
+                    <h2>${modelHeading}</h2>
+                </div>
+                <div class="model-panels">
+                    ${["oracle", "interrupt"].map(stage => {
+                        const stageData = model[stage] || {};
+                        const stageLabel = stageData.label || (stage === "oracle" ? "Full Thinking" : "Speedup @0.3");
+                        const bodyLabel = stage === "oracle" ? "Oracle Output" : "Speedup Output";
+                        const renderedAnswer = stageData.answer ? renderRich(stageData.answer) : "";
+                        const renderedFinal = stageData.final ? renderRich(stageData.final) : "";
+                        const renderedReasoning = stageData.reasoning ? renderRich(stageData.reasoning) : "";
+                        const codeLineCount = stageData.code ? countLines(stageData.code) : 0;
+                        const answerLineCount = stageData.answer ? countLines(getContentString(stageData.answer)) : 0;
+                        const codeLineLabel = codeLineCount > 0 ? `<p class="answer-line-count">Answer section: ${codeLineCount} LINES</p>` : "";
+                        const answerLineLabel = answerLineCount > 0 ? `<p class="answer-line-count">Answer section: ${answerLineCount} LINES</p>` : "";
+                        const reasoningSection = renderedReasoning ? `
+                            <button class="view-reasoning-btn" data-content="${encodeURIComponent(renderedReasoning)}" data-title="Reasoning - ${stageLabel}">View reasoning</button>
+                        ` : "";
+                        const codeSection = stageData.code ? `
+                            <div class="content-container">
+                                ${codeLineLabel}
+                                <button class="view-separate-btn" data-content="${encodeURIComponent(stageData.code)}" data-type="code" data-title="Code - ${stageLabel}">View separately</button>
+                                <pre class="code-block"><code class="language-python">${escapeHTML(stageData.code)}</code></pre>
+                            </div>` : "";
+                        const answerSection = stageData.answer ? `
+                            <div class="content-container">
+                                ${answerLineLabel}
+                                <button class="view-separate-btn" data-content="${encodeURIComponent(renderedAnswer)}" data-type="math" data-title="Math Answer - ${stageLabel}">View separately</button>
+                                <div class="math-answer">${renderedAnswer}</div>
+                            </div>` : "";
+                        const finalSection = stageData.final ? `
+                            <div class="content-container">
+                                <button class="view-separate-btn" data-content="${encodeURIComponent(renderedFinal)}" data-type="final" data-title="Final Answer - ${stageLabel}">View separately</button>
+                                <div class="final-answer">${renderedFinal}</div>
+                            </div>` : "";
+                        return `
+                            <section class="panel">
+                                <h3>${bodyLabel} &mdash; ${stageLabel}</h3>
+                                ${reasoningSection}
+                                ${codeSection}
+                                ${answerSection}
+                                ${finalSection}
+                            </section>
+                        `;
+                    }).join("")}
+                </div>
+            `;
+
+            panelsContainerEl.querySelectorAll("pre code").forEach(block => {
+                if (window.hljs) {
+                    // Force Python syntax highlighting
+                    block.className = 'language-python';
+                    hljs.highlightElement(block);
+                    // Apply line numbers after highlighting
+                    applyLineNumbers(block);
+                }
+            });
+
+            panelsContainerEl.querySelectorAll(".view-reasoning-btn").forEach(btn => {
+                btn.addEventListener("click", (event) => {
+                    event.preventDefault();
+                    const encoded = btn.dataset.content || "";
+                    if (!encoded) return;
+                    const title = btn.dataset.title || "Reasoning";
+                    showSeparateViewPanic(encoded, "reasoning", title);
+                });
+            });
+
+            typesetMath();
+            
+            // Add event listeners for view separate buttons
+            panelsContainerEl.querySelectorAll(".view-separate-btn").forEach(btn => {
+                btn.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    const content = btn.dataset.content;
+                    const type = btn.dataset.type;
+                    const title = btn.dataset.title;
+                    showSeparateViewPanic(content, type, title);
+                });
+            });
+        }
+
+        // Doubt panels function
+        function renderInteractivePanelsDoubt(problem, panelsContainerEl) {
+            const model = problem && typeof problem === "object" ? problem.model : null;
+            if (!model || typeof model !== "object") {
+                panelsContainerEl.innerHTML = '<div class="empty-state">No model data available for this problem.</div>';
+                typesetMath();
+                return;
+            }
+
+            const modelName = model.name || "Model";
+            const modelLink = model && typeof model === "object" ? (model.url || model.href || null) : null;
+            const baseId = `${problem.id || "problem"}-${slugify(modelName)}`;
+            const logoSrc = model.logo ? escapeAttribute(model.logo) : null;
+            const modelHeading = modelLink
+                ? `<a href="${escapeAttribute(modelLink)}" target="_blank" rel="noopener">${escapeHTML(modelName)}</a>`
+                : escapeHTML(modelName);
+
+            panelsContainerEl.innerHTML = `
+                <div class="model-header">
+                    ${logoSrc ? `<img src="${logoSrc}" alt="${escapeAttribute(modelName)} logo">` : ""}
+                    <h2>${modelHeading}</h2>
+                </div>
+                <div class="model-panels">
+                    ${["oracle", "interrupt"].map(stage => {
+                        const stageData = model[stage] || {};
+                        const stageLabel = stageData.label || (stage === "oracle" ? "Full Thinking" : "Info Update @0.3");
+                        const bodyLabel = stage === "oracle" ? "Oracle Output" : "Update Output";
+                        const renderedAnswer = stageData.answer ? renderRich(stageData.answer) : "";
+                        const renderedFinal = stageData.final ? renderRich(stageData.final) : "";
+                        const renderedReasoning = stageData.reasoning ? renderRich(stageData.reasoning) : "";
+                        const codeLineCount = stageData.code ? countLines(stageData.code) : 0;
+                        const answerLineCount = stageData.answer ? countLines(getContentString(stageData.answer)) : 0;
+                        const codeLineLabel = codeLineCount > 0 ? `<p class="answer-line-count">Answer section: ${codeLineCount} LINES</p>` : "";
+                        const answerLineLabel = answerLineCount > 0 ? `<p class="answer-line-count">Answer section: ${answerLineCount} LINES</p>` : "";
+                        const reasoningSection = renderedReasoning ? `
+                            <button class="view-reasoning-btn" data-content="${encodeURIComponent(renderedReasoning)}" data-title="Reasoning - ${stageLabel}">View reasoning</button>
+                        ` : "";
+                        const codeSection = stageData.code ? `
+                            <div class="content-container">
+                                ${codeLineLabel}
+                                <button class="view-separate-btn" data-content="${encodeURIComponent(stageData.code)}" data-type="code" data-title="Code - ${stageLabel}">View separately</button>
+                                <pre class="code-block"><code class="language-python">${escapeHTML(stageData.code)}</code></pre>
+                            </div>` : "";
+                        const answerSection = stageData.answer ? `
+                            <div class="content-container">
+                                ${answerLineLabel}
+                                <button class="view-separate-btn" data-content="${encodeURIComponent(renderedAnswer)}" data-type="math" data-title="Math Answer - ${stageLabel}">View separately</button>
+                                <div class="math-answer">${renderedAnswer}</div>
+                            </div>` : "";
+                        const finalSection = stageData.final ? `
+                            <div class="content-container">
+                                <button class="view-separate-btn" data-content="${encodeURIComponent(renderedFinal)}" data-type="final" data-title="Final Answer - ${stageLabel}">View separately</button>
+                                <div class="final-answer">${renderedFinal}</div>
+                            </div>` : "";
+                        return `
+                            <section class="panel">
+                                <h3>${bodyLabel} &mdash; ${stageLabel}</h3>
+                                ${reasoningSection}
+                                ${codeSection}
+                                ${answerSection}
+                                ${finalSection}
+                            </section>
+                        `;
+                    }).join("")}
+                </div>
+            `;
+
+            panelsContainerEl.querySelectorAll("pre code").forEach(block => {
+                if (window.hljs) {
+                    // Force Python syntax highlighting
+                    block.className = 'language-python';
+                    hljs.highlightElement(block);
+                    // Apply line numbers after highlighting
+                    applyLineNumbers(block);
+                }
+            });
+
+            panelsContainerEl.querySelectorAll(".view-reasoning-btn").forEach(btn => {
+                btn.addEventListener("click", (event) => {
+                    event.preventDefault();
+                    const encoded = btn.dataset.content || "";
+                    if (!encoded) return;
+                    const title = btn.dataset.title || "Reasoning";
+                    showSeparateViewDoubt(encoded, "reasoning", title);
+                });
+            });
+
+            typesetMath();
+            
+            // Add event listeners for view separate buttons
+            panelsContainerEl.querySelectorAll(".view-separate-btn").forEach(btn => {
+                btn.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    const content = btn.dataset.content;
+                    const type = btn.dataset.type;
+                    const title = btn.dataset.title;
+                    showSeparateViewDoubt(content, type, title);
+                });
+            });
+        }
+
         function showSeparateView(content, type, title) {
             // Create modal if it doesn't exist
             let modal = document.getElementById('separate-view-modal');
@@ -1539,6 +2377,186 @@
             // Set content
             document.getElementById('modal-title').textContent = title;
             const modalBody = document.getElementById('modal-body');
+            
+            if (type === 'code') {
+                const decodedContent = decodeURIComponent(content);
+                modalBody.innerHTML = `<pre class="code-block"><code class="language-python">${escapeHTML(decodedContent)}</code></pre>`;
+                // Apply syntax highlighting first, then line numbers
+                modalBody.querySelectorAll("pre code").forEach(block => {
+                    if (window.hljs) {
+                        // Apply syntax highlighting first
+                        block.className = 'language-python';
+                        hljs.highlightElement(block);
+                        // Then apply line numbers to the highlighted content
+                        applyLineNumbers(block);
+                    }
+                });
+            } else {
+                const decodedContent = decodeURIComponent(content);
+                modalBody.innerHTML = decodedContent;
+                typesetMath(modalBody);
+            }
+            modalBody.scrollTop = 0;
+            
+            // Show modal
+            modal.style.display = 'block';
+        }
+
+        // Leakage modal function
+        function showSeparateViewLeakage(content, type, title) {
+            // Create modal if it doesn't exist
+            let modal = document.getElementById('separate-view-modal-leakage');
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = 'separate-view-modal-leakage';
+                modal.className = 'interactive-viz-leakage modal';
+                modal.innerHTML = `
+                    <div class="modal-content">
+                        <span class="modal-close">&times;</span>
+                        <div class="modal-header">
+                            <h2 id="modal-title-leakage"></h2>
+                        </div>
+                        <div id="modal-body-leakage"></div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+                
+                // Add close functionality
+                modal.querySelector('.modal-close').addEventListener('click', () => {
+                    modal.style.display = 'none';
+                });
+                
+                // Close modal when clicking outside
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Set content
+            document.getElementById('modal-title-leakage').textContent = title;
+            const modalBody = document.getElementById('modal-body-leakage');
+            
+            if (type === 'code') {
+                const decodedContent = decodeURIComponent(content);
+                modalBody.innerHTML = `<pre class="code-block"><code class="language-python">${escapeHTML(decodedContent)}</code></pre>`;
+                // Apply syntax highlighting first, then line numbers
+                modalBody.querySelectorAll("pre code").forEach(block => {
+                    if (window.hljs) {
+                        // Apply syntax highlighting first
+                        block.className = 'language-python';
+                        hljs.highlightElement(block);
+                        // Then apply line numbers to the highlighted content
+                        applyLineNumbers(block);
+                    }
+                });
+            } else {
+                const decodedContent = decodeURIComponent(content);
+                modalBody.innerHTML = decodedContent;
+                typesetMath(modalBody);
+            }
+            modalBody.scrollTop = 0;
+            
+            // Show modal
+            modal.style.display = 'block';
+        }
+
+        // Panic modal function
+        function showSeparateViewPanic(content, type, title) {
+            // Create modal if it doesn't exist
+            let modal = document.getElementById('separate-view-modal-panic');
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = 'separate-view-modal-panic';
+                modal.className = 'interactive-viz-panic modal';
+                modal.innerHTML = `
+                    <div class="modal-content">
+                        <span class="modal-close">&times;</span>
+                        <div class="modal-header">
+                            <h2 id="modal-title-panic"></h2>
+                        </div>
+                        <div id="modal-body-panic"></div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+                
+                // Add close functionality
+                modal.querySelector('.modal-close').addEventListener('click', () => {
+                    modal.style.display = 'none';
+                });
+                
+                // Close modal when clicking outside
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Set content
+            document.getElementById('modal-title-panic').textContent = title;
+            const modalBody = document.getElementById('modal-body-panic');
+            
+            if (type === 'code') {
+                const decodedContent = decodeURIComponent(content);
+                modalBody.innerHTML = `<pre class="code-block"><code class="language-python">${escapeHTML(decodedContent)}</code></pre>`;
+                // Apply syntax highlighting first, then line numbers
+                modalBody.querySelectorAll("pre code").forEach(block => {
+                    if (window.hljs) {
+                        // Apply syntax highlighting first
+                        block.className = 'language-python';
+                        hljs.highlightElement(block);
+                        // Then apply line numbers to the highlighted content
+                        applyLineNumbers(block);
+                    }
+                });
+            } else {
+                const decodedContent = decodeURIComponent(content);
+                modalBody.innerHTML = decodedContent;
+                typesetMath(modalBody);
+            }
+            modalBody.scrollTop = 0;
+            
+            // Show modal
+            modal.style.display = 'block';
+        }
+
+        // Doubt modal function
+        function showSeparateViewDoubt(content, type, title) {
+            // Create modal if it doesn't exist
+            let modal = document.getElementById('separate-view-modal-doubt');
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = 'separate-view-modal-doubt';
+                modal.className = 'interactive-viz-doubt modal';
+                modal.innerHTML = `
+                    <div class="modal-content">
+                        <span class="modal-close">&times;</span>
+                        <div class="modal-header">
+                            <h2 id="modal-title-doubt"></h2>
+                        </div>
+                        <div id="modal-body-doubt"></div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+                
+                // Add close functionality
+                modal.querySelector('.modal-close').addEventListener('click', () => {
+                    modal.style.display = 'none';
+                });
+                
+                // Close modal when clicking outside
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Set content
+            document.getElementById('modal-title-doubt').textContent = title;
+            const modalBody = document.getElementById('modal-body-doubt');
             
             if (type === 'code') {
                 const decodedContent = decodeURIComponent(content);
@@ -1617,6 +2635,9 @@
         window.addEventListener("load", () => {
             typesetMath();
             loadInteractiveProblems();
+            loadInteractiveProblemsLeakage();
+            loadInteractiveProblemsPanic();
+            loadInteractiveProblemsDoubt();
         });
     </script>
 
