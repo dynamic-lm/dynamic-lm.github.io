@@ -252,7 +252,7 @@ async function loadInteractiveProblemsLeakage() {
 
         container.innerHTML = '<div class="interactive-viz-leakage"><div class="wrapper"><div class="header"><h1>Loading problems…</h1></div></div></div>';
 
-        const response = await fetch("./interactive_examples_data.json", { cache: "no-cache" });
+        const response = await fetch("./example_leakage.json", { cache: "no-cache" });
         if (!response.ok) {
             throw new Error(`Failed to load data (${response.status})`);
         }
@@ -281,7 +281,7 @@ async function loadInteractiveProblemsPanic() {
 
         container.innerHTML = '<div class="interactive-viz-panic"><div class="wrapper"><div class="header"><h1>Loading problems…</h1></div></div></div>';
 
-        const response = await fetch("./interactive_examples_data.json", { cache: "no-cache" });
+        const response = await fetch("./examples_panic.json", { cache: "no-cache" });
         if (!response.ok) {
             throw new Error(`Failed to load data (${response.status})`);
         }
@@ -310,7 +310,7 @@ async function loadInteractiveProblemsDoubt() {
 
         container.innerHTML = '<div class="interactive-viz-doubt"><div class="wrapper"><div class="header"><h1>Loading problems…</h1></div></div></div>';
 
-        const response = await fetch("./interactive_examples_data.json", { cache: "no-cache" });
+        const response = await fetch("./examples_doubt.json", { cache: "no-cache" });
         if (!response.ok) {
             throw new Error(`Failed to load data (${response.status})`);
         }
@@ -695,13 +695,20 @@ function renderInteractivePanels(problem, panelsContainerEl) {
                 const bodyLabel = stage === "oracle" ? "Oracle Output" : "Interrupt Output";
                 const renderedAnswer = stageData.answer ? renderRich(stageData.answer) : "";
                 const renderedFinal = stageData.final ? renderRich(stageData.final) : "";
-                const renderedReasoning = stageData.reasoning ? renderRich(stageData.reasoning) : "";
+                const previewReason = stageData.preview_reason ? renderRich(stageData.preview_reason) : "";
+                const fullReasoningTrace = stageData.full_reasoning_trace ? renderRich(stageData.full_reasoning_trace) : "";
                 const codeLineCount = stageData.code ? countLines(stageData.code) : 0;
                 const answerLineCount = stageData.answer ? countLines(getContentString(stageData.answer)) : 0;
+                const reasoningLineCount = stageData.preview_reason ? countLines(getContentString(stageData.preview_reason)) : 0;
                 const codeLineLabel = codeLineCount > 0 ? `<p class="answer-line-count">Answer section: ${codeLineCount} LINES</p>` : "";
                 const answerLineLabel = answerLineCount > 0 ? `<p class="answer-line-count">Answer section: ${answerLineCount} LINES</p>` : "";
-                const reasoningSection = renderedReasoning ? `
-                    <button class="view-reasoning-btn" data-content="${encodeURIComponent(renderedReasoning)}" data-title="Reasoning - ${stageLabel}">View reasoning</button>
+                const reasoningLineLabel = reasoningLineCount > 0 ? `<p class="answer-line-count">Reasoning Section: ${reasoningLineCount} LINES</p>` : "";
+                const reasoningSection = previewReason ? `
+                    <div class="content-container">
+                        ${reasoningLineLabel}
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(fullReasoningTrace)}" data-type="reasoning" data-title="Reasoning - ${stageLabel}">View separately</button>
+                        <div class="reasoning-answer limited">${previewReason}</div>
+                    </div>
                 ` : "";
                 const codeSection = stageData.code ? `
                     <div class="content-container">
@@ -713,7 +720,7 @@ function renderInteractivePanels(problem, panelsContainerEl) {
                     <div class="content-container">
                         ${answerLineLabel}
                         <button class="view-separate-btn" data-content="${encodeURIComponent(renderedAnswer)}" data-type="math" data-title="Math Answer - ${stageLabel}">View separately</button>
-                        <div class="math-answer">${renderedAnswer}</div>
+                        <div class="math-answer limited">${renderedAnswer}</div>
                     </div>` : "";
                 const finalSection = stageData.final ? `
                     <div class="content-container">
@@ -743,15 +750,6 @@ function renderInteractivePanels(problem, panelsContainerEl) {
         }
     });
 
-    panelsContainerEl.querySelectorAll(".view-reasoning-btn").forEach(btn => {
-        btn.addEventListener("click", (event) => {
-            event.preventDefault();
-            const encoded = btn.dataset.content || "";
-            if (!encoded) return;
-            const title = btn.dataset.title || "Reasoning";
-            showSeparateView(encoded, "reasoning", title);
-        });
-    });
 
     typesetMath();
 
@@ -796,13 +794,20 @@ function renderInteractivePanelsLeakage(problem, panelsContainerEl) {
                 const bodyLabel = stage === "oracle" ? "Oracle Output" : "Interrupt Output";
                 const renderedAnswer = stageData.answer ? renderRich(stageData.answer) : "";
                 const renderedFinal = stageData.final ? renderRich(stageData.final) : "";
-                const renderedReasoning = stageData.reasoning ? renderRich(stageData.reasoning) : "";
+                const previewReason = stageData.preview_reason ? renderRich(stageData.preview_reason) : "";
+                const fullReasoningTrace = stageData.full_reasoning_trace ? renderRich(stageData.full_reasoning_trace) : "";
                 const codeLineCount = stageData.code ? countLines(stageData.code) : 0;
                 const answerLineCount = stageData.answer ? countLines(getContentString(stageData.answer)) : 0;
+                const reasoningLineCount = stageData.preview_reason ? countLines(getContentString(stageData.preview_reason)) : 0;
                 const codeLineLabel = codeLineCount > 0 ? `<p class="answer-line-count">Answer section: ${codeLineCount} LINES</p>` : "";
                 const answerLineLabel = answerLineCount > 0 ? `<p class="answer-line-count">Answer section: ${answerLineCount} LINES</p>` : "";
-                const reasoningSection = renderedReasoning ? `
-                    <button class="view-reasoning-btn" data-content="${encodeURIComponent(renderedReasoning)}" data-title="Reasoning - ${stageLabel}">View reasoning</button>
+                const reasoningLineLabel = reasoningLineCount > 0 ? `<p class="answer-line-count">Reasoning Section: ${reasoningLineCount} LINES</p>` : "";
+                const reasoningSection = previewReason ? `
+                    <div class="content-container">
+                        ${reasoningLineLabel}
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(fullReasoningTrace)}" data-type="reasoning" data-title="Reasoning - ${stageLabel}">View separately</button>
+                        <div class="reasoning-answer limited">${previewReason}</div>
+                    </div>
                 ` : "";
                 const codeSection = stageData.code ? `
                     <div class="content-container">
@@ -814,7 +819,7 @@ function renderInteractivePanelsLeakage(problem, panelsContainerEl) {
                     <div class="content-container">
                         ${answerLineLabel}
                         <button class="view-separate-btn" data-content="${encodeURIComponent(renderedAnswer)}" data-type="math" data-title="Math Answer - ${stageLabel}">View separately</button>
-                        <div class="math-answer">${renderedAnswer}</div>
+                        <div class="math-answer limited">${renderedAnswer}</div>
                     </div>` : "";
                 const finalSection = stageData.final ? `
                     <div class="content-container">
@@ -897,13 +902,20 @@ function renderInteractivePanelsPanic(problem, panelsContainerEl) {
                 const bodyLabel = stage === "oracle" ? "Oracle Output" : "Speedup Output";
                 const renderedAnswer = stageData.answer ? renderRich(stageData.answer) : "";
                 const renderedFinal = stageData.final ? renderRich(stageData.final) : "";
-                const renderedReasoning = stageData.reasoning ? renderRich(stageData.reasoning) : "";
+                const previewReason = stageData.preview_reason ? renderRich(stageData.preview_reason) : "";
+                const fullReasoningTrace = stageData.full_reasoning_trace ? renderRich(stageData.full_reasoning_trace) : "";
                 const codeLineCount = stageData.code ? countLines(stageData.code) : 0;
                 const answerLineCount = stageData.answer ? countLines(getContentString(stageData.answer)) : 0;
+                const reasoningLineCount = stageData.preview_reason ? countLines(getContentString(stageData.preview_reason)) : 0;
                 const codeLineLabel = codeLineCount > 0 ? `<p class="answer-line-count">Answer section: ${codeLineCount} LINES</p>` : "";
                 const answerLineLabel = answerLineCount > 0 ? `<p class="answer-line-count">Answer section: ${answerLineCount} LINES</p>` : "";
-                const reasoningSection = renderedReasoning ? `
-                    <button class="view-reasoning-btn" data-content="${encodeURIComponent(renderedReasoning)}" data-title="Reasoning - ${stageLabel}">View reasoning</button>
+                const reasoningLineLabel = reasoningLineCount > 0 ? `<p class="answer-line-count">Reasoning Section: ${reasoningLineCount} LINES</p>` : "";
+                const reasoningSection = previewReason ? `
+                    <div class="content-container">
+                        ${reasoningLineLabel}
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(fullReasoningTrace)}" data-type="reasoning" data-title="Reasoning - ${stageLabel}">View separately</button>
+                        <div class="reasoning-answer limited">${previewReason}</div>
+                    </div>
                 ` : "";
                 const codeSection = stageData.code ? `
                     <div class="content-container">
@@ -915,7 +927,7 @@ function renderInteractivePanelsPanic(problem, panelsContainerEl) {
                     <div class="content-container">
                         ${answerLineLabel}
                         <button class="view-separate-btn" data-content="${encodeURIComponent(renderedAnswer)}" data-type="math" data-title="Math Answer - ${stageLabel}">View separately</button>
-                        <div class="math-answer">${renderedAnswer}</div>
+                        <div class="math-answer limited">${renderedAnswer}</div>
                     </div>` : "";
                 const finalSection = stageData.final ? `
                     <div class="content-container">
@@ -998,13 +1010,20 @@ function renderInteractivePanelsDoubt(problem, panelsContainerEl) {
                 const bodyLabel = stage === "oracle" ? "Oracle Output" : "Update Output";
                 const renderedAnswer = stageData.answer ? renderRich(stageData.answer) : "";
                 const renderedFinal = stageData.final ? renderRich(stageData.final) : "";
-                const renderedReasoning = stageData.reasoning ? renderRich(stageData.reasoning) : "";
+                const previewReason = stageData.preview_reason ? renderRich(stageData.preview_reason) : "";
+                const fullReasoningTrace = stageData.full_reasoning_trace ? renderRich(stageData.full_reasoning_trace) : "";
                 const codeLineCount = stageData.code ? countLines(stageData.code) : 0;
                 const answerLineCount = stageData.answer ? countLines(getContentString(stageData.answer)) : 0;
+                const reasoningLineCount = stageData.preview_reason ? countLines(getContentString(stageData.preview_reason)) : 0;
                 const codeLineLabel = codeLineCount > 0 ? `<p class="answer-line-count">Answer section: ${codeLineCount} LINES</p>` : "";
                 const answerLineLabel = answerLineCount > 0 ? `<p class="answer-line-count">Answer section: ${answerLineCount} LINES</p>` : "";
-                const reasoningSection = renderedReasoning ? `
-                    <button class="view-reasoning-btn" data-content="${encodeURIComponent(renderedReasoning)}" data-title="Reasoning - ${stageLabel}">View reasoning</button>
+                const reasoningLineLabel = reasoningLineCount > 0 ? `<p class="answer-line-count">Reasoning Section: ${reasoningLineCount} LINES</p>` : "";
+                const reasoningSection = previewReason ? `
+                    <div class="content-container">
+                        ${reasoningLineLabel}
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(fullReasoningTrace)}" data-type="reasoning" data-title="Reasoning - ${stageLabel}">View separately</button>
+                        <div class="reasoning-answer limited">${previewReason}</div>
+                    </div>
                 ` : "";
                 const codeSection = stageData.code ? `
                     <div class="content-container">
@@ -1016,7 +1035,7 @@ function renderInteractivePanelsDoubt(problem, panelsContainerEl) {
                     <div class="content-container">
                         ${answerLineLabel}
                         <button class="view-separate-btn" data-content="${encodeURIComponent(renderedAnswer)}" data-type="math" data-title="Math Answer - ${stageLabel}">View separately</button>
-                        <div class="math-answer">${renderedAnswer}</div>
+                        <div class="math-answer limited">${renderedAnswer}</div>
                     </div>` : "";
                 const finalSection = stageData.final ? `
                     <div class="content-container">
@@ -1091,12 +1110,14 @@ function showSeparateView(content, type, title) {
         // Add close functionality
         modal.querySelector('.modal-close').addEventListener('click', () => {
             modal.style.display = 'none';
+            document.body.classList.remove('modal-open');
         });
 
         // Close modal when clicking outside
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
                 modal.style.display = 'none';
+                document.body.classList.remove('modal-open');
             }
         });
     }
@@ -1127,6 +1148,7 @@ function showSeparateView(content, type, title) {
 
     // Show modal
     modal.style.display = 'block';
+    document.body.classList.add('modal-open');
 }
 
 // Leakage modal function
@@ -1151,12 +1173,14 @@ function showSeparateViewLeakage(content, type, title) {
         // Add close functionality
         modal.querySelector('.modal-close').addEventListener('click', () => {
             modal.style.display = 'none';
+            document.body.classList.remove('modal-open');
         });
 
         // Close modal when clicking outside
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
                 modal.style.display = 'none';
+                document.body.classList.remove('modal-open');
             }
         });
     }
@@ -1187,6 +1211,7 @@ function showSeparateViewLeakage(content, type, title) {
 
     // Show modal
     modal.style.display = 'block';
+    document.body.classList.add('modal-open');
 }
 
 // Panic modal function
@@ -1211,12 +1236,14 @@ function showSeparateViewPanic(content, type, title) {
         // Add close functionality
         modal.querySelector('.modal-close').addEventListener('click', () => {
             modal.style.display = 'none';
+            document.body.classList.remove('modal-open');
         });
 
         // Close modal when clicking outside
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
                 modal.style.display = 'none';
+                document.body.classList.remove('modal-open');
             }
         });
     }
@@ -1247,6 +1274,7 @@ function showSeparateViewPanic(content, type, title) {
 
     // Show modal
     modal.style.display = 'block';
+    document.body.classList.add('modal-open');
 }
 
 // Doubt modal function
@@ -1271,12 +1299,14 @@ function showSeparateViewDoubt(content, type, title) {
         // Add close functionality
         modal.querySelector('.modal-close').addEventListener('click', () => {
             modal.style.display = 'none';
+            document.body.classList.remove('modal-open');
         });
 
         // Close modal when clicking outside
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
                 modal.style.display = 'none';
+                document.body.classList.remove('modal-open');
             }
         });
     }
@@ -1307,6 +1337,7 @@ function showSeparateViewDoubt(content, type, title) {
 
     // Show modal
     modal.style.display = 'block';
+    document.body.classList.add('modal-open');
 }
 
 function applyLineNumbers(codeEl) {
