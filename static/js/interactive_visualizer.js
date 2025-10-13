@@ -252,7 +252,7 @@ async function loadInteractiveProblemsLeakage() {
 
         container.innerHTML = '<div class="interactive-viz-leakage"><div class="wrapper"><div class="header"><h1>Loading problems…</h1></div></div></div>';
 
-        const response = await fetch("./example_leakage.json", { cache: "no-cache" });
+        const response = await fetch("./examples_leakage.json", { cache: "no-cache" });
         if (!response.ok) {
             throw new Error(`Failed to load data (${response.status})`);
         }
@@ -706,25 +706,25 @@ function renderInteractivePanels(problem, panelsContainerEl) {
                 const reasoningSection = previewReason ? `
                     <div class="content-container">
                         ${reasoningLineLabel}
-                        <button class="view-separate-btn" data-content="${encodeURIComponent(fullReasoningTrace)}" data-type="reasoning" data-title="Reasoning - ${stageLabel}">View separately</button>
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(fullReasoningTrace)}" data-type="reasoning" data-title="Reasoning - ${stageLabel}">Open full view</button>
                         <div class="reasoning-answer limited">${previewReason}</div>
                     </div>
                 ` : "";
                 const codeSection = stageData.code ? `
                     <div class="content-container">
                         ${codeLineLabel}
-                        <button class="view-separate-btn" data-content="${encodeURIComponent(stageData.code)}" data-type="code" data-title="Code - ${stageLabel}">View separately</button>
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(stageData.code)}" data-type="code" data-title="Code - ${stageLabel}">Open full view</button>
                         <pre class="code-block"><code class="language-python">${escapeHTML(stageData.code)}</code></pre>
                     </div>` : "";
                 const answerSection = stageData.answer ? `
                     <div class="content-container">
                         ${answerLineLabel}
-                        <button class="view-separate-btn" data-content="${encodeURIComponent(renderedAnswer)}" data-type="math" data-title="Math Answer - ${stageLabel}">View separately</button>
-                        <div class="math-answer limited">${renderedAnswer}</div>
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(renderedAnswer)}" data-type="math" data-title="Math Answer - ${stageLabel}">Open full view</button>
+                        <div class="math-answer">${renderedAnswer}</div>
                     </div>` : "";
                 const finalSection = stageData.final ? `
                     <div class="content-container">
-                        <button class="view-separate-btn" data-content="${encodeURIComponent(renderedFinal)}" data-type="final" data-title="Final Answer - ${stageLabel}">View separately</button>
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(renderedFinal)}" data-type="final" data-title="Final Answer - ${stageLabel}">Open full view</button>
                         <div class="final-answer">${renderedFinal}</div>
                     </div>` : "";
                 return `
@@ -805,25 +805,25 @@ function renderInteractivePanelsLeakage(problem, panelsContainerEl) {
                 const reasoningSection = previewReason ? `
                     <div class="content-container">
                         ${reasoningLineLabel}
-                        <button class="view-separate-btn" data-content="${encodeURIComponent(fullReasoningTrace)}" data-type="reasoning" data-title="Reasoning - ${stageLabel}">View separately</button>
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(fullReasoningTrace)}" data-type="reasoning" data-title="Reasoning - ${stageLabel}">Open full view</button>
                         <div class="reasoning-answer limited">${previewReason}</div>
                     </div>
                 ` : "";
                 const codeSection = stageData.code ? `
                     <div class="content-container">
                         ${codeLineLabel}
-                        <button class="view-separate-btn" data-content="${encodeURIComponent(stageData.code)}" data-type="code" data-title="Code - ${stageLabel}">View separately</button>
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(stageData.code)}" data-type="code" data-title="Code - ${stageLabel}">Open full view</button>
                         <pre class="code-block"><code class="language-python">${escapeHTML(stageData.code)}</code></pre>
                     </div>` : "";
                 const answerSection = stageData.answer ? `
                     <div class="content-container">
                         ${answerLineLabel}
-                        <button class="view-separate-btn" data-content="${encodeURIComponent(renderedAnswer)}" data-type="math" data-title="Math Answer - ${stageLabel}">View separately</button>
-                        <div class="math-answer limited">${renderedAnswer}</div>
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(renderedAnswer)}" data-type="math" data-title="Math Answer - ${stageLabel}">Open full view</button>
+                        <div class="math-answer">${renderedAnswer}</div>
                     </div>` : "";
                 const finalSection = stageData.final ? `
                     <div class="content-container">
-                        <button class="view-separate-btn" data-content="${encodeURIComponent(renderedFinal)}" data-type="final" data-title="Final Answer - ${stageLabel}">View separately</button>
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(renderedFinal)}" data-type="final" data-title="Final Answer - ${stageLabel}">Open full view</button>
                         <div class="final-answer">${renderedFinal}</div>
                     </div>` : "";
                 return `
@@ -896,10 +896,10 @@ function renderInteractivePanelsPanic(problem, panelsContainerEl) {
             <h2>${modelHeading}</h2>
         </div>
         <div class="model-panels">
-            ${["oracle", "interrupt"].map(stage => {
+            ${["oracle"].map(stage => {
                 const stageData = model[stage] || {};
-                const stageLabel = stageData.label || (stage === "oracle" ? "Full Thinking" : "Speedup @0.3");
-                const bodyLabel = stage === "oracle" ? "Oracle Output" : "Speedup Output";
+                const stageLabel = stageData.label || "Full Thinking";
+                const bodyLabel = "Oracle Output";
                 const renderedAnswer = stageData.answer ? renderRich(stageData.answer) : "";
                 const renderedFinal = stageData.final ? renderRich(stageData.final) : "";
                 const previewReason = stageData.preview_reason ? renderRich(stageData.preview_reason) : "";
@@ -913,25 +913,25 @@ function renderInteractivePanelsPanic(problem, panelsContainerEl) {
                 const reasoningSection = previewReason ? `
                     <div class="content-container">
                         ${reasoningLineLabel}
-                        <button class="view-separate-btn" data-content="${encodeURIComponent(fullReasoningTrace)}" data-type="reasoning" data-title="Reasoning - ${stageLabel}">View separately</button>
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(fullReasoningTrace)}" data-type="reasoning" data-title="Reasoning - ${stageLabel}">Open full view</button>
                         <div class="reasoning-answer limited">${previewReason}</div>
                     </div>
                 ` : "";
                 const codeSection = stageData.code ? `
                     <div class="content-container">
                         ${codeLineLabel}
-                        <button class="view-separate-btn" data-content="${encodeURIComponent(stageData.code)}" data-type="code" data-title="Code - ${stageLabel}">View separately</button>
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(stageData.code)}" data-type="code" data-title="Code - ${stageLabel}">Open full view</button>
                         <pre class="code-block"><code class="language-python">${escapeHTML(stageData.code)}</code></pre>
                     </div>` : "";
                 const answerSection = stageData.answer ? `
                     <div class="content-container">
                         ${answerLineLabel}
-                        <button class="view-separate-btn" data-content="${encodeURIComponent(renderedAnswer)}" data-type="math" data-title="Math Answer - ${stageLabel}">View separately</button>
-                        <div class="math-answer limited">${renderedAnswer}</div>
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(renderedAnswer)}" data-type="math" data-title="Math Answer - ${stageLabel}">Open full view</button>
+                        <div class="math-answer">${renderedAnswer}</div>
                     </div>` : "";
                 const finalSection = stageData.final ? `
                     <div class="content-container">
-                        <button class="view-separate-btn" data-content="${encodeURIComponent(renderedFinal)}" data-type="final" data-title="Final Answer - ${stageLabel}">View separately</button>
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(renderedFinal)}" data-type="final" data-title="Final Answer - ${stageLabel}">Open full view</button>
                         <div class="final-answer">${renderedFinal}</div>
                     </div>` : "";
                 return `
@@ -1021,25 +1021,25 @@ function renderInteractivePanelsDoubt(problem, panelsContainerEl) {
                 const reasoningSection = previewReason ? `
                     <div class="content-container">
                         ${reasoningLineLabel}
-                        <button class="view-separate-btn" data-content="${encodeURIComponent(fullReasoningTrace)}" data-type="reasoning" data-title="Reasoning - ${stageLabel}">View separately</button>
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(fullReasoningTrace)}" data-type="reasoning" data-title="Reasoning - ${stageLabel}">Open full view</button>
                         <div class="reasoning-answer limited">${previewReason}</div>
                     </div>
                 ` : "";
                 const codeSection = stageData.code ? `
                     <div class="content-container">
                         ${codeLineLabel}
-                        <button class="view-separate-btn" data-content="${encodeURIComponent(stageData.code)}" data-type="code" data-title="Code - ${stageLabel}">View separately</button>
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(stageData.code)}" data-type="code" data-title="Code - ${stageLabel}">Open full view</button>
                         <pre class="code-block"><code class="language-python">${escapeHTML(stageData.code)}</code></pre>
                     </div>` : "";
                 const answerSection = stageData.answer ? `
                     <div class="content-container">
                         ${answerLineLabel}
-                        <button class="view-separate-btn" data-content="${encodeURIComponent(renderedAnswer)}" data-type="math" data-title="Math Answer - ${stageLabel}">View separately</button>
-                        <div class="math-answer limited">${renderedAnswer}</div>
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(renderedAnswer)}" data-type="math" data-title="Math Answer - ${stageLabel}">Open full view</button>
+                        <div class="math-answer">${renderedAnswer}</div>
                     </div>` : "";
                 const finalSection = stageData.final ? `
                     <div class="content-container">
-                        <button class="view-separate-btn" data-content="${encodeURIComponent(renderedFinal)}" data-type="final" data-title="Final Answer - ${stageLabel}">View separately</button>
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(renderedFinal)}" data-type="final" data-title="Final Answer - ${stageLabel}">Open full view</button>
                         <div class="final-answer">${renderedFinal}</div>
                     </div>` : "";
                 return `
