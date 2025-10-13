@@ -649,6 +649,75 @@ body {
   color: #475569;
 }
 
+.read-more-lead,
+.read-more-cta {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: #334155;
+  margin: 0 auto;
+  max-width: 640px;
+}
+
+.read-more-grid {
+  display: grid;
+  gap: 1.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  margin-top: 2rem;
+}
+
+.read-more-card {
+  background: linear-gradient(155deg, rgba(241, 245, 249, 0.85), #ffffff);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 18px;
+  padding: 1.75rem;
+  box-shadow: 0 18px 32px rgba(15, 23, 42, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+}
+
+.read-more-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 999px;
+  background: rgba(37, 99, 235, 0.1);
+  color: #1e3a8a;
+  font-size: 1.35rem;
+  box-shadow: inset 0 0 0 1px rgba(37, 99, 235, 0.15), 0 10px 18px rgba(30, 64, 175, 0.08);
+}
+
+.read-more-card h3 {
+  font-size: 1.12rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0;
+}
+
+.read-more-card p {
+  margin: 0;
+  color: #475569;
+  line-height: 1.6;
+  font-size: 0.98rem;
+}
+
+.read-more-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 22px 40px rgba(30, 64, 175, 0.18);
+  border-color: rgba(37, 99, 235, 0.25);
+}
+
+.read-more-secondary {
+  border: 1px solid rgba(15, 23, 42, 0.18);
+}
+
+.read-more-secondary:hover {
+  border-color: rgba(37, 99, 235, 0.4);
+}
+
 @media (max-width: 768px) {
   .tldr-callout {
     padding: 1.2rem 1.3rem;
@@ -661,5 +730,10 @@ body {
 
   .failure-item {
     padding-left: 0;
+  }
+
+  .read-more-grid {
+    grid-template-columns: 1fr;
+    margin-top: 1.5rem;
   }
 }
