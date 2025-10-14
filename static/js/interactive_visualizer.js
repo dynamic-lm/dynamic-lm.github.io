@@ -340,7 +340,7 @@ function renderInteractiveProblemLeakage() {
     const questionTitleHTML = questionUrl
         ? `<a href="${escapeAttribute(questionUrl)}" target="_blank" rel="noopener">${escapeHTML(title)}</a>`
         : escapeHTML(title);
-    const headerTitleHTML = "Examples of Hard Interrupts";
+    const headerTitleHTML = "Examples of Hard Interrupt";
     const headerActions = `
         <div class="header-actions">
             <button id="interactive-prev-problem-leakage" title="Cycle through the previous problem">◀ Previous</button>
@@ -622,8 +622,10 @@ function renderInteractivePanels(problem, panelsContainerEl) {
     panelsContainerEl.innerHTML = `
         <div class="model-header">
             ${logoSrc ? `<img src="${logoSrc}" alt="${escapeAttribute(modelName)} logo">` : ""}
-            <h2>${modelHeading}</h2>
-            ${takeaway ? `<p class="model-takeaway">${takeaway}</p>` : ""}
+            <div class="model-title-section">
+                <h2>${modelHeading}</h2>
+                ${takeaway ? `<p class="model-takeaway">${takeaway}</p>` : ""}
+            </div>
         </div>
         <div class="model-panels ${layout === 'single' ? 'single-column' : 'two-column'}">
             ${stages.map(stage => {
@@ -726,8 +728,10 @@ function renderInteractivePanelsLeakage(problem, panelsContainerEl) {
     panelsContainerEl.innerHTML = `
         <div class="model-header">
             ${logoSrc ? `<img src="${logoSrc}" alt="${escapeAttribute(modelName)} logo">` : ""}
-            <h2>${modelHeading}</h2>
-            ${takeaway ? `<p class="model-takeaway">${takeaway}</p>` : ""}
+            <div class="model-title-section">
+                <h2>${modelHeading}</h2>
+                ${takeaway ? `<p class="model-takeaway">${takeaway}</p>` : ""}
+            </div>
         </div>
         <div class="model-panels ${layout === 'single' ? 'single-column' : 'two-column'}">
             ${stages.map(stage => {
@@ -839,8 +843,10 @@ function renderInteractivePanelsPanic(problem, panelsContainerEl) {
     panelsContainerEl.innerHTML = `
         <div class="model-header">
             ${logoSrc ? `<img src="${logoSrc}" alt="${escapeAttribute(modelName)} logo">` : ""}
-            <h2>${modelHeading}</h2>
-            ${takeaway ? `<p class="model-takeaway">${takeaway}</p>` : ""}
+            <div class="model-title-section">
+                <h2>${modelHeading}</h2>
+                ${takeaway ? `<p class="model-takeaway">${takeaway}</p>` : ""}
+            </div>
         </div>
         <div class="model-panels ${layout === 'single' ? 'single-column' : 'two-column'}">
             ${stages.map(stage => {
@@ -952,8 +958,10 @@ function renderInteractivePanelsDoubt(problem, panelsContainerEl) {
     panelsContainerEl.innerHTML = `
         <div class="model-header">
             ${logoSrc ? `<img src="${logoSrc}" alt="${escapeAttribute(modelName)} logo">` : ""}
-            <h2>${modelHeading}</h2>
-            ${takeaway ? `<p class="model-takeaway">${takeaway}</p>` : ""}
+            <div class="model-title-section">
+                <h2>${modelHeading}</h2>
+                ${takeaway ? `<p class="model-takeaway">${takeaway}</p>` : ""}
+            </div>
         </div>
         <div class="model-panels ${layout === 'single' ? 'single-column' : 'two-column'}">
             ${stages.map(stage => {
