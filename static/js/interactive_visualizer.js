@@ -854,21 +854,41 @@ function renderInteractivePanelsPanic(problem, panelsContainerEl) {
                 const label = stageData.label || "Full Thinking";
                 const renderedAnswer = stageData.answer ? renderRich(stageData.answer) : "";
                 const renderedFinal = stageData.final ? renderRich(stageData.final) : "";
-                const previewReason = stageData.preview_reason ? renderRich(stageData.preview_reason) : "";
-                const fullReasoningTrace = stageData.full_reasoning_trace ? renderRich(stageData.full_reasoning_trace) : "";
+                
+                // For soft interrupt experiments, add reasoning sections
+                const preInterruptReason = stageData.pre_interrupt_reason ? renderRich(stageData.pre_interrupt_reason) : "";
+                const preInterruptFullReason = stageData.pre_interrupt_full_reason ? renderRich(stageData.pre_interrupt_full_reason) : "";
+                const interruptLaterReason = stageData.interrupt_later_reason ? renderRich(stageData.interrupt_later_reason) : "";
+                const interruptLaterFullReason = stageData.interrupt_later_full_reason ? renderRich(stageData.interrupt_later_full_reason) : "";
+                
                 const codeCharCount = stageData.code ? countCharacters(stageData.code) : 0;
                 const answerCharCount = stageData.answer ? countCharacters(getContentString(stageData.answer)) : 0;
-                const reasoningCharCount = stageData.full_reasoning_trace ? countCharacters(getContentString(stageData.full_reasoning_trace)) : 0;
+                const preInterruptCharCount = stageData.pre_interrupt_full_reason ? countCharacters(getContentString(stageData.pre_interrupt_full_reason)) : 0;
+                const interruptLaterCharCount = stageData.interrupt_later_full_reason ? countCharacters(getContentString(stageData.interrupt_later_full_reason)) : 0;
+                
                 const codeCharLabel = codeCharCount > 0 ? `<p class="answer-line-count">Answer section: ${codeCharCount} CHARACTERS</p>` : "";
                 const answerCharLabel = answerCharCount > 0 ? `<p class="answer-line-count">Answer section: ${answerCharCount} CHARACTERS</p>` : "";
-                const reasoningCharLabel = reasoningCharCount > 0 ? `<p class="reasoning-line-count">Reasoning Section: ${reasoningCharCount} CHARACTERS</p>` : "";
-                const reasoningSection = previewReason ? `
-                    <div class="content-container">
-                        ${reasoningCharLabel}
-                        <button class="view-separate-btn" data-content="${encodeURIComponent(fullReasoningTrace)}" data-type="reasoning" data-title="Reasoning - ${label}">Open full view</button>
-                        <div class="reasoning-answer limited">${previewReason}</div>
+                const preInterruptCharLabel = preInterruptCharCount > 0 ? `<p class="reasoning-line-count">Reasoning (Pre-Interrupt): ${preInterruptCharCount} CHARACTERS</p>` : "";
+                const interruptLaterCharLabel = interruptLaterCharCount > 0 ? `<p class="reasoning-line-count">Reasoning (Interrupt + Later): ${interruptLaterCharCount} CHARACTERS</p>` : "";
+                
+                // Add reasoning (pre-interrupt) section
+                const preInterruptSection = preInterruptReason ? `
+                    <div class="content-container reasoning-pre">
+                        ${preInterruptCharLabel}
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(preInterruptFullReason)}" data-type="reasoning" data-title="Reasoning (Pre-Interrupt) - ${label}">Open full view</button>
+                        <div class="reasoning-answer speedup-pre">${preInterruptReason}</div>
                     </div>
                 ` : "";
+                
+                // Add reasoning (interrupt + later) section
+                const interruptLaterSection = interruptLaterReason ? `
+                    <div class="content-container reasoning-post">
+                        ${interruptLaterCharLabel}
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(interruptLaterFullReason)}" data-type="reasoning" data-title="Reasoning (Interrupt + Later) - ${label}">Open full view</button>
+                        <div class="reasoning-answer speedup-post">${interruptLaterReason}</div>
+                    </div>
+                ` : "";
+                
                 const codeSection = stageData.code ? `
                     <div class="content-container">
                         ${codeCharLabel}
@@ -889,7 +909,8 @@ function renderInteractivePanelsPanic(problem, panelsContainerEl) {
                 return `
                     <section class="panel">
                         <h3>${label}</h3>
-                        ${reasoningSection}
+                        ${preInterruptSection}
+                        ${interruptLaterSection}
                         ${codeSection}
                         ${answerSection}
                         ${finalSection}

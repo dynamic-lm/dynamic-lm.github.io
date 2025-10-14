@@ -4,12 +4,7 @@
 
 window.HELP_IMPROVE_VIDEOJS = false;
 
-window.MathJax = {
-    tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']],
-        displayMath: [['$$', '$$'], ['\\[', '\\]']]
-    }
-};
+// MathJax configuration moved to index.html
 
 const TARGET_ASPECT = 0.38;
 const MIN_HEIGHT = 300;
