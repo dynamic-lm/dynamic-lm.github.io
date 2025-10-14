@@ -620,11 +620,11 @@ function renderInteractivePanels(problem, panelsContainerEl) {
     const stages = layout === "single" ? ["oracle"] : ["oracle", "interrupt"];
 
     panelsContainerEl.innerHTML = `
+        ${takeaway ? `<div class="model-takeaway-standalone">${takeaway}</div>` : ""}
         <div class="model-header">
             ${logoSrc ? `<img src="${logoSrc}" alt="${escapeAttribute(modelName)} logo">` : ""}
             <div class="model-title-section">
                 <h2>${modelHeading}</h2>
-                ${takeaway ? `<p class="model-takeaway">${takeaway}</p>` : ""}
             </div>
         </div>
         <div class="model-panels ${layout === 'single' ? 'single-column' : 'two-column'}">
@@ -637,10 +637,10 @@ function renderInteractivePanels(problem, panelsContainerEl) {
                 const fullReasoningTrace = stageData.full_reasoning_trace ? renderRich(stageData.full_reasoning_trace) : "";
                 const codeCharCount = stageData.code ? countCharacters(stageData.code) : 0;
                 const answerCharCount = stageData.answer ? countCharacters(getContentString(stageData.answer)) : 0;
-                const reasoningCharCount = stageData.preview_reason ? countCharacters(getContentString(stageData.preview_reason)) : 0;
+                const reasoningCharCount = stageData.full_reasoning_trace ? countCharacters(getContentString(stageData.full_reasoning_trace)) : 0;
                 const codeCharLabel = codeCharCount > 0 ? `<p class="answer-line-count">Answer section: ${codeCharCount} CHARACTERS</p>` : "";
                 const answerCharLabel = answerCharCount > 0 ? `<p class="answer-line-count">Answer section: ${answerCharCount} CHARACTERS</p>` : "";
-                const reasoningCharLabel = reasoningCharCount > 0 ? `<p class="answer-line-count">Reasoning Section: ${reasoningCharCount} CHARACTERS</p>` : "";
+                const reasoningCharLabel = reasoningCharCount > 0 ? `<p class="reasoning-line-count">Reasoning Section: ${reasoningCharCount} CHARACTERS</p>` : "";
                 const reasoningSection = previewReason ? `
                     <div class="content-container">
                         ${reasoningCharLabel}
@@ -726,11 +726,11 @@ function renderInteractivePanelsLeakage(problem, panelsContainerEl) {
     const stages = layout === "single" ? ["oracle"] : ["oracle", "interrupt"];
 
     panelsContainerEl.innerHTML = `
+        ${takeaway ? `<div class="model-takeaway-standalone">${takeaway}</div>` : ""}
         <div class="model-header">
             ${logoSrc ? `<img src="${logoSrc}" alt="${escapeAttribute(modelName)} logo">` : ""}
             <div class="model-title-section">
                 <h2>${modelHeading}</h2>
-                ${takeaway ? `<p class="model-takeaway">${takeaway}</p>` : ""}
             </div>
         </div>
         <div class="model-panels ${layout === 'single' ? 'single-column' : 'two-column'}">
@@ -743,10 +743,10 @@ function renderInteractivePanelsLeakage(problem, panelsContainerEl) {
                 const fullReasoningTrace = stageData.full_reasoning_trace ? renderRich(stageData.full_reasoning_trace) : "";
                 const codeCharCount = stageData.code ? countCharacters(stageData.code) : 0;
                 const answerCharCount = stageData.answer ? countCharacters(getContentString(stageData.answer)) : 0;
-                const reasoningCharCount = stageData.preview_reason ? countCharacters(getContentString(stageData.preview_reason)) : 0;
+                const reasoningCharCount = stageData.full_reasoning_trace ? countCharacters(getContentString(stageData.full_reasoning_trace)) : 0;
                 const codeCharLabel = codeCharCount > 0 ? `<p class="answer-line-count">Answer section: ${codeCharCount} CHARACTERS</p>` : "";
                 const answerCharLabel = answerCharCount > 0 ? `<p class="answer-line-count">Answer section: ${answerCharCount} CHARACTERS</p>` : "";
-                const reasoningCharLabel = reasoningCharCount > 0 ? `<p class="answer-line-count">Reasoning Section: ${reasoningCharCount} CHARACTERS</p>` : "";
+                const reasoningCharLabel = reasoningCharCount > 0 ? `<p class="reasoning-line-count">Reasoning Section: ${reasoningCharCount} CHARACTERS</p>` : "";
                 const reasoningSection = previewReason ? `
                     <div class="content-container">
                         ${reasoningCharLabel}
@@ -841,11 +841,11 @@ function renderInteractivePanelsPanic(problem, panelsContainerEl) {
     const stages = layout === "single" ? ["oracle"] : ["oracle", "interrupt"];
 
     panelsContainerEl.innerHTML = `
+        ${takeaway ? `<div class="model-takeaway-standalone">${takeaway}</div>` : ""}
         <div class="model-header">
             ${logoSrc ? `<img src="${logoSrc}" alt="${escapeAttribute(modelName)} logo">` : ""}
             <div class="model-title-section">
                 <h2>${modelHeading}</h2>
-                ${takeaway ? `<p class="model-takeaway">${takeaway}</p>` : ""}
             </div>
         </div>
         <div class="model-panels ${layout === 'single' ? 'single-column' : 'two-column'}">
@@ -858,10 +858,10 @@ function renderInteractivePanelsPanic(problem, panelsContainerEl) {
                 const fullReasoningTrace = stageData.full_reasoning_trace ? renderRich(stageData.full_reasoning_trace) : "";
                 const codeCharCount = stageData.code ? countCharacters(stageData.code) : 0;
                 const answerCharCount = stageData.answer ? countCharacters(getContentString(stageData.answer)) : 0;
-                const reasoningCharCount = stageData.preview_reason ? countCharacters(getContentString(stageData.preview_reason)) : 0;
+                const reasoningCharCount = stageData.full_reasoning_trace ? countCharacters(getContentString(stageData.full_reasoning_trace)) : 0;
                 const codeCharLabel = codeCharCount > 0 ? `<p class="answer-line-count">Answer section: ${codeCharCount} CHARACTERS</p>` : "";
                 const answerCharLabel = answerCharCount > 0 ? `<p class="answer-line-count">Answer section: ${answerCharCount} CHARACTERS</p>` : "";
-                const reasoningCharLabel = reasoningCharCount > 0 ? `<p class="answer-line-count">Reasoning Section: ${reasoningCharCount} CHARACTERS</p>` : "";
+                const reasoningCharLabel = reasoningCharCount > 0 ? `<p class="reasoning-line-count">Reasoning Section: ${reasoningCharCount} CHARACTERS</p>` : "";
                 const reasoningSection = previewReason ? `
                     <div class="content-container">
                         ${reasoningCharLabel}
@@ -956,11 +956,11 @@ function renderInteractivePanelsDoubt(problem, panelsContainerEl) {
     const stages = layout === "single" ? ["oracle"] : ["oracle", "interrupt"];
 
     panelsContainerEl.innerHTML = `
+        ${takeaway ? `<div class="model-takeaway-standalone">${takeaway}</div>` : ""}
         <div class="model-header">
             ${logoSrc ? `<img src="${logoSrc}" alt="${escapeAttribute(modelName)} logo">` : ""}
             <div class="model-title-section">
                 <h2>${modelHeading}</h2>
-                ${takeaway ? `<p class="model-takeaway">${takeaway}</p>` : ""}
             </div>
         </div>
         <div class="model-panels ${layout === 'single' ? 'single-column' : 'two-column'}">
@@ -973,10 +973,10 @@ function renderInteractivePanelsDoubt(problem, panelsContainerEl) {
                 const fullReasoningTrace = stageData.full_reasoning_trace ? renderRich(stageData.full_reasoning_trace) : "";
                 const codeCharCount = stageData.code ? countCharacters(stageData.code) : 0;
                 const answerCharCount = stageData.answer ? countCharacters(getContentString(stageData.answer)) : 0;
-                const reasoningCharCount = stageData.preview_reason ? countCharacters(getContentString(stageData.preview_reason)) : 0;
+                const reasoningCharCount = stageData.full_reasoning_trace ? countCharacters(getContentString(stageData.full_reasoning_trace)) : 0;
                 const codeCharLabel = codeCharCount > 0 ? `<p class="answer-line-count">Answer section: ${codeCharCount} CHARACTERS</p>` : "";
                 const answerCharLabel = answerCharCount > 0 ? `<p class="answer-line-count">Answer section: ${answerCharCount} CHARACTERS</p>` : "";
-                const reasoningCharLabel = reasoningCharCount > 0 ? `<p class="answer-line-count">Reasoning Section: ${reasoningCharCount} CHARACTERS</p>` : "";
+                const reasoningCharLabel = reasoningCharCount > 0 ? `<p class="reasoning-line-count">Reasoning Section: ${reasoningCharCount} CHARACTERS</p>` : "";
                 const reasoningSection = previewReason ? `
                     <div class="content-container">
                         ${reasoningCharLabel}
