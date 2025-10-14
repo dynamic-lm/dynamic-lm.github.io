@@ -1,498 +1,796 @@
 <!DOCTYPE html>
-<html lang="en"></html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="description" content="Project page for the paper \"Are Large Reasoning Models Interruptible?\" by
+        Tsung-Han Wu, Mihran Miroyan, David M. Chan, Trevor Darrell, Narges Norouzi, and Joseph E. Gonzalez.">
+        <meta property="og:title" content="Are Large Reasoning Models Interruptible?" />
+        <meta property="og:description" content="Project page for the paper \"Are Large Reasoning Models
+        Interruptible?\" by Tsung-Han Wu, Mihran Miroyan, David M. Chan, Trevor Darrell, Narges Norouzi, and Joseph E.
+        Gonzalez." />
+        <meta property="og:url" content="http://reverse-vlm.github.io" />
+        <meta property="og:image" content="static/images/ilrm_logo.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
 
-<head>
-    <meta charset="utf-8">
-    <!-- Meta tags for social media banners, these should be filled in appropriately as they are your "business card" -->
-    <!-- Replace the content tag with appropriate information -->
-    <meta name="description" content="Project page for the paper “Are Large Reasoning Models Interruptible?” by Tsung-Han Wu, Mihran Miroyan, David M. Chan, Trevor Darrell, Narges Norouzi, and Joseph E. Gonzalez.">
-    <meta property="og:title" content="Are Large Reasoning Models Interruptible?" />
-    <meta property="og:description" content="Project page for the paper “Are Large Reasoning Models Interruptible?” by Tsung-Han Wu, Mihran Miroyan, David M. Chan, Trevor Darrell, Narges Norouzi, and Joseph E. Gonzalez." />
-    <meta property="og:url" content="http://reverse-vlm.github.io" />
-    <!-- Path to banner image, should be in the path listed below. Optimal dimensions are 1200X630-->
-    <meta property="og:image" content="static/images/ilrm_logo.png" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
+        <meta name="twitter:title" content="Are Large Reasoning Models Interruptible?" />
+        <meta name="twitter:description" content="Project page for the paper \"Are Large Reasoning Models
+        Interruptible?\" by Tsung-Han Wu, Mihran Miroyan, David M. Chan, Trevor Darrell, Narges Norouzi, and Joseph E.
+        Gonzalez." />
+        <meta name="twitter:image" content="static/images/ilrm_logo.png" />
+        <meta name="twitter:card" content="IRLM Project Logo highlighting interruptible large reasoning models." />
+        <meta name="keywords" content="Large Reasoning Models, Interruptibility, Large Language Models" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+        <title>Are Large Reasoning Models Interruptible?</title>
+        <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="96x96" href="/static/images/favicon/favicon-96x96.png" />
+        <link rel="icon" type="image/x-icon" href="/static/images/favicon/favicon.ico" />
 
-    <meta name="twitter:title" content="Are Large Reasoning Models Interruptible?">
-    <meta name="twitter:description" content="Project page for the paper “Are Large Reasoning Models Interruptible?” by Tsung-Han Wu, Mihran Miroyan, David M. Chan, Trevor Darrell, Narges Norouzi, and Joseph E. Gonzalez." />
-    <!-- Path to banner image, should be in the path listed below. Optimal dimensions are 1200X600-->
-    <meta name="twitter:image" content="static/images/ilrm_logo.png">
-    <meta name="twitter:card" content="IRLM Project Logo highlighting interruptible large reasoning models.">
-    <!-- Keywords for your paper to be indexed by-->
-    <meta name="keywords"
-        content="Large Reasoning Models, Interruptibility, Large Language Models">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="apple-touch-icon" sizes="180x180" href="/static/images/favicon/apple-touch-icon.png" />
+        <link rel="manifest" href="/static/images/favicon/site.webmanifest" />
 
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.3/dist/css/bulma-carousel.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" />
+        <link rel="stylesheet" href="static/css/index.css" />
+        <link rel="stylesheet" href="static/css/interactive_visualizer.css" />
 
-    <title>Are Large Reasoning Models Interruptible?</title>
-    <!-- Standard favicon (for most browsers) -->
-    <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="/static/images/favicon/favicon-96x96.png">
-    <link rel="icon" type="image/x-icon" href="/static/images/favicon/favicon.ico">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+        <script defer src="static/fontawesome/js/fontawesome.min.js"></script>
+        <script src="static/js/bulma-carousel.min.js"></script>
+        <script src="static/js/bulma-slider.min.js"></script>
+        <script src="static/js/custom.js"></script>
 
-    <!-- Apple Touch Icon (iOS / macOS Safari bookmarks) -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/static/images/favicon/apple-touch-icon.png">
-    <!-- Progressive Web App manifest (optional) -->
-    <link rel="manifest" href="/static/images/favicon/site.webmanifest">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+        <script src="static/js/interactive_visualizer.js"></script>
 
-    <link rel="stylesheet" href="static/css/bulma.min.css">
-    <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
-    <link rel="stylesheet" href="static/css/bulma-slider.min.css">
-    <link rel="stylesheet" href="static/fontawesome/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
-    <link rel="stylesheet" href="static/css/index.css">
-    <!-- Floating TOC and interactive styles -->
-    <link rel="stylesheet" href="static/css/interactive_visualizer.css">
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <style>
+            /* Responsive carousel caption styles */
+            /* .carousel-caption {
+                text-align: center;
+                font-weight: 500;
+                color: #333;
+                margin-top: 6px;
+                font-size: clamp(13px, 2vw, 17px);
+                line-height: 1.3;
+                padding: 0 0.5rem;
+            } */
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
-    <script defer src="static/fontawesome/js/fontawesome.min.js"></script>
-    <script src="static/js/bulma-carousel.min.js"></script>
-    <script src="static/js/bulma-slider.min.js"></script>
-    <script src="static/js/custom.js"></script>
-    
-    <!-- Highlight.js for code syntax highlighting -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
-    <script src="static/js/interactive_visualizer.js"></script>
-    
-    <!-- MathJax for LaTeX rendering -->
-    <script>
-        window.MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [['$$', '$$'], ['\\[', '\\]']],
-                macros: {
-                    overarc: ['\\overparen{#1}', 1]
-                }
-            }
-        };
-    </script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+            /* Styles for content inside the new bulma-carousel structure */
+            /* .carousel .item > div {
+                padding: 1rem 0.5rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                height: 100%;
+                box-sizing: border-box;
+            } */
 
-<body>
-    <!-- Floating Table of Contents -->
-    <nav class="floating-toc">
-        <div class="toc-title">Contents</div>
-        <ul class="toc-list">
-            <li class="toc-item"><a href="#overview" class="toc-link">Overview</a></li>
-            <li class="toc-item"><a href="#problem-setup" class="toc-link">Problem Setup</a></li>
-            <li class="toc-item"><a href="#hard-interrupt" class="toc-link">#1 Hard Interrupt</a></li>
-            <li class="toc-item"><a href="#speedup" class="toc-link">#2 Speedup</a></li>
-            <li class="toc-item"><a href="#update-driven" class="toc-link">#3 Info Update</a></li>
-            <!-- <li class="toc-item"><a href="#read-more" class="toc-link">Discussions</a></li> -->
-            <li class="toc-item"><a href="#acknowledgements" class="toc-link">Acknowledgment</a></li>
-            <li class="toc-item"><a href="#BibTeX" class="toc-link">BibTeX</a></li>
-        </ul>
-    </nav>
+            /* .carousel .item img {
+                max-width: 100%;
+                max-height: calc(100% - 60px);
+                object-fit: contain;
+                margin-bottom: 10px;
+            } */
 
-    <section class="hero hero--landing" id="overview">
-        <div class="hero-body" style="padding-top: 1.5rem;">
-            <div class="container is-max-desktop">
-                <div class="columns is-centered is-vcentered hero-header">
-                    <div class="column is-narrow hero-logo-column">
-                        <img class="hero-logo" src="static/images/ilrm_logo.png" alt="IRLM Project Logo", style="height: 100px;">
-                        <div class="hero-logo-tooltip">
-                            Think of The Great Wave as a metaphor for dynamic context — the chatbot has to surf the changing tides of conversation, staying robust even as the waves keep moving.
-                        </div>
-                    </div>
-                    <div class="column has-text-centered hero-text-column">
-                        <h1 class="title is-2 publication-title hero-title">Are Large Reasoning Models Interruptible?</h1>
-                    </div>
-                </div>
-                <div class="container is-max-desktop">
-                    <div class="columns is-centered">
-                        <div class="column has-text-centered">
-                            <div class="is-size-6 publication-authors authors-inline" style="margin-top: -1.5rem;">
-                                <!-- Paper authors -->
-                                <span class="author-block"><a href="https://patrickthwu.com/" target="_blank" rel="noopener">Tsung-Han Wu<sup class="has-text-danger">*</sup></a></span>
-                                <span class="author-block"><a href="https://mmiroyan.github.io/" target="_blank" rel="noopener">Mihran Miroyan<sup class="has-text-danger">*</sup></a></span>
-                                <span class="author-block"><a href="https://dchan.cc/" target="_blank" rel="noopener">David M. Chan</a></span>
-                                <span class="author-block"><a href="https://people.eecs.berkeley.edu/~trevor/" target="_blank" rel="noopener">Trevor Darrell</a></span>
-                                <span class="author-block"><a href="https://nargesnorouzi.me/" target="_blank" rel="noopener">Narges Norouzi</a></span>
-                                <span class="author-block"><a href="https://people.eecs.berkeley.edu/~jegonzal/" target="_blank" rel="noopener">Joseph E. Gonzalez</a></span>
-                            </div>
-                            <div class="is-size-6 publication-authors" style="margin-top: 0.5rem;">
-                                <span class="author-block"><strong>UC Berkeley</strong></span>
-                                <br>
-                                <span class="author-block"><sup class="has-text-danger">*</sup>Equal contribution</span>
-                            </div>
+            /* Ensure carousel has a defined aspect ratio to prevent layout shift */
+            /* #results-carousel {
+                aspect-ratio: 17 / 8;
+                width: min(850px, 100%);
+                margin: 0 auto;
+            } */
+        </style>
+    </head>
 
-                            <div class="column has-text-centered">
-                                <div class="publication-links">
-
-                                    <span class="link-block">
-                                        <a href="https://arxiv.org/abs/2510.11713" target="_blank" class="external-link button is-normal is-rounded is-dark">
-                                            <span class="icon">
-                                                <i class="ai ai-arxiv"></i>
-                                            </span>
-                                            <span>arXiv</span>
-                                        </a>
-                                    </span>
-                                    <!-- Model/Dataset Button -->
-                                    <span class="link-block">
-                                        <a href="https://huggingface.co/collections/dynamic-lm/interrupt-lrm-68ecacae43522f3ddd5fd723" target="_blank" class="external-link button is-normal is-rounded is-dark">
-                                            <span class="icon">
-                                                <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face" style="height: 20px; vertical-align: middle;">
-                                            </span>
-                                            <span>Dataset</span>
-                                        </a>
-                                    </span>
-
-                                    <!-- Code Button -->
-                                    <span class="link-block">
-                                        <a href="https://github.com/dynamic-lm/interrupt-lrm" target="_blank" class="external-link button is-normal is-rounded is-dark">
-                                            <span class="icon">
-                                                <i class="fa-brands fa-github"></i>
-                                            </span>
-                                            <span>Code</span>
-                                        </a>
-                                    </span>
-                                </div>
-                                <br>
-                                <!-- <p>
-                                    <strong>TL;DR: </strong> We test SOTA reasoning models under <strong>mid-thinking stops, hurry-ups, and info updates</strong>, uncovering three failure modes.
-                                </p> -->
-                                 <div class="tldr-callout" role="note" aria-label="TLDR summary" style="margin-top: 0rem;">
-                                     <div class="tldr-header">
-                                       <!-- <span class="tldr-badge">TL;DR</span> -->
-                                       <p class="tldr-lede">We are the first to test SOTA reasoning models under real-world interruptions and find three failure modes.</p>
-                                     </div>
-                                     <ul class="tldr-failures">
-                                        <li class="failure-item">
-                                            <span class="failure-title">Hard Interrupt → Reasoning Leakage</span>
-                                            <span class="failure-desc">Spill unfinished thoughts into answers,<br>failing to actually save users' time</span>
-                                          </li>
-                                          <li class="failure-item">
-                                            <span class="failure-title">Speedup → Panic</span>
-                                            <span class="failure-desc">Rush to answer directly with unfinished reasoning, hurting accuracy</span>
-                                          </li>
-                                          <li class="failure-item">
-                                            <span class="failure-title">Info Updates → Self-doubt</span>
-                                            <span class="failure-desc">Can't adapt to new information from users<br>when conflicting with existing thoughts</span>
-                                          </li>
-                                     </ul>
-                                   </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                    
-                <div style="text-align: center; margin-top: 2rem;">
-                    <p style="color: #000000; font-size: 1.13rem; font-weight: 600;">What would happen if we interrupt LRMs when they perform 30% of the reasoning?</p>
-                </div>
-                
-                <div class="carousel-container" style="position: relative; display: flex; align-items: center; justify-content: center; margin: 0rem 0;">
-                    <!-- Left Arrow -->
-                    <button class="carousel-arrow carousel-arrow-left" style="background: none; border: none; font-size: 1.5rem; color: #666; cursor: pointer; margin-right: 0.5rem;">‹</button>
-                    
-                     <!-- Carousel Content - Sliding Panels -->
-                     <div class="carousel-content" style="position: relative; width: 850px; height: 400px; overflow: hidden; margin: 0 auto;">
-                         <div class="carousel-track" style="position: absolute; top: 0; left: 0; width: 2550px; height: 100%; transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);">
-                             <div class="carousel-panel" style="float: left; width: 850px; height: 100%; background: white; text-align: center; padding: 0.5rem;">
-                                 <div style="background: white; border-radius: 4px; height: 360px; display: flex; align-items: center; justify-content: center;">
-                                     <img src="static/images/figures_new/answer_length.png" alt="Hard Interrupt" style="max-width: 100%; max-height: 340px; object-fit: contain;">
-                                 </div>
-                                 <div style="text-align: center; font-weight: 500; color: #333;">Hard Interrupt → <span style="color: #FF0000;">Up to 10x longer answer length</span> with minimal time savings</div>
-                             </div>
-                             <div class="carousel-panel" style="float: left; width: 850px; height: 100%; background: white; text-align: center; padding: 0.5rem;">
-                                 <div style="background: white; border-radius: 4px; height: 360px; display: flex; align-items: center; justify-content: center;">
-                                     <img src="static/images/figures_new/panic_rate.png" alt="Speedup" style="max-width: 100%; max-height: 340px; object-fit: contain;">
-                                 </div>
-                                 <div style="text-align: center; font-weight: 500; color: #333;">Speedup → <span style="color: #FF0000;">Up to 90% errors stem from panic</span>, where the model answers too early without finishing its first reasoning pass</div>
-                             </div>
-                             <div class="carousel-panel" style="float: left; width: 850px; height: 100%; background: white; text-align: center; padding: 0.5rem;">
-                                 <div style="background: white; border-radius: 4px; height: 360px; display: flex; align-items: center; justify-content: center;">
-                                     <img src="static/images/figures_new/doubt_rate.png" alt="Info Update" style="max-width: 100%; max-height: 340px; object-fit: contain;">
-                                 </div>
-                                 <div style="text-align: center; font-weight: 500; color: #333; ">Info Update → <span style="color: #FF0000;">Up to 80% wrong cases come from self-doubt</span>, where the model fails to take new information</div>
-                             </div>
-                         </div>
-                     </div>
-                    
-                    <!-- Right Arrow -->
-                    <button class="carousel-arrow carousel-arrow-right" style="background: none; border: none; font-size: 1.5rem; color: #666; cursor: pointer; padding: 1rem; margin-left: 0.5rem;">›</button>
-                </div>
-                
-                <!-- Pagination Indicators -->
-                <div class="carousel-pagination" style="display: flex; justify-content: center; gap: 0.5rem; margin-top: 1rem;">
-                    <span class="pagination-dot active" style="width: 5%; height: 3px; background: #000; border-radius: 2px; display: inline-block;"></span>
-                    <span class="pagination-dot" style="width: 5%; height: 3px; background: #ccc; border-radius: 2px; display: inline-block;"></span>
-                    <span class="pagination-dot" style="width: 5%; height: 3px; background: #ccc; border-radius: 2px; display: inline-block;"></span>
-                </div>
-            </div>
-
-        </div>
-    </section>
-      
-    <section class="section" id="problem-setup">
-        <div class="container is-max-desktop">
-            <div class="columns is-centered has-text-centered">
-                <div class="column is-full">
-                    <h2 class="title is-4">How Do LRMs Perform In Dynamic Worlds? 
-                    </h2>
-                </div>
-            </div>
-            <p>
-                Because LRMs' reasoning and inference can take a lot of time, users don’t want to simply wait for them to finish. Instead, they often interrupt mid-inference: forcing an immediate answer (hard interrupt), asking the model to accelerate (speedup), or changing the task specification (info update). We introduce a new evaluation suite that tests how well LRMs handle these interruptions and dynamic context changes across math and coding tasks. The figure below illustrates our evaluation protocol.</p>
-            <div class="item is-vcentered" style="text-align: center; width: 90%; margin: 0.5rem auto;">
-                <img src="./static/images/fig2.png" style="max-width: 100%; height: auto;">
-            </div>
-            <p>In practice, we run a single inference session to obtain the full reasoning chain $r$ and then interrupt the interrupt message $i$ at different stages of the reasoning process ($0 \leq X < |r|$) based on different scenarios:</p>
-            <ul style="list-style-type: disc; padding-left: 2rem; margin-top: 0.5rem;">
-                <li><strong>Hard Interrupt → </strong> $i=\langle\text{end-think}\rangle$ or $\langle\text{force-answer}\rangle$; $r_X' = \emptyset$</li>
-                <li><strong>Speedup → </strong> $i=\text{Please provide the answer as soon as possible.}$</li>
-                <li><strong>Info Update →</strong> $i=\text{Update information}$</li>
+    <body>
+        <nav class="floating-toc">
+            <div class="toc-title">Contents</div>
+            <ul class="toc-list">
+                <li class="toc-item"><a href="#overview" class="toc-link">Overview</a></li>
+                <li class="toc-item"><a href="#problem-setup" class="toc-link">Problem Setup</a></li>
+                <li class="toc-item"><a href="#hard-interrupt" class="toc-link">#1 Hard Interrupt</a></li>
+                <li class="toc-item"><a href="#speedup" class="toc-link">#2 Speedup</a></li>
+                <li class="toc-item"><a href="#update-driven" class="toc-link">#3 Info Update</a></li>
+                <li class="toc-item"><a href="#acknowledgements" class="toc-link">Acknowledgment</a></li>
+                <li class="toc-item"><a href="#BibTeX" class="toc-link">BibTeX</a></li>
             </ul>
-            <p style="margin-top: 0.5rem;">For Hard Interrupt and Speedup evaluations, we directly utilized existing math and coding datasets, including GSM8K, MATH-500, AIME 24/25, and LiveCodeBench-v6. For the info update track specifically, we augmented these datasets to create a new collection containing 1401 reasoning problems with multiple conflicting information updates.</p>
-            
-            <div class="dataset-viewer">
-                <div class="dataset-toggle">
-                    <button class="dataset-btn active" data-dataset="math">Math Dataset</button>
-                    <button class="dataset-btn" data-dataset="code">Code Dataset</button>
-                </div>
-                
-                <div class="viewer-container">
-                    <iframe
-                      class="dataset-iframe active"
-                      data-dataset="math"
-                      src="https://huggingface.co/datasets/dynamic-lm/update-interrupt-math/embed/viewer?theme=light"
-                      allowfullscreen
-                    ></iframe>
-                    <iframe
-                      class="dataset-iframe"
-                      data-dataset="code"
-                      src="https://huggingface.co/datasets/dynamic-lm/update-interrupt-code/embed/viewer?theme=light"
-                      allowfullscreen
-                    ></iframe>
-                </div>
-            </div>
-        </div>
-    </section>
+        </nav>
 
-    <section class="section" id="hard-interrupt">
-        <div class="container is-max-desktop">
-            <div class="columns is-centered has-text-centered">
-                <div class="column is-full">
-                    <h2 class="title is-4">Hard Interrupt: Are LRMs Truly Anytime Models?</h2>
-                </div>
-            </div>
-            
-            <!-- Hard Interrupt Content -->
-            <div class="columns is-centered">
-                <div class="column is-full">
-              
-                  <p style="margin-top: 1rem; margin-bottom: 0; line-height: 1.6;">
-                    When cutting LRMs’ thinking budget in the end-thinking setup, the results look surprisingly good at first: Pass@1 does not drop much.
-                 </p>
-              
-                  <p style="margin-top: 1rem; line-height: 1.6;">
-                    But the fun part comes after we look at the answer lengths, where most models "cheat" when told to answer right away. Even with the inserted end-thinking token, they keep reasoning inside the answer section, sneaking in extra thoughts to reach the right result.
-                    This hidden reasoning, we call it <strong>reasoning leakage</strong>, makes models look smarter than they really are. 
-                    Once we disable it in the force-answering setup, Pass@1 accuracy drops sharply, showing that LRMs still have room for improvement under anytime scenarios.
-                  </p>
-              
-                  <p style="margin-top: 1rem; line-height: 1.6;">
-                    Things get even trickier in coding tasks. Models still "think" through inline comments in the force-answering setup, producing up to 10× longer code to reason their way out. 
-                    It is clever, but it breaks the idea of controlled computation and disobeys the user’s instruction to answer immediately.
-                  </p>
-                  <div id="interactive-vis-container-leakage" style="margin: 2rem 0;">
-                    <!-- Content will be loaded here by JavaScript -->
-                 </div>
-                  <video class="is-fullwidth" autoplay loop muted playsinline>
-                    <source src="./static/images/hard_interrupt.mov" type="video/mp4">
-                    Your browser does not support the video tag.
-                  </video>
-              
-              
-                  <p style="margin-top: 1rem; line-height: 1.6;">
-                    And remember the common "thinking tokens vs. accuracy" plot from prior work
-                    (<a href="https://qwen.ai/blog?id=1e3fa5c2d4662af2855586055ad037ed9e555125&from=research.research-list" target="_blank">Qwen3</a> 
-                    and 
-                    <a href="https://huggingface.co/nvidia/NVIDIA-Nemotron-Nano-12B-v2" target="_blank">NVIDIA’s Nemotron</a>)? 
-                    Our results show that this plot may not tell the full story. 
-                    Longer outputs often hide extra reasoning and quietly inflate compute cost, even when the model appears to stop thinking early.
-                  </p>
-                  
-                  <p style="margin-top: 1rem; line-height: 1.6;">
-                    Ideally, we want models that are aware of their own limits, able to estimate how much reasoning they can afford, and transparent when they cannot solve something in time. 
-                    Instead of secretly thinking more during the answer, they should strike a better balance between following instructions and producing correct results.
-                  </p>
-                  
-                  <p style="margin-top: 1rem; line-height: 1.6;">
-                    <strong>Takeaway:</strong> Current LRMs show fragile anytime behavior caused by reasoning leakage. 
-                    A promising next step is to revisit the "thinking tokens vs. accuracy" metric and address leakage, so that LRMs can be deployed safely in time-critical applications.
-                  </p>
-                </div>
-              </div>
-        </div>
-    </section>
+        <section class="hero hero--landing" id="overview">
+            <div class="hero-body" style="padding-top: 1.5rem">
+                <div class="container is-max-desktop">
+                    <div class="columns is-centered is-vcentered hero-header">
+                        <div class="column is-narrow hero-logo-column">
+                            <img
+                                class="hero-logo"
+                                src="static/images/ilrm_logo.png"
+                                alt="IRLM Project Logo"
+                                style="height: 100px" />
+                            <div class="hero-logo-tooltip">
+                                Think of The Great Wave as a metaphor for dynamic context - AI must surf the shifting
+                                waves of conversation, staying upright (robust) the whole time.
+                            </div>
+                        </div>
+                        <div class="column has-text-centered hero-text-column">
+                            <h1 class="title is-2 publication-title hero-title">
+                                Are Large Reasoning Models Interruptible?
+                            </h1>
+                        </div>
+                    </div>
+                    <div class="container is-max-desktop">
+                        <div class="columns is-centered">
+                            <div class="column has-text-centered">
+                                <div class="is-size-6 publication-authors authors-inline" style="margin-top: -1.5rem">
+                                    <span class="author-block"
+                                        ><a href="https://patrickthwu.com/" target="_blank" rel="noopener"
+                                            >Tsung-Han Wu<sup class="has-text-danger">*</sup></a
+                                        ></span
+                                    >
+                                    <span class="author-block"
+                                        ><a href="https://mmiroyan.github.io/" target="_blank" rel="noopener"
+                                            >Mihran Miroyan<sup class="has-text-danger">*</sup></a
+                                        ></span
+                                    >
+                                    <span class="author-block"
+                                        ><a href="https://dchan.cc/" target="_blank" rel="noopener"
+                                            >David M. Chan</a
+                                        ></span
+                                    >
+                                    <span class="author-block"
+                                        ><a
+                                            href="https://people.eecs.berkeley.edu/~trevor/"
+                                            target="_blank"
+                                            rel="noopener"
+                                            >Trevor Darrell</a
+                                        ></span
+                                    >
+                                    <span class="author-block"
+                                        ><a href="https://nargesnorouzi.me/" target="_blank" rel="noopener"
+                                            >Narges Norouzi</a
+                                        ></span
+                                    >
+                                    <span class="author-block"
+                                        ><a
+                                            href="https://people.eecs.berkeley.edu/~jegonzal/"
+                                            target="_blank"
+                                            rel="noopener"
+                                            >Joseph E. Gonzalez</a
+                                        ></span
+                                    >
+                                </div>
+                                <div class="is-size-6 publication-authors" style="margin-top: 0.5rem">
+                                    <span class="author-block"><strong>UC Berkeley</strong></span>
+                                    <br />
+                                    <span class="author-block"
+                                        ><sup class="has-text-danger">*</sup>Equal contribution</span
+                                    >
+                                </div>
 
-    <section class="section" id="speedup">
-        <div class="container is-max-desktop">
-            <div class="columns is-centered has-text-centered">
-                <div class="column is-full">
-                    <h2 class="title is-4">Speedup: Can We Reduce LRM Computation Mid-Reasoning?</h2>
-                </div>
-            </div>
-            
-            <!-- Speedup Content -->
-            <div class="columns is-centered">
-                <div class="column is-full">
-                  <ul style="list-style-type: disc; padding-left: 2rem; margin: 1rem 0 0.5rem 0;">
-                    <li style="margin-bottom: 0.5rem;">Magistral & Qwen (Math): Achieve near “free-lunch” speedups — thinking faster mid-process with fewer tokens consumed.</li>
-                    <li style="margin-bottom: 0;">GPT-OSS & Qwen (Coding): Tend to <strong>panic</strong> under pressure — up to a 25% performance drop from rushing to answer before finishing its first reasoning cycle.</li>
-                  </ul>
-                  <img src="static/images/figures_new/soft_interrupt_output_length.png" style="max-width: 100%; height: auto;">
-                  
-                  <p style="margin-top: 1rem; line-height: 1.6;">
-                    Complementary to prior work on efficient reasoning via pre-planning, we are the first to examine the efficacy of <b>on-the-fly speedup</b>. 
-                    Interestingly, the speedup rate follows a <b>U-shaped curve</b> — pushing the model at the right moment can yield faster responses with minimal performance loss.
-                  </p>
-              
-                  <p style="margin-top: 1rem; line-height: 1.6;">
-                    However, some models like Qwen and GPT-OSS exhibit <b>panic answering</b>, especially on coding tasks. 
-                    While performance drops are expected under acceleration, the ideal behavior should be a smooth drop than a complete collapse into rushed, low-quality answers.
-                  </p>
-                  
-                  <div id="interactive-vis-container-panic" style="margin: 2rem 0;">
-                    <!-- Content will be loaded here by JavaScript -->
-                 </div>
-                </div>
-              </div>
-        </div>
-    </section>
+                                <div class="column has-text-centered">
+                                    <div class="publication-links">
+                                        <span class="link-block">
+                                            <a
+                                                href="https://arxiv.org/abs/2510.11713"
+                                                target="_blank"
+                                                class="external-link button is-normal is-rounded is-dark">
+                                                <span class="icon">
+                                                    <i class="ai ai-arxiv"></i>
+                                                </span>
+                                                <span>arXiv</span>
+                                            </a>
+                                        </span>
+                                        <!-- Model/Dataset Button -->
+                                        <span class="link-block">
+                                            <a
+                                                href="https://huggingface.co/collections/dynamic-lm/interrupt-lrm-68ecacae43522f3ddd5fd723"
+                                                target="_blank"
+                                                class="external-link button is-normal is-rounded is-dark">
+                                                <span class="icon">
+                                                    <img
+                                                        src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg"
+                                                        alt="Hugging Face"
+                                                        style="height: 20px; vertical-align: middle" />
+                                                </span>
+                                                <span>Dataset</span>
+                                            </a>
+                                        </span>
 
-    <section class="section" id="update-driven">
-        <div class="container is-max-desktop">
-          <div class="columns is-centered has-text-centered">
-            <div class="column is-full">
-              <h2 class="title is-4">How Do LRMs Behave Under Update-Driven Interruptions?</h2>
-            </div>
-          </div>
-      
-          <!-- (1) Update Prompting Subsection -->
-          <div class="columns is-centered">
-            <div class="column is-full">      
-              <p>
-                To simulate real-time context changes, we prompt the model with a system instruction
-                explaining that updates will appear between <code>&lt;update&gt;...&lt;/update&gt;</code> tags,
-                and then insert these updates mid-reasoning. This simple setup caused a noticeable performance drop across models.
-              </p>
-      
-              <p>
-                To mitigate this, we introduced a more natural baseline: <b>guided prompting</b> using the model’s own voice.
-                Instead of a raw update tag, we phrase the update as if the model is reminding itself of the new information.
-                This almost eliminates the <b>self-doubt</b> issue and significantly stabilizes performance,
-                as shown in the chart below.
-              </p>
-              <p style="margin-top: 1rem; line-height: 1.6;">
-                We revisit the main intervention experiments to study the trade-off between
-                performance retention and output-length expansion after receiving information updates.
-                In some cases, models maintain strong performance—even outperforming the
-                “stop-and-redo” baseline. For example, GPT-OSS on <i>LiveCodeBench-v6</i> and
-                Qwen on <i>GSM8k</i> preserve around <b>95%</b> of oracle accuracy with much lower computation cost.
-                However, this efficiency remains inconsistent across other settings.
-              </p>
-              <img src="static/images/figures_new/intervene_acc.png" style="max-width: 100%; height: auto;">
-      
-              <p style="margin-top: 1rem; line-height: 1.6;">
-                From the figure, we observe that:
-                <br>(1) Guided prompts are highly effective but cannot fully prevent performance drops when updates arrive too late in the reasoning process.
-                <br>(2) With guidance, Qwen and Magistral still struggle on harder benchmarks like <i>AIME 24/25</i> and <i>LiveCodeBench-v6</i>, especially in coding tasks where updates often conflict with starter code.
-              </p>
-      
-              <p style="margin-top: 1rem; line-height: 1.6;">
-                Since not all LRMs natively support multi-turn thinking, we cannot easily close a reasoning block,
-                inject a user update, and reopen it. To validate this, we performed an ablation study simulating that setup,
-                confirming that current LRMs remain fragile under such mid-thinking interruptions, performing worse than our guided prompting baseline.
-              </p>
-              
-              <div id="interactive-vis-container-doubt" style="margin: 2rem 0;">
-                <!-- Content will be loaded here by JavaScript -->
-             </div>
-      
-            </div>
-          </div>
-        </div>
-      </section>
+                                        <span class="link-block">
+                                            <a
+                                                href="https://github.com/dynamic-lm/interrupt-lrm"
+                                                target="_blank"
+                                                class="external-link button is-normal is-rounded is-dark">
+                                                <span class="icon">
+                                                    <i class="fa-brands fa-github"></i>
+                                                </span>
+                                                <span>Code</span>
+                                            </a>
+                                        </span>
+                                    </div>
+                                    <br />
+                                    <div
+                                        class="tldr-callout"
+                                        role="note"
+                                        aria-label="TLDR summary"
+                                        style="margin-top: 0rem">
+                                        <div class="tldr-header">
+                                            <p class="tldr-lede">
+                                                Reasoning with Large Reasoning Models (LRMs) can be slow, and users
+                                                often want to interrupt them mid-thought. We test SOTA reasoning models
+                                                under several real-world interruption scenarios, and find three new
+                                                failure modes!
+                                            </p>
+                                        </div>
+                                        <ul class="tldr-failures">
+                                            <li class="failure-item">
+                                                <span class="failure-title">Reasoning Leakage</span>
+                                                <span class="failure-desc"
+                                                    >Unfinished thoughts spill into answers, failing to actually save
+                                                    users' time</span
+                                                >
+                                            </li>
+                                            <li class="failure-item">
+                                                <span class="failure-title">Panic</span>
+                                                <span class="failure-desc"
+                                                    >Rush to answer directly with unfinished reasoning, hurting
+                                                    accuracy</span
+                                                >
+                                            </li>
+                                            <li class="failure-item">
+                                                <span class="failure-title">Self-doubt</span>
+                                                <span class="failure-desc"
+                                                    >Models can't adapt to new information from users when that info
+                                                    conflicts with existing thoughts</span
+                                                >
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-    <!-- Acknowledgements Section -->
-    <section class="section" id="acknowledgements">
-        <div class="container is-max-desktop">
-            <div class="columns is-centered has-text-centered">
-                <div class="column is-full">
-                    <h2 class="title is-4">Acknowledgment</h2>
+                    <div style="text-align: center; margin-top: 2rem; margin-bottom: 1rem">
+                        <p style="color: #000000; font-size: 1.13rem; font-weight: 600">
+                            What would happen if we interrupt LRMs when they're 30% done thinking?
+                        </p>
+                    </div>
+                    <div
+                        class="carousel-container"
+                        style="
+                            position: relative;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            margin: 0rem 0;
+                        ">
+                        <!-- Left Arrow -->
+                        <button
+                            class="carousel-arrow carousel-arrow-left"
+                            style="
+                                background: none;
+                                border: none;
+                                font-size: 1.5rem;
+                                color: #666;
+                                cursor: pointer;
+                                margin-right: 0.5rem;
+                            ">
+                            ‹
+                        </button>
+
+                        <!-- Carousel Content - Sliding Panels -->
+                        <div
+                            class="carousel-content"
+                            style="position: relative; width: 850px; height: 400px; overflow: hidden; margin: 0 auto">
+                            <div
+                                class="carousel-track"
+                                style="
+                                    position: absolute;
+                                    top: 0;
+                                    left: 0;
+                                    width: 2550px;
+                                    height: 100%;
+                                    transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+                                ">
+                                <div
+                                    class="carousel-panel"
+                                    style="
+                                        float: left;
+                                        width: 850px;
+                                        height: 100%;
+                                        background: white;
+                                        text-align: center;
+                                        padding: 0.5rem;
+                                    ">
+                                    <div
+                                        style="
+                                            background: white;
+                                            border-radius: 4px;
+                                            height: 360px;
+                                            display: flex;
+                                            align-items: center;
+                                            justify-content: center;
+                                        ">
+                                        <img
+                                            src="static/images/figures_new/answer_length.png"
+                                            alt="Reasoning Leakage"
+                                            style="max-width: 100%; max-height: 340px; object-fit: contain" />
+                                    </div>
+                                    <div style="text-align: center; font-weight: 500; color: #333">
+                                        Reasoning Leakage →
+                                        <span style="color: #ff0000">Up to 10x longer answer length</span> reducing time
+                                        savings
+                                    </div>
+                                </div>
+                                <div
+                                    class="carousel-panel"
+                                    style="
+                                        float: left;
+                                        width: 850px;
+                                        height: 100%;
+                                        background: white;
+                                        text-align: center;
+                                        padding: 0.5rem;
+                                    ">
+                                    <div
+                                        style="
+                                            background: white;
+                                            border-radius: 4px;
+                                            height: 360px;
+                                            display: flex;
+                                            align-items: center;
+                                            justify-content: center;
+                                        ">
+                                        <img
+                                            src="static/images/figures_new/panic_rate.png"
+                                            alt="Speedup"
+                                            style="max-width: 100%; max-height: 340px; object-fit: contain" />
+                                    </div>
+                                    <div style="text-align: center; font-weight: 500; color: #333">
+                                        Panic → Up to 90% of speedup errors happen when the model answers too early
+                                    </div>
+                                </div>
+                                <div
+                                    class="carousel-panel"
+                                    style="
+                                        float: left;
+                                        width: 850px;
+                                        height: 100%;
+                                        background: white;
+                                        text-align: center;
+                                        padding: 0.5rem;
+                                    ">
+                                    <div
+                                        style="
+                                            background: white;
+                                            border-radius: 4px;
+                                            height: 360px;
+                                            display: flex;
+                                            align-items: center;
+                                            justify-content: center;
+                                        ">
+                                        <img
+                                            src="static/images/figures_new/doubt_rate.png"
+                                            alt="Info Update"
+                                            style="max-width: 100%; max-height: 340px; object-fit: contain" />
+                                    </div>
+                                    <div style="text-align: center; font-weight: 500; color: #333">
+                                        Self-Doubt →
+                                        <span style="color: #ff0000"
+                                            >Up to 80% of update errors caused by self-doubt</span
+                                        >
+                                        (the model doesn't trust new info)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Arrow -->
+                        <button
+                            class="carousel-arrow carousel-arrow-right"
+                            style="
+                                background: none;
+                                border: none;
+                                font-size: 1.5rem;
+                                color: #666;
+                                cursor: pointer;
+                                padding: 1rem;
+                                margin-left: 0.5rem;
+                            ">
+                            ›
+                        </button>
+                    </div>
+
+                    <!-- Pagination Indicators -->
+                    <div
+                        class="carousel-pagination"
+                        style="display: flex; justify-content: center; gap: 0.5rem; margin-top: 1rem">
+                        <span
+                            class="pagination-dot active"
+                            style="
+                                width: 5%;
+                                height: 3px;
+                                background: #000;
+                                border-radius: 2px;
+                                display: inline-block;
+                            "></span>
+                        <span
+                            class="pagination-dot"
+                            style="
+                                width: 5%;
+                                height: 3px;
+                                background: #ccc;
+                                border-radius: 2px;
+                                display: inline-block;
+                            "></span>
+                        <span
+                            class="pagination-dot"
+                            style="
+                                width: 5%;
+                                height: 3px;
+                                background: #ccc;
+                                border-radius: 2px;
+                                display: inline-block;
+                            "></span>
+                    </div>
                 </div>
             </div>
-            <div class="columns is-centered">
-                <div class="column is-full">
-                    <p style="line-height: 1.6;">
-                        We are deeply grateful to <a href="https://lisabdunlap.com/" target="_blank" rel="noopener">Lisa Dunlap</a> for her invaluable feedback and thoughtful discussions. We also thank <strong><a href="https://modal.com/" target="_blank" rel="noopener">Modal</a></strong> for supporting this work through their Academics Compute Grant. <a href="https://sky.cs.berkeley.edu/" target="_blank" rel="noopener">Sky Computing Lab</a> is supported by gifts from Accenture, AMD, Anyscale, Cisco, Google, IBM, Intel, Intesa Sanpaolo, Lambda, Lightspeed, Mibura, Microsoft, NVIDIA, Samsung SDS, and SAP. Authors, as part of their affiliation with UC Berkeley, were supported in part by the National Science Foundation, US Department of Defense, and/or the <a href="https://bair.berkeley.edu/" target="_blank" rel="noopener">Berkeley Artificial Intelligence Research (BAIR)</a> industrial alliance program, as well as gifts from Amazon.
-                    </p>
+        </section>
+
+        <section class="section" id="problem-setup">
+            <div class="container is-max-desktop">
+                <div class="columns is-centered has-text-centered">
+                    <div class="column is-full">
+                        <h2 class="title is-4">How Do LRMs Perform In Dynamic Worlds?</h2>
+                    </div>
+                </div>
+                <p>
+                    Because LRMs' reasoning and inference can take a lot of time, users often don't want to wait for
+                    them to finish. Instead, they want to interrupt mid-inference: forcing an immediate answer (hard
+                    interrupt), asking the model to accelerate (speedup), or changing the task specification (info
+                    update). We explore how well LRMs handle these interruptions and dynamic context changes across math
+                    and coding tasks. The figure below illustrates our evaluation protocol:
+                </p>
+                <div class="item is-vcentered" style="text-align: center; width: 90%; margin: 0.5rem auto">
+                    <img src="./static/images/fig2.png" style="max-width: 100%; height: auto" />
+                </div>
+                <p>
+                    In practice, we run a single inference session to obtain the full reasoning chain $r$ and then
+                    interrupt the interrupt message $i$ at different stages of the reasoning process ($0 \leq X < |r|$)
+                    based on different scenarios:
+                </p>
+                <ul style="list-style-type: disc; padding-left: 2rem; margin-top: 0.5rem">
+                    <li>
+                        <strong>Hard Interrupt → </strong> $i=\langle\text{end-think}\rangle$ or
+                        $\langle\text{force-answer}\rangle$; $r_X' = \emptyset$
+                    </li>
+                    <li><strong>Speedup → </strong> $i=\text{Please provide the answer as soon as possible.}$</li>
+                    <li><strong>Info Update →</strong> $i=\text{Update information}$</li>
+                </ul>
+                <p style="margin-top: 0.5rem">
+                    For Hard Interrupt and Speedup evaluations, we directly utilized existing math and coding datasets,
+                    including GSM8K, MATH-500, AIME 24/25, and LiveCodeBench-v6. For the info update track specifically,
+                    we augmented these datasets to create a new collection containing 1401 reasoning problems with
+                    multiple conflicting information updates.
+                </p>
+
+                <div class="dataset-viewer">
+                    <div class="dataset-toggle">
+                        <button class="dataset-btn active" data-dataset="math">Math Dataset</button>
+                        <button class="dataset-btn" data-dataset="code">Code Dataset</button>
+                    </div>
+
+                    <div class="viewer-container">
+                        <iframe
+                            class="dataset-iframe active"
+                            data-dataset="math"
+                            src="https://huggingface.co/datasets/dynamic-lm/update-interrupt-math/embed/viewer?theme=light"
+                            allowfullscreen></iframe>
+                        <iframe
+                            class="dataset-iframe"
+                            data-dataset="code"
+                            src="https://huggingface.co/datasets/dynamic-lm/update-interrupt-code/embed/viewer?theme=light"
+                            allowfullscreen></iframe>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!--BibTex citation -->
-    <section class="section" id="BibTeX">
-        <div class="container is-max-desktop content">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                <h3 class="title" style="margin-bottom: 0;">BibTeX</h3>
-                <button id="copy-bibtex" class="button is-small is-light" style="border: 1px solid #ddd; background: #f8f9fa;">
-                    <span class="icon is-small">
-                        <i class="fas fa-copy"></i>
-                    </span>
-                    <span>Copy</span>
-                </button>
+        <section class="section" id="hard-interrupt">
+            <div class="container is-max-desktop">
+                <div class="columns is-centered has-text-centered">
+                    <div class="column is-full">
+                        <h2 class="title is-4">Hard Interrupt: Are LRMs Truly Anytime Models?</h2>
+                    </div>
+                </div>
+
+                <div class="columns is-centered">
+                    <div class="column is-full">
+                        <p style="margin-top: 1rem; margin-bottom: 0; line-height: 1.6">
+                            When cutting LRMs' thinking budget in the end-thinking setup, the results look surprisingly
+                            good: Pass@1 doesn't drop much even when interrupting halfway through the reasoning process.
+                            When we look at the answer lengths, however, most models "cheat" when told to answer right
+                            away. Even with the inserted end-thinking token, they keep reasoning inside the answer
+                            section, sneaking in extra thoughts to reach the right result. This hidden reasoning, we
+                            call <strong>reasoning leakage</strong>, makes models look smarter than they really are.
+                            Once we disable it in the force-answering setup, Pass@1 accuracy drops sharply, showing that
+                            LRMs still have room for improvement under anytime scenarios. In coding tasks, it's even
+                            worse. Models still "think" through inline comments in the force-answering setup, producing
+                            up to 10x longer code.
+                        </p>
+                        <div id="interactive-vis-container-leakage" style="margin: 2rem 0"></div>
+                        <p style="margin-top: 1rem; line-height: 1.6">
+                            Do you recall the "thinking tokens vs. accuracy" plot from prior work: (<a
+                                href="https://qwen.ai/blog?id=1e3fa5c2d4662af2855586055ad037ed9e555125&from=research.research-list"
+                                target="_blank"
+                                >Qwen3</a
+                            >
+                            and
+                            <a href="https://huggingface.co/nvidia/NVIDIA-Nemotron-Nano-12B-v2" target="_blank"
+                                >NVIDIA's Nemotron</a
+                            >)? Our results show that this plot may not tell the full story. Longer outputs often hide
+                            extra reasoning and quietly inflate compute cost, even when the model appears to stop
+                            thinking early. You can see this in our full results below:
+                        </p>
+
+                        <video class="is-fullwidth" autoplay loop muted playsinline style="margin-top: 3em">
+                            <source src="./static/images/hard_interrupt.mov" type="video/mp4" />
+                            Your browser does not support the video tag.
+                        </video>
+
+                        <p style="margin-top: 1rem; line-height: 1.6">
+                            Instead of secretly thinking more during the answer, ideal models should strike a better
+                            balance between following instructions and producing correct results.
+                        </p>
+
+                        <p style="margin-top: 1rem; line-height: 1.6">
+                            <strong>Takeaway:</strong> Current LRMs show fragile anytime behavior caused by reasoning
+                            leakage. A promising next step is to revisit the "thinking tokens vs. accuracy" metric and
+                            address leakage, so that LRMs can be deployed safely in time-critical applications.
+                        </p>
+                    </div>
+                </div>
             </div>
-            <pre id="bibtex-content" style="position: relative; background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 6px; padding: 1rem; margin: 0;"><code>@article{wu2025interruptible,
+        </section>
+
+        <section class="section" id="speedup">
+            <div class="container is-max-desktop">
+                <div class="columns is-centered has-text-centered">
+                    <div class="column is-full">
+                        <h2 class="title is-4">Speedup: Can We Reduce LRM Computation Mid-Reasoning?</h2>
+                    </div>
+                </div>
+
+                <div class="columns is-centered">
+                    <div class="column is-full">
+                        <p style="margin-top: 1rem; line-height: 1.6">
+                            We all want faster AI. But can we speed up a reasoning model after it has already started a
+                            complex task? Here, we explore this idea of <strong>"on-the-fly" acceleration</strong>. We
+                            found that timing is everything, and the effect follows a distinct
+                            <strong>U-shaped curve</strong>: interrupt at just the right moment, and you can get a
+                            faster response with almost no drop in quality:
+                        </p>
+
+                        <img
+                            src="static/images/figures_new/soft_interrupt_output_length.png"
+                            alt="Graph showing performance vs. speedup interruption"
+                            style="max-width: 100%; height: auto; margin-top: 1rem; border-radius: 8px" />
+
+                        <p style="margin-top: 1rem; line-height: 1.6">
+                            For some models working on math problems, this works incredibly well. It's almost a "free
+                            lunch"; models think faster and consume fewer resources without sacrificing accuracy.
+                            However, the story changes dramatically with coding tasks.
+                        </p>
+
+                        <p style="margin-top: 1rem; line-height: 1.6">
+                            When pushed to accelerate on code generation, some models like Qwen and GPT-OSS tend to
+                            <strong>panic</strong>. Instead of gracefully speeding up, their performance collapses by up
+                            to 25%. They rush to a conclusion, providing low-quality, incomplete answers before their
+                            first reasoning cycle is even finished. This "panic answering" shows that while we can speed
+                            up AI, pushing too hard can cause it to stumble completely.
+                        </p>
+
+                        <div id="interactive-vis-container-panic" style="margin: 2rem 0"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="update-driven">
+            <div class="container is-max-desktop">
+                <div class="columns is-centered has-text-centered">
+                    <div class="column is-full">
+                        <h2 class="title is-4">How Do LRMs Behave Under Update-Driven Interruptions?</h2>
+                    </div>
+                </div>
+
+                <div class="columns is-centered">
+                    <div class="column is-full">
+                        <p style="margin-top: 1rem; line-height: 1.6">
+                            To simulate real-time context changes, we prompt the model with a system instruction
+                            explaining that updates will appear between
+                            <code>&lt;update&gt;...&lt;/update&gt;</code> tags, and then insert these updates
+                            mid-reasoning. This simple setup caused a noticeable performance drop across models.
+                        </p>
+
+                        <p style="margin-top: 1rem; line-height: 1.6">
+                            To mitigate this, we introduced a more natural baseline: <b>guided prompting</b> using the
+                            model's own voice. Instead of a raw update tag, we phrase the update as if the model is
+                            reminding itself of the new information. This almost eliminates the <b>self-doubt</b> issue
+                            and significantly stabilizes performance, as shown in the chart below.
+                        </p>
+
+                        <img
+                            src="static/images/figures_new/intervene_acc.png"
+                            style="max-width: 100%; height: auto; margin-top: 3em" />
+
+                        <p style="margin-top: 1rem; line-height: 1.6">
+                            Models generally maintain strong performance, even outperforming the "stop-and-redo"
+                            baseline. For example, GPT-OSS on <i>LiveCodeBench-v6</i> and Qwen on <i>GSM8k</i> preserve
+                            around <b>95%</b> of oracle accuracy with much lower computation cost.
+                        </p>
+
+                        <div style="margin-top: 1rem; line-height: 1.6">
+                            We can also see that:
+                            <ol style="list-style-type: decimal; padding-left: 1.5rem; margin-top: 0.5rem">
+                                <li>
+                                    Guided prompts are highly effective but cannot fully prevent performance drops when
+                                    updates arrive too late in the reasoning process.
+                                </li>
+                                <li>
+                                    With guidance, Qwen and Magistral still struggle on harder benchmarks like
+                                    <i>AIME 24/25</i> and <i>LiveCodeBench-v6</i>, especially in coding tasks where
+                                    updates often conflict with starter code.
+                                </li>
+                            </ol>
+                        </div>
+
+                        <p style="margin-top: 1rem; line-height: 1.6">
+                            One limitation of current LRMs is that not all of them natively support multi-turn thinking.
+                            This means we cannot easily close a reasoning block, inject a user update, and reopen it. To
+                            validate this, we performed an ablation study simulating that setup, confirming that current
+                            LRMs remain fragile under such mid-thinking interruptions, performing worse than our guided
+                            prompting baseline.
+                        </p>
+
+                        <div id="interactive-vis-container-doubt" style="margin: 2rem 0"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="conclusion">
+            <div class="container is-max-desktop">
+                <div class="columns is-centered has-text-centered">
+                    <div class="column is-full">
+                        <h2 class="title is-4">Conclusion</h2>
+                    </div>
+                </div>
+                <div class="columns is-centered">
+                    <div class="column is-full">
+                        <p style="line-height: 1.6">
+                            In this work, we are the first to systematically evaluate large reasoning models (LRMs)
+                            under dynamic contexts, simulating real-world interruptions like hard stops, speedups, and
+                            information updates. Our findings reveal three new failure modes: reasoning leakage, panic
+                            answering, and self-doubt. These issues highlight the fragility of current LRMs in
+                            time-sensitive applications. We hope our work inspires future research to develop more
+                            robust and adaptable reasoning models that can handle interruptions gracefully.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="acknowledgements">
+            <div class="container is-max-desktop">
+                <div class="columns is-centered has-text-centered">
+                    <div class="column is-full">
+                        <h2 class="title is-4">Acknowledgment</h2>
+                    </div>
+                </div>
+                <div class="columns is-centered">
+                    <div class="column is-full">
+                        <p style="line-height: 1.6">
+                            We are deeply grateful to
+                            <a href="https://lisabdunlap.com/" target="_blank" rel="noopener">Lisa Dunlap</a> for her
+                            invaluable feedback and thoughtful discussions. We also thank
+                            <strong><a href="https://modal.com/" target="_blank" rel="noopener">Modal</a></strong> for
+                            supporting this work through their Academics Compute Grant.
+                            <a href="https://sky.cs.berkeley.edu/" target="_blank" rel="noopener">Sky Computing Lab</a>
+                            is supported by gifts from Accenture, AMD, Anyscale, Cisco, Google, IBM, Intel, Intesa
+                            Sanpaolo, Lambda, Lightspeed, Mibura, Microsoft, NVIDIA, Samsung SDS, and SAP. Authors, as
+                            part of their affiliation with UC Berkeley, were supported in part by the National Science
+                            Foundation, US Department of Defense, and/or the
+                            <a href="https://bair.berkeley.edu/" target="_blank" rel="noopener"
+                                >Berkeley Artificial Intelligence Research (BAIR)</a
+                            >
+                            industrial alliance program, as well as gifts from Amazon.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--BibTex citation -->
+        <section class="section" id="BibTeX">
+            <div class="container is-max-desktop content">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem">
+                    <h3 class="title" style="margin-bottom: 0">BibTeX</h3>
+                    <button
+                        id="copy-bibtex"
+                        class="button is-small is-light"
+                        style="border: 1px solid #ddd; background: #f8f9fa">
+                        <span class="icon is-small">
+                            <i class="fas fa-copy"></i>
+                        </span>
+                        <span>Copy</span>
+                    </button>
+                </div>
+                <pre
+                    id="bibtex-content"
+                    style="
+                        position: relative;
+                        background: #f8f9fa;
+                        border: 1px solid #e9ecef;
+                        border-radius: 6px;
+                        padding: 1rem;
+                        margin: 0;
+                    "><code>@article{wu2025interruptible,
   title={Are Large Reasoning Models Interruptible?},
   author={Wu, Tsung-Han and Miroyan, Mihran and Chan, David M and Darrell, Trevor and Norouzi, Narges and Gonzalez, Joseph E},
   journal={arXiv preprint arXiv:2510.11713}
   year={2025}
 }</code></pre>
-        </div>
-    </section>
-    <!--End BibTex citation -->
-
-
-    <footer class="footer">
-        <div class="container">
-            <div class="columns is-centered">
-                <div class="column is-8">
-                    <div class="content">
-
-                        <p>
-                            This page was built using the <a
-                                href="https://github.com/eliahuhorwitz/Academic-project-page-template"
-                                target="_blank">Academic Project Page Template</a> which was adopted from the <a
-                                href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
-                            You are free to borrow the of this website, we just ask that you link back to this page in
-                            the footer. <br> This website is licensed under a <a rel="license"
-                                href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
-                                Commons Attribution-ShareAlike 4.0 International License</a>.
-                        </p>
-
+            </div>
+        </section>
+        <footer class="footer">
+            <div class="container">
+                <div class="columns is-centered">
+                    <div class="column is-8">
+                        <div class="content">
+                            <p>
+                                This page was built using the
+                                <a
+                                    href="https://github.com/eliahuhorwitz/Academic-project-page-template"
+                                    target="_blank"
+                                    >Academic Project Page Template</a
+                                >
+                                which was adopted from the
+                                <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page. You are
+                                free to borrow the of this website, we just ask that you link back to this page in the
+                                footer. This website is licensed under a
+                                <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank"
+                                    >Creative Commons Attribution-ShareAlike 4.0 International License</a
+                                >.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </footer>
+        </footer>
 
-    <!-- Statcounter tracking code -->
-
-    <!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
-
-    <!-- End of Statcounter Code -->
-
-    
-
-</body>
-
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                bulmaCarousel.attach('#results-carousel', {
+                    slidesToScroll: 1,
+                    slidesToShow: 1,
+                    loop: true,
+                    autoplay: true,
+                    autoplaySpeed: 5000,
+                    pauseOnHover: true,
+                });
+            });
+        </script>
+    </body>
 </html>
