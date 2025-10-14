@@ -13,6 +13,7 @@
       "model": {
         "name": "Qwen3-8B",
         "url": "https://huggingface.co/Qwen/Qwen3-8B",
+        "takeaway": "This model shows strong reasoning capabilities but struggles with complex symmetry constraints in game theory problems.",
         "oracle": {
           "preview_reason": {
             "format": "text",

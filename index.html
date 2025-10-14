@@ -239,8 +239,28 @@
                 <li><strong>Info Update →</strong> $i=\text{Update information}$</li>
             </ul>
             <p style="margin-top: 0.5rem;">For Hard Interrupt and Speedup evaluations, we directly utilized existing math and coding datasets, including GSM8K, MATH-500, AIME 24/25, and LiveCodeBench-v6. For the info update track specifically, we augmented these datasets to create a new collection containing 1401 reasoning problems with multiple conflicting information updates.</p>
-            <br>
-            <p>See more about out dataset (a Gallery below).</p>
+            
+            <div class="dataset-viewer">
+                <div class="dataset-toggle">
+                    <button class="dataset-btn active" data-dataset="math">Math Dataset</button>
+                    <button class="dataset-btn" data-dataset="code">Code Dataset</button>
+                </div>
+                
+                <div class="viewer-container">
+                    <iframe
+                      class="dataset-iframe active"
+                      data-dataset="math"
+                      src="https://huggingface.co/datasets/dynamic-lm/update-interrupt-math/embed/viewer?theme=light"
+                      allowfullscreen
+                    ></iframe>
+                    <iframe
+                      class="dataset-iframe"
+                      data-dataset="code"
+                      src="https://huggingface.co/datasets/dynamic-lm/update-interrupt-code/embed/viewer?theme=light"
+                      allowfullscreen
+                    ></iframe>
+                </div>
+            </div>
         </div>
     </section>
 

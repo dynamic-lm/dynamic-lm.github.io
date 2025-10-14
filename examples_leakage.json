@@ -13,6 +13,7 @@
       "model": {
         "name": "Qwen3-8B",
         "url": "https://huggingface.co/Qwen/Qwen3-8B",
+        "takeaway": "Demonstrates excellent mathematical reasoning and problem-solving skills with clear step-by-step analysis.",
         "oracle": {
           "preview_reason": {
             "format": "text",
@@ -75,6 +76,42 @@
           "label": "End Thinking @0.3"
         },
         "logo": "static/images/openai_logo.svg"
+      }
+    },
+    {
+      "id": "single-column-example",
+      "question": {
+        "title": "Single Column Layout Example",
+        "content": {
+          "format": "text",
+          "value": "This is an example showing how to use the single column layout configuration. When you set `\"layout\": \"single\"` in the model data, it will display only the oracle output in a single column instead of the default two-column layout."
+        },
+        "url": "https://example.com/single-column"
+      },
+      "model": {
+        "name": "Example Model",
+        "url": "https://example.com/model",
+        "layout": "single",
+        "oracle": {
+          "preview_reason": {
+            "format": "text",
+            "value": "This is a single column example showing only the oracle output. The layout is configured to show just one column instead of the typical two-column layout with oracle and interrupt outputs."
+          },
+          "full_reasoning_trace": {
+            "format": "text",
+            "value": "This is the full reasoning trace for the single column example. When you set `\"layout\": \"single\"` in the model configuration, the system will:\n\n1. Only display the oracle output\n2. Use a single column layout instead of two columns\n3. Make the content wider since it takes up the full width\n\nThis is useful when you want to focus on just the oracle output and don't need to compare it with interrupt or update outputs."
+          },
+          "answer": {
+            "format": "text",
+            "value": "The single column layout is achieved by setting `\"layout\": \"single\"` in the model data. This configuration makes the oracle output take up the full width of the container, providing more space for the content."
+          },
+          "final": {
+            "format": "text",
+            "value": "Single column layout: Oracle output only, full width display"
+          },
+          "label": "Single Column Example"
+        },
+        "logo": "static/images/mistral_logo.png"
       }
     }
   ]

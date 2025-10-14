@@ -323,88 +323,6 @@ async function loadInteractiveProblemsDoubt() {
     }
 }
 
-function renderInteractiveProblem() {
-    if (!interactiveProblems.length) {
-        return;
-    }
-    const problem = interactiveProblems[currentInteractiveProblemIndex];
-    const { title, content, url: questionUrl } = extractQuestion(problem);
-
-    const container = document.getElementById('interactive-viz-container');
-    if (!container) return;
-
-    const questionHTML = renderRich(content);
-    const encodedQuestion = encodeURIComponent(questionHTML || "");
-    const questionTitleHTML = questionUrl
-        ? `<a href="${escapeAttribute(questionUrl)}" target="_blank" rel="noopener">${escapeHTML(title)}</a>`
-        : escapeHTML(title);
-    const headerTitleHTML = "Examples of Reasoning Leakage";
-    const headerActions = `
-        <div class="header-actions">
-            <button id="interactive-next-problem" title="Cycle through the next problem">Next problem ▶</button>
-        </div>
-    `;
-
-    container.innerHTML = `
-        <div class="interactive-viz">
-            <div class="wrapper">
-                <div class="header">
-                    <h1 id="interactive-question-title">${headerTitleHTML}</h1>
-                    ${headerActions}
-                </div>
-                <div class="question-details" id="interactive-question-details">
-                    <h2 class="question-preview-title">${questionTitleHTML}</h2>
-                    <div class="question-content">${questionHTML}</div>
-                    <button 
-                        class="view-full-context-btn" 
-                        data-type="question" 
-                        data-title="${encodeURIComponent(title)}"
-                        data-content="${encodedQuestion}">
-                        View Full Problem
-                    </button>
-                </div>
-                <div class="panels-container" id="interactive-panels-container"></div>
-            </div>
-        </div>
-    `;
-
-    const questionDetailsEl = document.getElementById('interactive-question-details');
-    const viewFullQuestionBtn = questionDetailsEl ? questionDetailsEl.querySelector('.view-full-context-btn') : null;
-    const panelsContainerEl = document.getElementById('interactive-panels-container');
-    const nextProblemBtn = document.getElementById('interactive-next-problem');
-
-    renderInteractivePanels(problem, panelsContainerEl);
-    if (questionDetailsEl) {
-        typesetMath(questionDetailsEl);
-    }
-
-    const updateQuestionClamp = () => {
-        if (!questionDetailsEl) return;
-        const isOverflowing = Math.ceil(questionDetailsEl.scrollHeight - questionDetailsEl.clientHeight) > 4;
-        questionDetailsEl.classList.toggle('is-clamped', isOverflowing);
-    };
-
-    updateQuestionClamp();
-    setTimeout(updateQuestionClamp, 200);
-    setTimeout(updateQuestionClamp, 600);
-    requestAnimationFrame(updateQuestionClamp);
-
-    if (viewFullQuestionBtn) {
-        viewFullQuestionBtn.addEventListener("click", (event) => {
-            event.preventDefault();
-            const contentValue = viewFullQuestionBtn.dataset.content || "";
-            if (!contentValue) return;
-            const encodedTitle = viewFullQuestionBtn.dataset.title;
-            const titleValue = encodedTitle ? decodeURIComponent(encodedTitle) : title;
-            showSeparateView(contentValue, viewFullQuestionBtn.dataset.type || "question", `Full context - ${titleValue}`);
-        });
-    }
-
-    nextProblemBtn.addEventListener("click", () => {
-        currentInteractiveProblemIndex = (currentInteractiveProblemIndex + 1) % interactiveProblems.length;
-        renderInteractiveProblem();
-    });
-}
 
 // Leakage render function
 function renderInteractiveProblemLeakage() {
@@ -422,10 +340,11 @@ function renderInteractiveProblemLeakage() {
     const questionTitleHTML = questionUrl
         ? `<a href="${escapeAttribute(questionUrl)}" target="_blank" rel="noopener">${escapeHTML(title)}</a>`
         : escapeHTML(title);
-    const headerTitleHTML = "Examples of Reasoning Leakage";
+    const headerTitleHTML = "Examples of Hard Interrupts";
     const headerActions = `
         <div class="header-actions">
-            <button id="interactive-next-problem-leakage" title="Cycle through the next problem">Next problem ▶</button>
+            <button id="interactive-prev-problem-leakage" title="Cycle through the previous problem">◀ Previous</button>
+            <button id="interactive-next-problem-leakage" title="Cycle through the next problem">Next ▶</button>
         </div>
     `;
 
@@ -455,6 +374,7 @@ function renderInteractiveProblemLeakage() {
     const questionDetailsEl = document.getElementById('interactive-question-details-leakage');
     const viewFullQuestionBtn = questionDetailsEl ? questionDetailsEl.querySelector('.view-full-context-btn') : null;
     const panelsContainerEl = document.getElementById('interactive-panels-container-leakage');
+    const prevProblemBtn = document.getElementById('interactive-prev-problem-leakage');
     const nextProblemBtn = document.getElementById('interactive-next-problem-leakage');
 
     renderInteractivePanelsLeakage(problem, panelsContainerEl);
@@ -484,6 +404,11 @@ function renderInteractiveProblemLeakage() {
         });
     }
 
+    prevProblemBtn.addEventListener("click", () => {
+        currentInteractiveProblemIndexLeakage = (currentInteractiveProblemIndexLeakage - 1 + interactiveProblemsLeakage.length) % interactiveProblemsLeakage.length;
+        renderInteractiveProblemLeakage();
+    });
+
     nextProblemBtn.addEventListener("click", () => {
         currentInteractiveProblemIndexLeakage = (currentInteractiveProblemIndexLeakage + 1) % interactiveProblemsLeakage.length;
         renderInteractiveProblemLeakage();
@@ -506,10 +431,11 @@ function renderInteractiveProblemPanic() {
     const questionTitleHTML = questionUrl
         ? `<a href="${escapeAttribute(questionUrl)}" target="_blank" rel="noopener">${escapeHTML(title)}</a>`
         : escapeHTML(title);
-    const headerTitleHTML = "Examples of Panic Answering";
+    const headerTitleHTML = "Examples of Soft Interrupt (Speedup)";
     const headerActions = `
         <div class="header-actions">
-            <button id="interactive-next-problem-panic" title="Cycle through the next problem">Next problem ▶</button>
+            <button id="interactive-prev-problem-panic" title="Cycle through the previous problem">◀ Previous</button>
+            <button id="interactive-next-problem-panic" title="Cycle through the next problem">Next ▶</button>
         </div>
     `;
 
@@ -539,6 +465,7 @@ function renderInteractiveProblemPanic() {
     const questionDetailsEl = document.getElementById('interactive-question-details-panic');
     const viewFullQuestionBtn = questionDetailsEl ? questionDetailsEl.querySelector('.view-full-context-btn') : null;
     const panelsContainerEl = document.getElementById('interactive-panels-container-panic');
+    const prevProblemBtn = document.getElementById('interactive-prev-problem-panic');
     const nextProblemBtn = document.getElementById('interactive-next-problem-panic');
 
     renderInteractivePanelsPanic(problem, panelsContainerEl);
@@ -568,6 +495,11 @@ function renderInteractiveProblemPanic() {
         });
     }
 
+    prevProblemBtn.addEventListener("click", () => {
+        currentInteractiveProblemIndexPanic = (currentInteractiveProblemIndexPanic - 1 + interactiveProblemsPanic.length) % interactiveProblemsPanic.length;
+        renderInteractiveProblemPanic();
+    });
+
     nextProblemBtn.addEventListener("click", () => {
         currentInteractiveProblemIndexPanic = (currentInteractiveProblemIndexPanic + 1) % interactiveProblemsPanic.length;
         renderInteractiveProblemPanic();
@@ -590,10 +522,11 @@ function renderInteractiveProblemDoubt() {
     const questionTitleHTML = questionUrl
         ? `<a href="${escapeAttribute(questionUrl)}" target="_blank" rel="noopener">${escapeHTML(title)}</a>`
         : escapeHTML(title);
-    const headerTitleHTML = "Examples of Self-Doubt";
+    const headerTitleHTML = "Examples of Update-Driven Interrupt";
     const headerActions = `
         <div class="header-actions">
-            <button id="interactive-next-problem-doubt" title="Cycle through the next problem">Next problem ▶</button>
+            <button id="interactive-prev-problem-doubt" title="Cycle through the previous problem">◀ Previous</button>
+            <button id="interactive-next-problem-doubt" title="Cycle through the next problem">Next ▶</button>
         </div>
     `;
 
@@ -623,6 +556,7 @@ function renderInteractiveProblemDoubt() {
     const questionDetailsEl = document.getElementById('interactive-question-details-doubt');
     const viewFullQuestionBtn = questionDetailsEl ? questionDetailsEl.querySelector('.view-full-context-btn') : null;
     const panelsContainerEl = document.getElementById('interactive-panels-container-doubt');
+    const prevProblemBtn = document.getElementById('interactive-prev-problem-doubt');
     const nextProblemBtn = document.getElementById('interactive-next-problem-doubt');
 
     renderInteractivePanelsDoubt(problem, panelsContainerEl);
@@ -652,6 +586,11 @@ function renderInteractiveProblemDoubt() {
         });
     }
 
+    prevProblemBtn.addEventListener("click", () => {
+        currentInteractiveProblemIndexDoubt = (currentInteractiveProblemIndexDoubt - 1 + interactiveProblemsDoubt.length) % interactiveProblemsDoubt.length;
+        renderInteractiveProblemDoubt();
+    });
+
     nextProblemBtn.addEventListener("click", () => {
         currentInteractiveProblemIndexDoubt = (currentInteractiveProblemIndexDoubt + 1) % interactiveProblemsDoubt.length;
         renderInteractiveProblemDoubt();
@@ -674,14 +613,20 @@ function renderInteractivePanels(problem, panelsContainerEl) {
     const modelHeading = modelLink
         ? `<a href="${escapeAttribute(modelLink)}" target="_blank" rel="noopener">${escapeHTML(modelName)}</a>`
         : escapeHTML(modelName);
+    const takeaway = model.takeaway ? escapeHTML(model.takeaway) : null;
+    
+    // Determine layout based on model configuration
+    const layout = model.layout || "two"; // default to two columns for main section
+    const stages = layout === "single" ? ["oracle"] : ["oracle", "interrupt"];
 
     panelsContainerEl.innerHTML = `
         <div class="model-header">
             ${logoSrc ? `<img src="${logoSrc}" alt="${escapeAttribute(modelName)} logo">` : ""}
             <h2>${modelHeading}</h2>
+            ${takeaway ? `<p class="model-takeaway">${takeaway}</p>` : ""}
         </div>
-        <div class="model-panels">
-            ${["oracle", "interrupt"].map(stage => {
+        <div class="model-panels ${layout === 'single' ? 'single-column' : 'two-column'}">
+            ${stages.map(stage => {
                 const stageData = model[stage] || {};
                 const label = stageData.label || (stage === "oracle" ? "Full Thinking" : "Hard Interrupt @0.3");
                 const renderedAnswer = stageData.answer ? renderRich(stageData.answer) : "";
@@ -772,14 +717,20 @@ function renderInteractivePanelsLeakage(problem, panelsContainerEl) {
     const modelHeading = modelLink
         ? `<a href="${escapeAttribute(modelLink)}" target="_blank" rel="noopener">${escapeHTML(modelName)}</a>`
         : escapeHTML(modelName);
+    const takeaway = model.takeaway ? escapeHTML(model.takeaway) : null;
+    
+    // Determine layout based on model configuration
+    const layout = model.layout || "two"; // default to two columns for leakage section
+    const stages = layout === "single" ? ["oracle"] : ["oracle", "interrupt"];
 
     panelsContainerEl.innerHTML = `
         <div class="model-header">
             ${logoSrc ? `<img src="${logoSrc}" alt="${escapeAttribute(modelName)} logo">` : ""}
             <h2>${modelHeading}</h2>
+            ${takeaway ? `<p class="model-takeaway">${takeaway}</p>` : ""}
         </div>
-        <div class="model-panels">
-            ${["oracle", "interrupt"].map(stage => {
+        <div class="model-panels ${layout === 'single' ? 'single-column' : 'two-column'}">
+            ${stages.map(stage => {
                 const stageData = model[stage] || {};
                 const label = stageData.label || (stage === "oracle" ? "Full Thinking" : "Hard Interrupt @0.3");
                 const renderedAnswer = stageData.answer ? renderRich(stageData.answer) : "";
@@ -879,14 +830,20 @@ function renderInteractivePanelsPanic(problem, panelsContainerEl) {
     const modelHeading = modelLink
         ? `<a href="${escapeAttribute(modelLink)}" target="_blank" rel="noopener">${escapeHTML(modelName)}</a>`
         : escapeHTML(modelName);
+    const takeaway = model.takeaway ? escapeHTML(model.takeaway) : null;
+    
+    // Determine layout based on model configuration
+    const layout = model.layout || "single"; // default to single column
+    const stages = layout === "single" ? ["oracle"] : ["oracle", "interrupt"];
 
     panelsContainerEl.innerHTML = `
         <div class="model-header">
             ${logoSrc ? `<img src="${logoSrc}" alt="${escapeAttribute(modelName)} logo">` : ""}
             <h2>${modelHeading}</h2>
+            ${takeaway ? `<p class="model-takeaway">${takeaway}</p>` : ""}
         </div>
-        <div class="model-panels">
-            ${["oracle"].map(stage => {
+        <div class="model-panels ${layout === 'single' ? 'single-column' : 'two-column'}">
+            ${stages.map(stage => {
                 const stageData = model[stage] || {};
                 const label = stageData.label || "Full Thinking";
                 const renderedAnswer = stageData.answer ? renderRich(stageData.answer) : "";
@@ -986,14 +943,20 @@ function renderInteractivePanelsDoubt(problem, panelsContainerEl) {
     const modelHeading = modelLink
         ? `<a href="${escapeAttribute(modelLink)}" target="_blank" rel="noopener">${escapeHTML(modelName)}</a>`
         : escapeHTML(modelName);
+    const takeaway = model.takeaway ? escapeHTML(model.takeaway) : null;
+    
+    // Determine layout based on model configuration
+    const layout = model.layout || "two"; // default to two columns for doubt section
+    const stages = layout === "single" ? ["oracle"] : ["oracle", "interrupt"];
 
     panelsContainerEl.innerHTML = `
         <div class="model-header">
             ${logoSrc ? `<img src="${logoSrc}" alt="${escapeAttribute(modelName)} logo">` : ""}
             <h2>${modelHeading}</h2>
+            ${takeaway ? `<p class="model-takeaway">${takeaway}</p>` : ""}
         </div>
-        <div class="model-panels">
-            ${["oracle", "interrupt"].map(stage => {
+        <div class="model-panels ${layout === 'single' ? 'single-column' : 'two-column'}">
+            ${stages.map(stage => {
                 const stageData = model[stage] || {};
                 const label = stageData.label || (stage === "oracle" ? "Full Thinking" : "Info Update @0.3");
                 const renderedAnswer = stageData.answer ? renderRich(stageData.answer) : "";

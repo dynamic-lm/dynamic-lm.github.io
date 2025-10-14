@@ -18,23 +18,47 @@ const MAX_WIDTH = 860;
 const initCarousel = () => {
     const container = document.querySelector('.carousel-container');
     const track = container ? container.querySelector('.carousel-track') : null;
-    const dots = container ? container.querySelectorAll('.pagination-dot') : [];
+    const panels = container ? container.querySelectorAll('.carousel-panel') : [];
+    const paginationDots = document.querySelectorAll('.carousel-pagination .pagination-dot');
     const leftArrow = container ? container.querySelector('.carousel-arrow-left') : null;
     const rightArrow = container ? container.querySelector('.carousel-arrow-right') : null;
 
-    if (!container || !track || !leftArrow || !rightArrow || !dots.length) {
+    if (!container || !track || !leftArrow || !rightArrow || !paginationDots.length || !panels.length) {
         return;
     }
 
     let currentSlide = 0;
-    const totalSlides = dots.length;
-    const panelWidth = 850;
+    const totalSlides = Math.max(panels.length, paginationDots.length);
+
+    const getPanelWidth = () => {
+        const firstPanel = panels[0];
+        if (!firstPanel) {
+            return 0;
+        }
+        const rect = firstPanel.getBoundingClientRect();
+        return rect.width || firstPanel.offsetWidth || container.clientWidth;
+    };
+
+    const updateTrackWidth = () => {
+        const width = getPanelWidth();
+        if (!width) {
+            return;
+        }
+        track.style.width = `${width * panels.length}px`;
+        panels.forEach((panel) => {
+            panel.style.width = `${width}px`;
+        });
+        return width;
+    };
+
+    let panelWidth = updateTrackWidth() || 850;
 
     const updateCarousel = () => {
+        panelWidth = getPanelWidth() || panelWidth;
         const leftPosition = -currentSlide * panelWidth;
         track.style.left = `${leftPosition}px`;
 
-        dots.forEach((dot, index) => {
+        paginationDots.forEach((dot, index) => {
             dot.style.background = index === currentSlide ? '#000' : '#ccc';
         });
     };
@@ -49,7 +73,7 @@ const initCarousel = () => {
         updateCarousel();
     });
 
-    dots.forEach((dot, index) => {
+    paginationDots.forEach((dot, index) => {
         dot.addEventListener('click', () => {
             currentSlide = index;
             updateCarousel();
@@ -75,6 +99,11 @@ const initCarousel = () => {
 
     container.addEventListener('mouseenter', stopAutoPlay);
     container.addEventListener('mouseleave', startAutoPlay);
+
+    window.addEventListener('resize', () => {
+        panelWidth = updateTrackWidth() || panelWidth;
+        updateCarousel();
+    }, { passive: true });
 
     updateCarousel();
     startAutoPlay();
@@ -401,4 +430,67 @@ $(document).ready(() => {
             }
         });
     }
+
+    // Dataset viewer toggle functionality
+    function initDatasetToggle() {
+        const datasetBtns = document.querySelectorAll('.dataset-btn');
+        const datasetIframes = document.querySelectorAll('.dataset-iframe');
+        
+        if (datasetBtns.length === 0 || datasetIframes.length === 0) {
+            return; // Elements not found yet
+        }
+
+        const forceLightTheme = () => {
+            datasetIframes.forEach((iframe) => {
+                const srcAttr = iframe.getAttribute('src');
+                const pendingSrc = iframe.dataset.src;
+                const targetSrc = srcAttr || pendingSrc;
+
+                if (!targetSrc) {
+                    return;
+                }
+
+                try {
+                    const url = new URL(targetSrc, window.location.href);
+                    if (url.searchParams.get('theme') !== 'light') {
+                        url.searchParams.set('theme', 'light');
+                        const updatedSrc = url.toString();
+
+                        if (srcAttr) {
+                            iframe.setAttribute('src', updatedSrc);
+                        }
+
+                        if (pendingSrc) {
+                            iframe.dataset.src = updatedSrc;
+                        }
+                    }
+                } catch (error) {
+                    console.warn('Unable to enforce dataset theme', error);
+                }
+            });
+        };
+
+        forceLightTheme();
+        
+        datasetBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const selectedDataset = this.getAttribute('data-dataset');
+                
+                // Update button states
+                datasetBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Update iframe visibility
+                datasetIframes.forEach(iframe => {
+                    iframe.classList.remove('active');
+                    if (iframe.getAttribute('data-dataset') === selectedDataset) {
+                        iframe.classList.add('active');
+                    }
+                });
+            });
+        });
+    }
+    
+    // Initialize dataset toggle
+    initDatasetToggle();
 });

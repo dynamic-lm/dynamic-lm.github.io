@@ -718,6 +718,76 @@ body {
   border-color: rgba(37, 99, 235, 0.4);
 }
 
+/* Dataset viewer section */
+.dataset-viewer {
+  margin: 2rem 0;
+}
+
+.dataset-toggle {
+  display: inline-flex;
+  border-radius: 999px;
+  background: #f3f4f6;
+  padding: 0.4rem;
+  gap: 0.4rem;
+  margin: 0 auto 1.5rem auto;
+  justify-content: center;
+}
+
+.dataset-toggle button {
+  border: none;
+  background: transparent;
+  color: #1f2937;
+  font-weight: 600;
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 120ms ease, color 120ms ease;
+}
+
+.dataset-toggle button:hover {
+  background: rgba(17, 24, 39, 0.1);
+}
+
+.dataset-toggle button.active {
+  background: #111827;
+  color: #fff;
+}
+
+.dataset-toggle button:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+/* Viewer container styling for iframe */
+.viewer-container {
+  width: 100%;
+  height: 500px;
+  margin: 1rem 0;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: relative;
+  background: #ffffff;
+  color-scheme: light;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.viewer-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: #ffffff;
+  color-scheme: light;
+}
+
+.viewer-container .dataset-iframe {
+  display: none;
+}
+
+.viewer-container .dataset-iframe.active {
+  display: block;
+}
+
 @media (max-width: 768px) {
   .tldr-callout {
     padding: 1.2rem 1.3rem;
@@ -737,4 +807,3 @@ body {
     margin-top: 1.5rem;
   }
 }
-

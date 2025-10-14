@@ -13,6 +13,7 @@
       "model": {
         "name": "Qwen3-8B",
         "url": "https://huggingface.co/Qwen/Qwen3-8B",
+        "takeaway": "Shows consistent performance across different problem types with reliable solution generation.",
         "oracle": {
           "preview_reason": {
             "format": "text",
