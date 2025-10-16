@@ -1065,11 +1065,13 @@ function renderInteractivePanelsDoubt(problem, panelsContainerEl) {
         ? problem.updates
         : (Array.isArray(model.updates) ? model.updates : null);
     const updateLeftSource =
+        oracleData.update ??
         model.update_left ??
         problem.update_left ??
         (updateCandidates && updateCandidates[0]) ??
         null;
     const updateRightSource =
+        interruptData.update ??
         model.update_right ??
         problem.update_right ??
         (updateCandidates && updateCandidates[1]) ??
@@ -1086,16 +1088,16 @@ function renderInteractivePanelsDoubt(problem, panelsContainerEl) {
         : "";
     const updateLeftSection = `
         <div class="content-container update-block">
-            <h3 class="update-heading">Update</h3>
             ${updateLeftCharLabel}
+            <button class="view-separate-btn" data-content="${encodeURIComponent(updateLeftContent)}" data-type="update" data-title="Update Section - Full Thinking">Open full view</button>
             <div class="reasoning-answer intervene-pre limited">${updateLeftContent}</div>
         </div>
     `;
     
     const updateRightSection = `
         <div class="content-container update-block">
-            <h3 class="update-heading">Update</h3>
             ${updateRightCharLabel}
+            <button class="view-separate-btn" data-content="${encodeURIComponent(updateRightContent)}" data-type="update" data-title="Update Section - Intervene @0.3">Open full view</button>
             <div class="reasoning-answer intervene-pre limited">${updateRightContent}</div>
         </div>
     `;
@@ -1136,9 +1138,9 @@ function renderInteractivePanelsDoubt(problem, panelsContainerEl) {
                 const codeCharCount = stageData.code ? countCharacters(stageData.code) : 0;
                 const answerCharCount = stageData.answer ? countCharacters(getContentString(stageData.answer)) : 0;
                 const reasoningCharCount = stageData.full_reasoning_trace ? countCharacters(getContentString(stageData.full_reasoning_trace)) : 0;
-                const preInterruptCharCount = stageData.pre_interrupt_full_reason
-                    ? countCharacters(getContentString(stageData.pre_interrupt_full_reason))
-                    : (stageData.pre_interrupt_reason ? countCharacters(getContentString(stageData.pre_interrupt_reason)) : 0);
+                const preInterruptCharCount = (stage === "oracle" ? oracleData.pre_interrupt_full_reason : stageData.pre_interrupt_full_reason)
+                    ? countCharacters(getContentString(stage === "oracle" ? oracleData.pre_interrupt_full_reason : stageData.pre_interrupt_full_reason))
+                    : ((stage === "oracle" ? oracleData.pre_interrupt_reason : stageData.pre_interrupt_reason) ? countCharacters(getContentString(stage === "oracle" ? oracleData.pre_interrupt_reason : stageData.pre_interrupt_reason)) : 0);
                 const interruptLaterCharCount = stageData.interrupt_later_full_reason
                     ? countCharacters(getContentString(stageData.interrupt_later_full_reason))
                     : (stageData.interrupt_later_reason ? countCharacters(getContentString(stageData.interrupt_later_reason)) : 0);
@@ -1146,7 +1148,7 @@ function renderInteractivePanelsDoubt(problem, panelsContainerEl) {
                 const codeCharLabel = codeCharCount > 0 ? `<p class="answer-line-count">Answer section: ${codeCharCount} CHARACTERS</p>` : "";
                 const answerCharLabel = answerCharCount > 0 ? `<p class="answer-line-count">Answer section: ${answerCharCount} CHARACTERS</p>` : "";
                 const isInterruptStage = stage === "interrupt";
-                const reasoningLabelText = isInterruptStage ? "Reasoning (Update + Post Interrupt)" : "Reasoning Section";
+                const reasoningLabelText = isInterruptStage ? "Reasoning (AFTER UPDATE)" : "Reasoning Section";
                 const reasoningCharLabel = reasoningCharCount > 0
                     ? `<p class="reasoning-line-count">${reasoningLabelText}: ${reasoningCharCount} CHARACTERS</p>`
                     : "";
@@ -1154,7 +1156,7 @@ function renderInteractivePanelsDoubt(problem, panelsContainerEl) {
                     ? `<p class="reasoning-line-count">Reasoning (Before Update): ${preInterruptCharCount} CHARACTERS</p>`
                     : "";
                 const interruptLaterCharLabel = interruptLaterCharCount > 0
-                    ? `<p class="reasoning-line-count">Reasoning (Update + Post Interrupt): ${interruptLaterCharCount} CHARACTERS</p>`
+                    ? `<p class="reasoning-line-count">Reasoning (AFTER UPDATE): ${interruptLaterCharCount} CHARACTERS</p>`
                     : "";
 
     const showSharedPre = sharedPreExists;
@@ -1178,7 +1180,7 @@ function renderInteractivePanelsDoubt(problem, panelsContainerEl) {
                 const interruptLaterSection = hasSoftInterruptStructure && interruptLaterReason ? `
                     <div class="content-container reasoning-post">
                         ${interruptLaterCharLabel}
-                        <button class="view-separate-btn" data-content="${encodeURIComponent(interruptLaterFullReasonRendered)}" data-type="reasoning" data-title="Reasoning (Update + Post Interrupt) - ${label}">Open full view</button>
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(interruptLaterFullReasonRendered)}" data-type="reasoning" data-title="Reasoning (AFTER UPDATE) - ${label}">Open full view</button>
                         <div class="reasoning-answer intervene-post limited">${interruptLaterReason}</div>
                     </div>
                 ` : "";
@@ -1507,6 +1509,10 @@ function showSeparateViewDoubt(content, type, title) {
                 applyLineNumbers(block);
             }
         });
+    } else if (type === 'update') {
+        const decodedContent = decodeURIComponent(content);
+        modalBody.innerHTML = `<div class="update-content">${decodedContent}</div>`;
+        typesetMath(modalBody);
     } else {
         const decodedContent = decodeURIComponent(content);
         modalBody.innerHTML = decodedContent;
