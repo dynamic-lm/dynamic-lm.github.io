@@ -518,9 +518,9 @@
                         </p>
 
                         <p style="margin-top: 1rem; line-height: 1.6">
-                            <strong>Takeaway:</strong> Current LRMs show fragile anytime behavior caused by reasoning
-                            leakage. A promising next step is to revisit the "thinking tokens vs. accuracy" metric and
-                            address leakage, so that LRMs can be deployed safely in time-critical applications.
+                            <strong>Takeaway:</strong> Current LRMs show only partial anytime behavior, thanks to
+                            reasoning leakage. In the future, we need to understand and mitigate this leakage to build
+                            truly interruptible models.
                         </p>
                     </div>
                 </div>
@@ -565,6 +565,13 @@
                         </p>
 
                         <div id="interactive-vis-container-panic" style="margin: 2rem 0"></div>
+
+                        <p style="margin-top: 1rem; line-height: 1.6">
+                            <strong>Takeaway:</strong> When we want to speed up LRMs, we can often get a "free lunch",
+                            achieving faster responses with minimal accuracy loss. However, pushing too hard can lead to
+                            panic answering, where models rush to incomplete conclusions. Future work should focus on
+                            developing more robust acceleration techniques that avoid this pitfall.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -628,6 +635,12 @@
                         </p>
 
                         <div id="interactive-vis-container-doubt" style="margin: 2rem 0"></div>
+
+                        <p style="margin-top: 1rem; line-height: 1.6">
+                            <strong>Takeaway:</strong> LRMs can adapt to mid-reasoning updates with proper prompting,
+                            but they still struggle with late or conflicting information. Future work should focus on
+                            developing models that can natively handle multi-turn reasoning and interruptions.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -647,8 +660,17 @@
                             under dynamic contexts, simulating real-world interruptions like hard stops, speedups, and
                             information updates. Our findings reveal three new failure modes: reasoning leakage, panic
                             answering, and self-doubt. These issues highlight the fragility of current LRMs in
-                            time-sensitive applications. We hope our work inspires future research to develop more
-                            robust and adaptable reasoning models that can handle interruptions gracefully.
+                            time-sensitive applications.
+                        </p>
+                        <p style="line-height: 1.6; margin-top: 1rem">
+                            <strong>We call on researchers to:</strong> develop LRMs that can gracefully handle
+                            interruptions, implement checkpointing mechanisms for reasoning steps, and design adaptive
+                            inference strategies that maintain consistency under dynamic constraints.
+                            <strong>We encourage practitioners to:</strong>
+                            rigorously test reasoning models in interrupt-rich environments before deployment, establish
+                            clear fallback mechanisms for time-sensitive applications, and report interruptibility
+                            failures to inform the research community. Together, we can build more robust, deployable
+                            reasoning systems.
                         </p>
                     </div>
                 </div>
