@@ -88,6 +88,46 @@ function tokenizePlainText(input) {
             continue;
         }
 
+        if (input.startsWith("$$", idx)) {
+            const prevChar = idx > 0 ? input[idx - 1] : null;
+            if (prevChar === "\\") {
+                buffer += "$";
+                idx += 1;
+                continue;
+            }
+            const fenceEnd = input.indexOf("$$", idx + 2);
+            if (fenceEnd === -1) {
+                buffer += input[idx];
+                idx += 1;
+                continue;
+            }
+            flushBuffer();
+            const content = input.slice(idx + 2, fenceEnd);
+            tokens.push({ type: "mathblock", content });
+            idx = fenceEnd + 2;
+            continue;
+        }
+
+        if (input[idx] === "$") {
+            const prevChar = idx > 0 ? input[idx - 1] : null;
+            if (prevChar === "\\") {
+                buffer += "$";
+                idx += 1;
+                continue;
+            }
+            const end = input.indexOf("$", idx + 1);
+            if (end === -1) {
+                buffer += input[idx];
+                idx += 1;
+                continue;
+            }
+            flushBuffer();
+            const content = input.slice(idx + 1, end);
+            tokens.push({ type: "mathinline", content });
+            idx = end + 1;
+            continue;
+        }
+
         if (input[idx] === "`") {
             const end = input.indexOf("`", idx + 1);
             if (end === -1) {
@@ -134,6 +174,16 @@ function renderPlainToken(token) {
             }
             const languageClass = lang ? `language-${escapeHTML(lang)}` : "language-plaintext";
             return `<pre class="code-block"><code class="${languageClass}">${escapeHTML(token.content)}</code></pre>`;
+        }
+        case "mathinline": {
+            const trimmed = token.content.trim();
+            if (!trimmed) return "";
+            return wrapLatex(trimmed);
+        }
+        case "mathblock": {
+            const trimmed = token.content.trim();
+            if (!trimmed) return "";
+            return `<span class="mathjax-latex">\\[${trimmed}\\]</span>`;
         }
         default:
             return "";
@@ -632,7 +682,6 @@ function renderInteractivePanels(problem, panelsContainerEl) {
                 const stageData = model[stage] || {};
                 const label = stageData.label || (stage === "oracle" ? "Full Thinking" : "Hard Interrupt @0.3");
                 const renderedAnswer = stageData.answer ? renderRich(stageData.answer) : "";
-                const renderedFinal = stageData.final ? renderRich(stageData.final) : "";
                 const previewReason = stageData.preview_reason ? renderRich(stageData.preview_reason) : "";
                 const fullReasoningTrace = stageData.full_reasoning_trace ? renderRich(stageData.full_reasoning_trace) : "";
                 const codeCharCount = stageData.code ? countCharacters(stageData.code) : 0;
@@ -640,7 +689,11 @@ function renderInteractivePanels(problem, panelsContainerEl) {
                 const reasoningCharCount = stageData.full_reasoning_trace ? countCharacters(getContentString(stageData.full_reasoning_trace)) : 0;
                 const codeCharLabel = codeCharCount > 0 ? `<p class="answer-line-count">Answer section: ${codeCharCount} CHARACTERS</p>` : "";
                 const answerCharLabel = answerCharCount > 0 ? `<p class="answer-line-count">Answer section: ${answerCharCount} CHARACTERS</p>` : "";
-                const reasoningCharLabel = reasoningCharCount > 0 ? `<p class="reasoning-line-count">Reasoning Section: ${reasoningCharCount} CHARACTERS</p>` : "";
+                const isInterruptStage = stage === "interrupt";
+                const reasoningLabelText = isInterruptStage ? "Reasoning (Update + Post Interrupt)" : "Reasoning Section";
+                const reasoningCharLabel = reasoningCharCount > 0
+                    ? `<p class="reasoning-line-count">${reasoningLabelText}: ${reasoningCharCount} CHARACTERS</p>`
+                    : "";
                 const reasoningSection = previewReason ? `
                     <div class="content-container">
                         ${reasoningCharLabel}
@@ -659,11 +712,6 @@ function renderInteractivePanels(problem, panelsContainerEl) {
                         ${answerCharLabel}
                         <button class="view-separate-btn" data-content="${encodeURIComponent(renderedAnswer)}" data-type="math" data-title="Math Answer - ${label}">Open full view</button>
                         <div class="math-answer">${renderedAnswer}</div>
-                    </div>` : "";
-                const finalSection = stageData.final ? `
-                    <div class="content-container">
-                        <button class="view-separate-btn" data-content="${encodeURIComponent(renderedFinal)}" data-type="final" data-title="Final Answer - ${label}">Open full view</button>
-                        <div class="final-answer">${renderedFinal}</div>
                     </div>` : "";
                 return `
                     <section class="panel">
@@ -746,7 +794,11 @@ function renderInteractivePanelsLeakage(problem, panelsContainerEl) {
                 const reasoningCharCount = stageData.full_reasoning_trace ? countCharacters(getContentString(stageData.full_reasoning_trace)) : 0;
                 const codeCharLabel = codeCharCount > 0 ? `<p class="answer-line-count">Answer section: ${codeCharCount} CHARACTERS</p>` : "";
                 const answerCharLabel = answerCharCount > 0 ? `<p class="answer-line-count">Answer section: ${answerCharCount} CHARACTERS</p>` : "";
-                const reasoningCharLabel = reasoningCharCount > 0 ? `<p class="reasoning-line-count">Reasoning Section: ${reasoningCharCount} CHARACTERS</p>` : "";
+                const isInterruptStage = stage === "interrupt";
+                const reasoningLabelText = isInterruptStage ? "Reasoning (Update + Post Interrupt)" : "Reasoning Section";
+                const reasoningCharLabel = reasoningCharCount > 0
+                    ? `<p class="reasoning-line-count">${reasoningLabelText}: ${reasoningCharCount} CHARACTERS</p>`
+                    : "";
                 const reasoningSection = previewReason ? `
                     <div class="content-container">
                         ${reasoningCharLabel}
@@ -971,40 +1023,166 @@ function renderInteractivePanelsDoubt(problem, panelsContainerEl) {
         ? `<a href="${escapeAttribute(modelLink)}" target="_blank" rel="noopener">${escapeHTML(modelName)}</a>`
         : escapeHTML(modelName);
     const takeaway = model.takeaway ? escapeHTML(model.takeaway) : null;
-    
-    // Determine layout based on model configuration
-    const layout = model.layout || "two"; // default to two columns for doubt section
+    const hasInterruptStage = model.interrupt && typeof model.interrupt === "object";
+    const layout = model.layout || (hasInterruptStage ? "two" : "single");
     const stages = layout === "single" ? ["oracle"] : ["oracle", "interrupt"];
+
+    const oracleData = model.oracle || {};
+    const interruptData = model.interrupt || {};
+    const sharedPreReasonSource =
+        model.shared_pre_reason ??
+        oracleData.pre_interrupt_reason ??
+        interruptData.pre_interrupt_reason ??
+        null;
+    const sharedPreFullReasonSource =
+        model.shared_pre_full_reason ??
+        oracleData.pre_interrupt_full_reason ??
+        interruptData.pre_interrupt_full_reason ??
+        null;
+
+    const sharedPreExists = Boolean(sharedPreReasonSource || sharedPreFullReasonSource);
+    const sharedPreReason = sharedPreExists
+        ? renderRich(sharedPreReasonSource || sharedPreFullReasonSource)
+        : "";
+    const sharedPreFullReason = sharedPreFullReasonSource
+        ? renderRich(sharedPreFullReasonSource)
+        : sharedPreReason;
+    const sharedPreCharCount = sharedPreFullReasonSource
+        ? countCharacters(getContentString(sharedPreFullReasonSource))
+        : (sharedPreReasonSource ? countCharacters(getContentString(sharedPreReasonSource)) : 0);
+    const sharedPreCharLabel = sharedPreCharCount > 0
+        ? `<p class="reasoning-line-count">Reasoning (Before Update): ${sharedPreCharCount} CHARACTERS</p>`
+        : "";
+    const sharedPreSection = sharedPreExists ? `
+        <div class="content-container shared-reasoning">
+            ${sharedPreCharLabel}
+            <button class="view-separate-btn" data-content="${encodeURIComponent(sharedPreFullReason)}" data-type="reasoning" data-title="Reasoning (Before Update)">Open full view</button>
+            <div class="reasoning-answer intervene-pre limited">${sharedPreReason}</div>
+        </div>
+    ` : "";
+
+    const updateCandidates = Array.isArray(problem.updates)
+        ? problem.updates
+        : (Array.isArray(model.updates) ? model.updates : null);
+    const updateLeftSource =
+        model.update_left ??
+        problem.update_left ??
+        (updateCandidates && updateCandidates[0]) ??
+        null;
+    const updateRightSource =
+        model.update_right ??
+        problem.update_right ??
+        (updateCandidates && updateCandidates[1]) ??
+        null;
+    const updateLeftContent = updateLeftSource ? renderRich(updateLeftSource) : `<p class="update-placeholder">No update provided.</p>`;
+    const updateRightContent = updateRightSource ? renderRich(updateRightSource) : `<p class="update-placeholder">No update provided.</p>`;
+    const updateLeftCharCount = updateLeftSource ? countCharacters(getContentString(updateLeftSource)) : 0;
+    const updateRightCharCount = updateRightSource ? countCharacters(getContentString(updateRightSource)) : 0;
+    const updateLeftCharLabel = updateLeftCharCount > 0
+        ? `<p class="answer-line-count">Update Section: ${updateLeftCharCount} CHARACTERS</p>`
+        : "";
+    const updateRightCharLabel = updateRightCharCount > 0
+        ? `<p class="answer-line-count">Update Section: ${updateRightCharCount} CHARACTERS</p>`
+        : "";
+    const updateLeftSection = `
+        <div class="content-container update-block">
+            <h3 class="update-heading">Update</h3>
+            ${updateLeftCharLabel}
+            <div class="reasoning-answer intervene-pre limited">${updateLeftContent}</div>
+        </div>
+    `;
+    
+    const updateRightSection = `
+        <div class="content-container update-block">
+            <h3 class="update-heading">Update</h3>
+            ${updateRightCharLabel}
+            <div class="reasoning-answer intervene-pre limited">${updateRightContent}</div>
+        </div>
+    `;
 
     panelsContainerEl.innerHTML = `
         ${takeaway ? `<div class="model-takeaway-standalone">${takeaway}</div>` : ""}
         <div class="model-header">
-            ${logoSrc ? `<img src="${logoSrc}" alt="${escapeAttribute(modelName)} logo">` : ""}
-            <div class="model-title-section">
+            <div class="model-heading">
+                ${logoSrc ? `<img src="${logoSrc}" alt="${escapeAttribute(modelName)} logo">` : ""}
                 <h2>${modelHeading}</h2>
             </div>
+            ${sharedPreSection}
         </div>
-        <div class="model-panels ${layout === 'single' ? 'single-column' : 'two-column'}">
+        <div class="model-panels ${layout === "single" ? "single-column" : "two-column"}">
             ${stages.map(stage => {
                 const stageData = model[stage] || {};
-                const label = stageData.label || (stage === "oracle" ? "Full Thinking" : "Info Update @0.3");
+                const label = stageData.label || (stage === "oracle" ? "Full Thinking" : "Intervene @0.3");
                 const renderedAnswer = stageData.answer ? renderRich(stageData.answer) : "";
                 const renderedFinal = stageData.final ? renderRich(stageData.final) : "";
                 const previewReason = stageData.preview_reason ? renderRich(stageData.preview_reason) : "";
                 const fullReasoningTrace = stageData.full_reasoning_trace ? renderRich(stageData.full_reasoning_trace) : "";
+                const hasSoftInterruptStructure = Boolean(
+                    stageData.pre_interrupt_reason ||
+                    stageData.pre_interrupt_full_reason ||
+                    stageData.interrupt_later_reason ||
+                    stageData.interrupt_later_full_reason
+                );
+
+                const preInterruptReason = stageData.pre_interrupt_reason ? renderRich(stageData.pre_interrupt_reason) : "";
+                const preInterruptFullReasonRendered = stageData.pre_interrupt_full_reason
+                    ? renderRich(stageData.pre_interrupt_full_reason)
+                    : preInterruptReason;
+                const interruptLaterReason = stageData.interrupt_later_reason ? renderRich(stageData.interrupt_later_reason) : "";
+                const interruptLaterFullReasonRendered = stageData.interrupt_later_full_reason
+                    ? renderRich(stageData.interrupt_later_full_reason)
+                    : interruptLaterReason;
+
                 const codeCharCount = stageData.code ? countCharacters(stageData.code) : 0;
                 const answerCharCount = stageData.answer ? countCharacters(getContentString(stageData.answer)) : 0;
                 const reasoningCharCount = stageData.full_reasoning_trace ? countCharacters(getContentString(stageData.full_reasoning_trace)) : 0;
+                const preInterruptCharCount = stageData.pre_interrupt_full_reason
+                    ? countCharacters(getContentString(stageData.pre_interrupt_full_reason))
+                    : (stageData.pre_interrupt_reason ? countCharacters(getContentString(stageData.pre_interrupt_reason)) : 0);
+                const interruptLaterCharCount = stageData.interrupt_later_full_reason
+                    ? countCharacters(getContentString(stageData.interrupt_later_full_reason))
+                    : (stageData.interrupt_later_reason ? countCharacters(getContentString(stageData.interrupt_later_reason)) : 0);
+
                 const codeCharLabel = codeCharCount > 0 ? `<p class="answer-line-count">Answer section: ${codeCharCount} CHARACTERS</p>` : "";
                 const answerCharLabel = answerCharCount > 0 ? `<p class="answer-line-count">Answer section: ${answerCharCount} CHARACTERS</p>` : "";
-                const reasoningCharLabel = reasoningCharCount > 0 ? `<p class="reasoning-line-count">Reasoning Section: ${reasoningCharCount} CHARACTERS</p>` : "";
-                const reasoningSection = previewReason ? `
+                const isInterruptStage = stage === "interrupt";
+                const reasoningLabelText = isInterruptStage ? "Reasoning (Update + Post Interrupt)" : "Reasoning Section";
+                const reasoningCharLabel = reasoningCharCount > 0
+                    ? `<p class="reasoning-line-count">${reasoningLabelText}: ${reasoningCharCount} CHARACTERS</p>`
+                    : "";
+                const preInterruptCharLabel = preInterruptCharCount > 0
+                    ? `<p class="reasoning-line-count">Reasoning (Before Update): ${preInterruptCharCount} CHARACTERS</p>`
+                    : "";
+                const interruptLaterCharLabel = interruptLaterCharCount > 0
+                    ? `<p class="reasoning-line-count">Reasoning (Update + Post Interrupt): ${interruptLaterCharCount} CHARACTERS</p>`
+                    : "";
+
+    const showSharedPre = sharedPreExists;
+
+                const reasoningSection = (!hasSoftInterruptStructure || !showSharedPre) && previewReason ? `
                     <div class="content-container">
                         ${reasoningCharLabel}
-                        <button class="view-separate-btn" data-content="${encodeURIComponent(fullReasoningTrace)}" data-type="reasoning" data-title="Reasoning - ${label}">Open full view</button>
-                        <div class="reasoning-answer limited">${previewReason}</div>
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(fullReasoningTrace)}" data-type="reasoning" data-title="${reasoningLabelText} - ${label}">Open full view</button>
+                        <div class="reasoning-answer${isInterruptStage ? " intervene-post" : ""} limited">${previewReason}</div>
                     </div>
                 ` : "";
+
+                const preInterruptSection = hasSoftInterruptStructure && preInterruptReason && !showSharedPre ? `
+                    <div class="content-container reasoning-pre">
+                        ${preInterruptCharLabel}
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(preInterruptFullReasonRendered)}" data-type="reasoning" data-title="Reasoning (Before Update) - ${label}">Open full view</button>
+                        <div class="reasoning-answer intervene-pre limited">${preInterruptReason}</div>
+                    </div>
+                ` : "";
+
+                const interruptLaterSection = hasSoftInterruptStructure && interruptLaterReason ? `
+                    <div class="content-container reasoning-post">
+                        ${interruptLaterCharLabel}
+                        <button class="view-separate-btn" data-content="${encodeURIComponent(interruptLaterFullReasonRendered)}" data-type="reasoning" data-title="Reasoning (Update + Post Interrupt) - ${label}">Open full view</button>
+                        <div class="reasoning-answer intervene-post limited">${interruptLaterReason}</div>
+                    </div>
+                ` : "";
+
                 const codeSection = stageData.code ? `
                     <div class="content-container">
                         ${codeCharLabel}
@@ -1022,15 +1200,36 @@ function renderInteractivePanelsDoubt(problem, panelsContainerEl) {
                         <button class="view-separate-btn" data-content="${encodeURIComponent(renderedFinal)}" data-type="final" data-title="Final Answer - ${label}">Open full view</button>
                         <div class="final-answer">${renderedFinal}</div>
                     </div>` : "";
-                return `
-                    <section class="panel">
-                        <h3>${label}</h3>
-                        ${reasoningSection}
-                        ${codeSection}
-                        ${answerSection}
-                        ${finalSection}
-                    </section>
-                `;
+
+
+                // For doubt section, show oracle (Full Thinking) on left with updateLeft, 
+                // and interrupt (Intervene @0.3) on right with updateRight
+                if (stage === "oracle") {
+                    return `
+                        <section class="panel">
+                            <h3>${label}</h3>
+                            ${preInterruptSection}
+                            ${updateLeftSection}
+                            ${interruptLaterSection}
+                            ${answerSection}
+                            ${codeSection}
+                            ${finalSection}
+                        </section>
+                    `;
+                } else if (stage === "interrupt") {
+                    return `
+                        <section class="panel">
+                            <h3>${label}</h3>
+                            ${preInterruptSection}
+                            ${updateRightSection}
+                            ${interruptLaterSection}
+                            ${answerSection}
+                            ${codeSection}
+                            ${finalSection}
+                        </section>
+                    `;
+                }
+                return "";
             }).join("")}
         </div>
     `;

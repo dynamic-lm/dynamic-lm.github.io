@@ -762,7 +762,7 @@ body.modal-open .modal * {
 .interactive-viz-panic #modal-body-panic pre.code-block .line-numbers { background: #bbf7d0; }
 .interactive-viz-panic #modal-body-panic .math-answer, .interactive-viz-panic #modal-body-panic .final-answer { height: 100%; max-height: none; overflow-y: auto; }
 
-/* Doubt container styles */
+/* Intervene container styles */
 .interactive-viz-doubt { margin: 0; font-family: "Inter", Arial, sans-serif; background: #eef2f7; color: #1c1c1c; }
 .interactive-viz-doubt .wrapper { max-width: 1280px; margin: 32px auto; background: #fff; border-radius: 14px; box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12); overflow: hidden; }
 .interactive-viz-doubt .header { padding: 12px 20px; background: linear-gradient(135deg, #ea580c, #c2410c); color: #fff; display: flex; justify-content: space-between; align-items: center; }
@@ -808,12 +808,21 @@ body.modal-open .modal * {
     font-weight: 700; 
     line-height: 1.4; 
 }
-.interactive-viz-doubt .model-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.interactive-viz-doubt .model-header { display: flex; flex-direction: column; gap: 12px; margin-bottom: 12px; }
+.interactive-viz-doubt .model-header .model-heading { display: flex; align-items: center; gap: 10px; }
 .interactive-viz-doubt .model-header img { width: 28px; height: 28px; object-fit: contain; border-radius: 6px; background: #fff; box-shadow: 0 3px 8px rgba(15, 23, 42, 0.12); flex-shrink: 0; }
-.interactive-viz-doubt .model-header .model-title-section { flex: 1; display: flex; align-items: center; gap: 12px; }
 .interactive-viz-doubt .model-header h2 { margin: 0; font-size: 0.95rem; font-weight: 600; color: #0f172a; }
 .interactive-viz-doubt .model-header h2 a { color: inherit; text-decoration: none; transition: color 0.15s ease; }
 .interactive-viz-doubt .model-header h2 a:hover { color: #ea580c; }
+.interactive-viz-doubt .model-header .shared-reasoning { align-self: stretch; margin-top: 10px; }
+.interactive-viz-doubt .model-updates { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); width: 100%; }
+.interactive-viz-doubt .interrupt-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; width: 100%; }
+.interactive-viz-doubt .interrupt-column { display: flex; flex-direction: column; gap: 12px; }
+.interactive-viz-doubt .update-block { display: flex; flex-direction: column; gap: 8px; }
+.interactive-viz-doubt .update-heading { margin: 0; font-size: 0.85rem; font-weight: 700; color: #c2410c; text-transform: uppercase; letter-spacing: 0.05em; }
+.interactive-viz-doubt .update-block .answer-line-count { margin-top: 0; }
+.interactive-viz-doubt .update-block .reasoning-answer { font-size: 0.9rem; }
+.interactive-viz-doubt .update-placeholder { margin: 0; color: #6b7280; font-style: italic; }
 .interactive-viz-doubt .model-takeaway {
     margin: 0;
     font-size: 0.9rem;
@@ -829,9 +838,11 @@ body.modal-open .modal * {
 .interactive-viz-doubt .panel { border: none; border-radius: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; background: transparent; min-height: 450px; box-shadow: none; }
 .interactive-viz-doubt .panel h3 { margin: 0; font-size: 0.95rem; color: #1f2937; font-weight: 700; }
 .interactive-viz-doubt .math-answer, .interactive-viz-doubt .final-answer, .interactive-viz-doubt .reasoning-answer { border-radius: 10px; line-height: 1.6; max-height: 400px; overflow-y: auto; position: relative; }
-.interactive-viz-doubt .math-answer { background: #fff7ed; border-left: 4px solid #ea580c; padding: 12px 12px; }
-.interactive-viz-doubt .final-answer { background: #fed7aa; border-left: 4px solid #c2410c; padding: 12px 12px; font-weight: 600; color: #0f172a; }
+.interactive-viz-doubt .math-answer { background: #fff7ed; border-left: 4px solid #ea580c; padding: 12px 12px; max-height: 100px; }
+.interactive-viz-doubt .final-answer { background: #fed7aa; border-left: 4px solid #ea580c; padding: 12px 12px; font-weight: 600; color: #0f172a; }
 .interactive-viz-doubt .reasoning-answer { background: #fff7ed; border-left: 4px solid #ea580c; padding: 12px 12px; color: #0f172a; }
+.interactive-viz-doubt .reasoning-answer.intervene-pre { max-height: 200px; border-left-color: #ea580c; }
+.interactive-viz-doubt .reasoning-answer.intervene-post { max-height: 200px; border-left-color: #ea580c; }
 .interactive-viz-doubt .reasoning-answer.limited { 
     display: -webkit-box; 
     -webkit-line-clamp: 2;
@@ -850,6 +861,10 @@ body.modal-open .modal * {
     height: 1.6em;
     background: linear-gradient(transparent, #fff7ed);
     pointer-events: none;
+}
+.interactive-viz-doubt .reasoning-answer.intervene-pre.limited::after,
+.interactive-viz-doubt .reasoning-answer.intervene-post.limited::after {
+    background: linear-gradient(transparent, #fff7ed);
 }
 .interactive-viz-doubt .math-answer.limited { 
     display: -webkit-box; 
@@ -891,3 +906,4 @@ body.modal-open .modal * {
 .interactive-viz-doubt #modal-body-doubt pre.code-block { height: auto; max-height: none; background: #fff7ed; border: 1px solid #fed7aa; overflow-x: auto; overflow-y: visible; }
 .interactive-viz-doubt #modal-body-doubt pre.code-block .line-numbers { background: #fed7aa; }
 .interactive-viz-doubt #modal-body-doubt .math-answer, .interactive-viz-doubt #modal-body-doubt .final-answer { height: 100%; max-height: none; overflow-y: auto; }
+.interactive-viz-doubt .shared-reasoning { margin-bottom: 16px; }

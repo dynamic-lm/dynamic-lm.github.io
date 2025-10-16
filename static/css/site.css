@@ -576,6 +576,19 @@ section {
     font-size: 0.8rem;
 }
 
+/* Fix for FontAwesome icons in buttons */
+.button .icon {
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+    flex-shrink: 0;
+}
+
+.button .icon i {
+    font-size: 1rem !important;
+    width: 1em;
+    height: 1em;
+}
+
 /* Cards and callouts */
 .card {
     background: var(--color-surface);
