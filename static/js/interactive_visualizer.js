@@ -1076,29 +1076,48 @@ function renderInteractivePanelsDoubt(problem, panelsContainerEl) {
         problem.update_right ??
         (updateCandidates && updateCandidates[1]) ??
         null;
-    const updateLeftContent = updateLeftSource ? renderRich(updateLeftSource) : `<p class="update-placeholder">No update provided.</p>`;
-    const updateRightContent = updateRightSource ? renderRich(updateRightSource) : `<p class="update-placeholder">No update provided.</p>`;
-    const updateLeftCharCount = updateLeftSource ? countCharacters(getContentString(updateLeftSource)) : 0;
-    const updateRightCharCount = updateRightSource ? countCharacters(getContentString(updateRightSource)) : 0;
+    const updateLeftPreviewSource =
+        oracleData.update_preview ??
+        model.update_left_preview ??
+        problem.update_left_preview ??
+        null;
+    const updateRightPreviewSource =
+        interruptData.update_preview ??
+        model.update_right_preview ??
+        problem.update_right_preview ??
+        null;
+    const updateLeftFullSource = updateLeftSource || updateLeftPreviewSource;
+    const updateRightFullSource = updateRightSource || updateRightPreviewSource;
+    const updateLeftCharCount = updateLeftFullSource ? countCharacters(getContentString(updateLeftFullSource)) : 0;
+    const updateRightCharCount = updateRightFullSource ? countCharacters(getContentString(updateRightFullSource)) : 0;
     const updateLeftCharLabel = updateLeftCharCount > 0
         ? `<p class="answer-line-count">Update Section: ${updateLeftCharCount} CHARACTERS</p>`
         : "";
     const updateRightCharLabel = updateRightCharCount > 0
         ? `<p class="answer-line-count">Update Section: ${updateRightCharCount} CHARACTERS</p>`
         : "";
+    const updatePlaceholder = `<p class="update-placeholder">No update provided.</p>`;
+    const updateLeftFullContent = updateLeftFullSource ? renderRich(updateLeftFullSource) : updatePlaceholder;
+    const updateRightFullContent = updateRightFullSource ? renderRich(updateRightFullSource) : updatePlaceholder;
+    const updateLeftPreviewContent = updateLeftPreviewSource
+        ? renderRich(updateLeftPreviewSource)
+        : updateLeftFullContent;
+    const updateRightPreviewContent = updateRightPreviewSource
+        ? renderRich(updateRightPreviewSource)
+        : updateRightFullContent;
     const updateLeftSection = `
         <div class="content-container update-block">
             ${updateLeftCharLabel}
-            <button class="view-separate-btn" data-content="${encodeURIComponent(updateLeftContent)}" data-type="update" data-title="Update Section - Full Thinking">Open full view</button>
-            <div class="reasoning-answer intervene-pre limited">${updateLeftContent}</div>
+            <button class="view-separate-btn" data-content="${encodeURIComponent(updateLeftFullContent)}" data-type="update" data-title="Update Section - Full Thinking">Open full view</button>
+            <div class="reasoning-answer intervene-pre limited">${updateLeftPreviewContent}</div>
         </div>
     `;
     
     const updateRightSection = `
         <div class="content-container update-block">
             ${updateRightCharLabel}
-            <button class="view-separate-btn" data-content="${encodeURIComponent(updateRightContent)}" data-type="update" data-title="Update Section - Intervene @0.3">Open full view</button>
-            <div class="reasoning-answer intervene-pre limited">${updateRightContent}</div>
+            <button class="view-separate-btn" data-content="${encodeURIComponent(updateRightFullContent)}" data-type="update" data-title="Update Section - Intervene @0.3">Open full view</button>
+            <div class="reasoning-answer intervene-pre limited">${updateRightPreviewContent}</div>
         </div>
     `;
 
