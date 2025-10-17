@@ -54,6 +54,17 @@
         <script src="static/js/interactive_visualizer.js"></script>
 
         <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script>
+            window.MathJax = {
+                tex: {
+                    inlineMath: [['$', '$'], ['\\(', '\\)']],
+                    displayMath: [['$$', '$$'], ['\\[', '\\]']]
+                },
+                options: {
+                    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+                }
+            };
+        </script>
     </head>
 
     <body>
@@ -65,6 +76,7 @@
                 <li class="toc-item"><a href="#hard-interrupt" class="toc-link">#1 Hard Interrupt</a></li>
                 <li class="toc-item"><a href="#speedup" class="toc-link">#2 Speedup</a></li>
                 <li class="toc-item"><a href="#update-driven" class="toc-link">#3 Info Update</a></li>
+                <li class="toc-item"><a href="#conclusion" class="toc-link">Conclusion</a></li>
                 <li class="toc-item"><a href="#acknowledgements" class="toc-link">Acknowledgment</a></li>
                 <li class="toc-item"><a href="#BibTeX" class="toc-link">BibTeX</a></li>
             </ul>
@@ -321,7 +333,7 @@
                                             style="max-width: 100%; max-height: 340px; object-fit: contain" />
                                     </div>
                                     <div style="text-align: center; font-weight: 500; color: #333">
-                                        Panic → Up to 90% of speedup errors happen when the model answers too early
+                                        Panic → <span style="color: #ff0000">Up to 90% of speedup errors</span> happen when the model answers too early
                                     </div>
                                 </div>
                                 <div
@@ -448,18 +460,20 @@
                     multiple conflicting information updates.
                 </p>
 
-                <div class="dataset-viewer">
-                    <!-- <div class="dataset-toggle">
-                        <button class="dataset-btn active" data-dataset="math">Math Dataset</button>
-                        <button class="dataset-btn" data-dataset="code">Code Dataset</button>
-                    </div> -->
-
-                    <div class="viewer-container">
-                        <iframe
-                            class="dataset-iframe active"
-                            src="https://huggingface.co/datasets/dynamic-lm/update-interrupt-benchmark?theme=light"
-                            allowfullscreen></iframe>
-                    </div>
+                <div class="dataset-cta">
+                    <p class="dataset-cta__lead">
+                        Explore the full Update-Interrupt Benchmark dataset on Hugging Face.
+                    </p>
+                    <a
+                        class="button is-link is-rounded is-light"
+                        href="https://huggingface.co/datasets/dynamic-lm/update-interrupt-benchmark"
+                        target="_blank"
+                        rel="noopener">
+                        View full dataset on Hugging Face
+                        <span aria-hidden="true" class="icon">
+                            <i class="fas fa-external-link-alt"></i>
+                        </span>
+                    </a>
                 </div>
             </div>
         </section>
