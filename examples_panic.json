@@ -11,7 +11,7 @@
         "url": "https://atcoder.jp/contests/abc387/tasks/abc387_f"
       },
       "model": {
-        "name": "GPT-OSS-20B",
+        "name": "GPT-OSS (20B)",
         "takeaway": "Under soft interrupt, models sometimes \"panic\" and decide to answer before finishing reasoning, causing errors",
         "url": "https://huggingface.co/openai/gpt-oss-20b",
         "oracle": {
@@ -51,7 +51,7 @@
         "url": "https://artofproblemsolving.com/wiki/index.php/2025_AIME_II_Problems/Problem_5"
       },
       "model": {
-        "name": "Qwen3-8B",
+        "name": "Qwen3 (8B)",
         "url": "https://huggingface.co/Qwen/Qwen3-8B",
         "takeaway": "When receiving a speedup request, models sometimes panic and dump an answer out of nowhere and get it wrong",
         "oracle": {

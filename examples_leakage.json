@@ -11,7 +11,7 @@
         "url": "https://atcoder.jp/contests/arc188/tasks/arc188_b"
       },
       "model": {
-        "name": "Qwen3-8B",
+        "name": "Qwen3 (8B)",
         "url": "https://huggingface.co/Qwen/Qwen3-8B",
         "takeaway": "Under force-answer interrupts, LRMs keep “thinking” in code comments, producing 76× longer but wrong code.",
         "oracle": {
@@ -52,7 +52,7 @@
       },
       "url": "https://artofproblemsolving.com/wiki/index.php/2024_AIME_I_Problems/Problem_3",
       "model": {
-        "name": "GPT-OSS-20B",
+        "name": "GPT-OSS (20B)",
         "takeaway": "Severe reasoning leakage under hard interrupt: 18x longer answer & 50% more total computes than full thinking",
         "url": "https://huggingface.co/openai/gpt-oss-20b",
         "oracle": {
@@ -99,7 +99,7 @@
         "url": "https://artofproblemsolving.com/wiki/index.php/2024_AIME_I_Problems/Problem_5"
       },
       "model": {
-        "name": "Magistral Small 1.2",
+        "name": "Magistral Small 1.2 (24B)",
         "url": "https://huggingface.co/mistralai/Magistral-Small-2509",
         "takeaway": "Severe reasoning leakage under hard interrupt: 30x longer answer & 35% more total computes than full thinking",
         "oracle": {
