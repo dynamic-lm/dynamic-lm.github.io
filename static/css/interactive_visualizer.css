@@ -501,10 +501,8 @@
     grid-template-columns: 1fr;
 }
 .interactive-viz .model-panels.two-column {
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    /* Safari fallback for auto-fit */
     -ms-grid-columns: (1fr) [2];
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 @media (max-width: 800px) {
     .interactive-viz .model-panels.two-column {
@@ -526,8 +524,12 @@
     gap: 14px;
     background: transparent;
     min-height: 450px;
+    min-width: 0;
     -webkit-box-shadow: none;
     box-shadow: none;
+}
+.interactive-viz .panel .content-container {
+    min-width: 0;
 }
 .interactive-viz .panel h3 {
     margin: 0;
@@ -561,6 +563,11 @@
     border-left: 4px solid #0ea5e9;
     padding: 12px 12px;
     color: #0f172a;
+}
+.interactive-viz .math-answer,
+.interactive-viz .final-answer,
+.interactive-viz .reasoning-answer {
+    overflow-x: auto;
 }
 .interactive-viz .reasoning-answer.limited {
     display: -webkit-box;
@@ -615,6 +622,8 @@
     border-radius: 10px;
     overflow: auto;
     max-height: 400px;
+    max-width: 100%;
+    min-width: 0;
 }
 .interactive-viz pre.code-block {
     display: -ms-grid;
@@ -624,6 +633,8 @@
     padding: 0;
     background: #f8fafc;
     border: 1px solid #e2e8f0;
+    max-width: 100%;
+    min-width: 0;
 }
 .interactive-viz pre.code-block code {
     display: block;
@@ -632,6 +643,7 @@
     padding: 12px 12px;
     min-width: 0;
     white-space: pre;
+    max-width: 100%;
 }
 .interactive-viz pre.code-block .line-numbers {
     display: -webkit-inline-box;
@@ -1243,10 +1255,8 @@ body.modal-open .modal * {
     grid-template-columns: 1fr;
 }
 .interactive-viz-leakage .model-panels.two-column {
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    /* Safari fallback for auto-fit */
     -ms-grid-columns: (1fr) [2];
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 @media (max-width: 800px) {
     .interactive-viz-leakage .model-panels.two-column {
@@ -1268,8 +1278,12 @@ body.modal-open .modal * {
     gap: 14px;
     background: transparent;
     min-height: 350px;
+    min-width: 0;
     -webkit-box-shadow: none;
     box-shadow: none;
+}
+.interactive-viz-leakage .panel .content-container {
+    min-width: 0;
 }
 .interactive-viz-leakage .panel h3 {
     margin: 0;
@@ -1303,6 +1317,11 @@ body.modal-open .modal * {
     border-left: 4px solid #cbd5e1;
     padding: 12px 12px;
     color: #4b5563;
+}
+.interactive-viz-leakage .math-answer,
+.interactive-viz-leakage .final-answer,
+.interactive-viz-leakage .reasoning-answer {
+    overflow-x: auto;
 }
 .interactive-viz-leakage .reasoning-answer.limited {
     display: -webkit-box;
@@ -1350,6 +1369,8 @@ body.modal-open .modal * {
     border-radius: 10px;
     overflow: auto;
     max-height: 350px;
+    max-width: 100%;
+    min-width: 0;
 }
 .interactive-viz-leakage pre.code-block {
     display: -ms-grid;
@@ -1359,6 +1380,8 @@ body.modal-open .modal * {
     padding: 0;
     background: #faf5ff;
     border: 1px solid #e9d5ff;
+    max-width: 100%;
+    min-width: 0;
 }
 .interactive-viz-leakage pre.code-block code {
     display: block;
@@ -1367,6 +1390,7 @@ body.modal-open .modal * {
     padding: 12px 12px;
     min-width: 0;
     white-space: pre;
+    max-width: 100%;
 }
 .interactive-viz-leakage pre.code-block .line-numbers {
     display: -webkit-inline-box;
@@ -1955,10 +1979,8 @@ body.modal-open .modal * {
     grid-template-columns: 1fr;
 }
 .interactive-viz-panic .model-panels.two-column {
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    /* Safari fallback for auto-fit */
     -ms-grid-columns: (1fr) [2];
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 @media (max-width: 800px) {
     .interactive-viz-panic .model-panels.two-column {
@@ -2763,10 +2785,8 @@ body.modal-open .modal * {
     grid-template-columns: 1fr;
 }
 .interactive-viz-doubt .model-panels.two-column {
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    /* Safari fallback for auto-fit */
     -ms-grid-columns: (1fr) [2];
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 @media (max-width: 800px) {
     .interactive-viz-doubt .model-panels.two-column {

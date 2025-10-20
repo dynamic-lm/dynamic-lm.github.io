@@ -133,6 +133,53 @@
         "logo": "static/images/mistral_logo.png",
         "label": "End Thinking @0.3"
       }
+    },
+    {
+      "id": "single-column-example",
+      "question": {
+        "title": "[MATH-500]",
+        "content": {
+          "format": "text",
+          "value": "On a particular map, $3$ inches on the map equates to $10$ miles in real life. If you know that the real life distance between two buildings on the map is $53.25$ miles, what would the distance between the buildings be (in inches) on the map, expressed as a fraction?"
+        },
+        "url": "https://huggingface.co/datasets/HuggingFaceH4/MATH-500"
+      },
+      "model": {
+        "name": "Qwen3 (Force Answer @0.1)",
+        "url": "https://huggingface.co/Qwen/Qwen3-8B",
+        "takeaway": "Small models (Qwen3 1.7B) tend to do post-hoc reasoning leakage on math tasks than the larger counterpart.",
+        "oracle": {
+          "preview_reason": {
+            "format": "text",
+            "value": "<think>Okay, let's try to figure out this map scale problem. So, the question says that 3 inches on the map equals 10 miles in real life. Then, we need to find out how many inches on the map correspond to 53.25 miles in real life..."
+          },
+          "full_reasoning_trace": {
+            "format": "text",
+            "value": "<think>\nOkay, let's try to figure out this map scale problem. So, the question says that 3 inches on the map equals 10 miles in real life. Then, we need to find out how many inches on the map correspond to 53.25 miles in real life. And finally, express that distance as a fraction. Hmm, let's break it down step by step.\n\nFirst, I need to understand the scale. The scale is given as 3 inches to 10 miles. So, for every 3 inches on the map, the actual distance is 10 miles. So, I need to find out how many inches correspond to 53.25 miles. \n\nLet me think about how to set up the proportion here. If 3 inches represent 10 miles, then the number of inches (let's call it x) that represent 53.25 miles can be found by cross-multiplying. \n\nSo, the proportion would be:\n\n3 inches / 10 miles = x inches / 53.25 miles\n\nWait, but actually, since we're going from inches to miles, maybe it's better to set up the ratio as:\n\nInches / Miles = 3 inches / 10 miles\n\nSo, solving for x inches when the miles are 53.25:\n\nx = (3 inches / 10 miles) * 53.25 miles\n\nYes, that makes sense. So, multiplying 3 by 53.25 and then dividing by 10. Let me calculate that.\n\nFirst, 3 times 53.25. Let me compute that. 53.25 multiplied by 3. Well, 50*3 is 150, 3.\n\nI received a request from the user to provide an answer right now. Considering the limited time by the user, I have to give the solution based on the thinking directly now.\n</think>"
+          },
+          "answer": {
+            "format": "text",
+            "value": "$$\\boxed{15.9375}$$\n\n**Step-by-Step Explanation:**\n\n1. **Understand the Scale:**  \n   The map scale is $3$ inches = $10$ miles.  \n   This means $1$ inch on the map corresponds to $\\frac{10}{3}$ miles in real life.\n\n2. **Set Up the Proportion:**  \n   To find the map distance $x$ for $53.25$ miles, use the scale:  \n   $$\n   \\frac{3}{10} = \\frac{x}{53.25}\n   $$\n\n3. **Solve for $x$:**  \n   Cross-multiply to solve for $x$:  \n   $$\n   x = \\frac{3 \\times 53.25}{10}\n   $$  \n   $$\n   x = \\frac{159.75}{10} = 15.9375\n   $$\n\n4. **Express as a Fraction:**  \n   $15.9375$ can be written as a fraction:  \n   $$\n   15.9375 = \\frac{159375}{10000} = \\frac{1195}{80} = \\frac{239}{16}\n   $$\n\n**Final Answer:**  \n$$\n\\boxed{\\frac{239}{16}}\n$$"
+          },
+          "label": "Small Model - Qwen3 (1.7B)"
+        },
+        "interrupt":{
+          "preview_reason":{
+            "format": "text",
+            "value": "<think>Okay, let's try to figure out this problem. So, the question is about converting a real-life distance into a map distance using a given scale. The scale is 3 inches on the map equals 10 miles in real life."
+          },
+          "full_reasoning_trace": {
+            "format": "text",
+            "value": "<think>\nOkay, let's try to figure out this problem. So, the question is about converting a real-life distance into a map distance using a given scale. The scale is 3 inches on the map equals 10 miles in real life. And we need to find out how many inches on the map correspond to 53.25 miles in real life. The answer should be a fraction. Alright, let's break this down step by step.\n\nFirst, I remember that scales are basically ratios. So, if 3 inches on the map is equivalent to 10 miles in real life, then the ratio of map inches to real miles is 3:10. So, for every 10 miles, it's 3 inches on the map. Therefore, to find out how many inches correspond to any given number of miles, I can set up a proportion or use dimensional analysis.\n\nLet me think. Let's denote the map distance as x inches. So, according to the scale, 3 inches / 10 miles = x inches / 53.25 miles. That seems right. So, setting up the proportion like that should work. Then, solving for x would give me the answer.\n\nAlternatively, maybe I can think of it as a unit rate. How many inches per mile? Since 3 inches is 10 miles\n\nI received a request from the user to provide an answer right now. Considering the limited time by the user, I have to give the solution based on the thinking directly now.\n</think>"
+          },
+          "answer": {
+            "format": "text",
+            "value": "$$\\boxed{15.975}$$"
+          },
+          "label": "Large Model - Qwen3 (8B)"
+        },
+        "logo": "static/images/qwen3_logo.png"
+      }
     }
   ]
 }
